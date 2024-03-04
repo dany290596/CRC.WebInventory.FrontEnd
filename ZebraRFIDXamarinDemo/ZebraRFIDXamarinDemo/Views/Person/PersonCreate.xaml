@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Person"
+   
+    x:Class="ZebraRFIDXamarinDemo.Views.Person.PersonCreate">
+
+    <ContentPage.BindingContext>
+        <local:PersonCreateViewModel></local:PersonCreateViewModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+            <StackLayout Spacing="5" Padding="15">
+                <Label Text="Persona" TextColor="Green" HorizontalOptions="Center"></Label>
+
+            <!--<Entry Text="{Binding Person.Id}" Placeholder="Identificador" FontSize="Medium" ></Entry>-->
+                <Entry Text="{Binding Person.Nombre}" Placeholder="Nombre" FontSize="Medium"></Entry>
+                <Entry Text="{Binding Person.Apellido}" Placeholder="Apellido" FontSize="Medium"></Entry>
+                <Entry Text="{Binding Person.Correo}" Placeholder="Correo" FontSize="Medium"></Entry>
+                <Entry Text="{Binding Person.Pais}" Placeholder="Pais" FontSize="Medium"></Entry>
+
+                <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelPersonCommand}" HorizontalOptions="FillAndExpand" BackgroundColor="Black" TextColor="White"></Button>
+                <Button Text="Guardar" Command="{Binding SavePersonCommand}" HorizontalOptions="FillAndExpand" BackgroundColor="Black" TextColor="White"></Button>
+                </StackLayout>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

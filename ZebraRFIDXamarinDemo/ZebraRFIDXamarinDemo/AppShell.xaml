@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:person="clr-namespace:ZebraRFIDXamarinDemo.Views.Person"
+    xmlns:dashboard="clr-namespace:ZebraRFIDXamarinDemo.Views.Dashboard"
+    xmlns:login="clr-namespace:ZebraRFIDXamarinDemo.Views.Authorization"
+    xmlns:loading="clr-namespace:ZebraRFIDXamarinDemo.Views.Shared"
+    xmlns:setting="clr-namespace:ZebraRFIDXamarinDemo.Views.Setting"
+    xmlns:inventory="clr-namespace:ZebraRFIDXamarinDemo.Views.Inventory"
+    x:Class="ZebraRFIDXamarinDemo.AppShell"
+    Title="WebInventory"
+    BackgroundColor="DarkOrange">
+
+
+
+    <!--
+    <ShellContent>
+        <FlyoutItem Title="Personas">
+            <ShellContent Route="PersonIndex" ContentTemplate="{DataTemplate local:PersonIndex}"></ShellContent>
+        </FlyoutItem>
+    </ShellContent>
+    -->
+
+
+      <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="NavigationPrimary">DarkOrange</Color>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="DarkOrange" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="DarkOrange" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarTitleColor" Value="White" />
+            </Style>
+            <Style BasedOn="{StaticResource BaseStyle}" TargetType="ShellItem" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!--  Flyout  -->
+    <ShellItem Route="LoadingIndex" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled">
+        <ShellContent ContentTemplate="{DataTemplate loading:LoadingIndex}"></ShellContent>
+    </ShellItem>
+
+    <ShellItem Route="LoginIndex" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled">
+        <ShellContent ContentTemplate="{DataTemplate login:LoginIndex}"></ShellContent>
+    </ShellItem>
+    <!--
+    <FlyoutItem Title="Login">
+        <ShellContent Route="LoginIndex" ContentTemplate="{DataTemplate login:LoginIndex}"></ShellContent>
+    </FlyoutItem>
+    -->
+    
+    <FlyoutItem Title="Inicio" Icon="house.png">
+        <ShellContent Route="DashboardIndex" ContentTemplate="{DataTemplate dashboard:DashboardIndex}" />
+    </FlyoutItem>
+    
+
+    <FlyoutItem Title="Inventarios" Icon="list.png">
+        <ShellContent Route="InventoryIndex" ContentTemplate="{DataTemplate inventory:InventoryIndex}" />
+    </FlyoutItem>
+
+    <!--
+    <FlyoutItem Title="Personas" Icon="tab_about.png">
+        <ShellContent Route="PersonIndex"  ContentTemplate="{DataTemplate person:PersonIndex}" />
+    </FlyoutItem>
+    -->
+
+    <FlyoutItem Title="Configuración" Icon="configure.png">
+        <ShellContent Route="SettingIndex" ContentTemplate="{DataTemplate setting:SettingIndex}"></ShellContent>
+    </FlyoutItem>
+
+
+
+    <!--
+    <ShellContent
+        Title="Login Page" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled"
+        ContentTemplate="{DataTemplate local:PersonIndex}"
+        Route="PersonIndex" />
+    -->
+
+     <Shell.FlyoutFooter>
+        <StackLayout Padding="20">
+            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cerrar Sesión" Command="{Binding LogoutCommand}" />
+        </StackLayout>
+    </Shell.FlyoutFooter>
+</Shell>

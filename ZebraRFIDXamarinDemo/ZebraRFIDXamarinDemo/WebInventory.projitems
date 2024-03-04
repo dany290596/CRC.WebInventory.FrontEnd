@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{6530D03E-137E-4BD1-937B-0717F52B66F3}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ZebraRFIDXamarinDemo</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Person\PersonIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Person\PersonCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)AppShell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Dashboard\DashboardIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Authorization\LoginIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Setting\SettingIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Setting\SettingCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Shared\LoadingIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\FlyoutHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\PersonRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPersonRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Person\Person.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Person\PersonIndex.xaml.cs">
+      <DependentUpon>PersonIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Person\PersonBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Person\PersonCreateViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Person\PersonIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Person\PersonCreate.xaml.cs">
+      <DependentUpon>PersonCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dashboard\DashboardIndex.xaml.cs">
+      <DependentUpon>DashboardIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Authorization\LoginIndex.xaml.cs">
+      <DependentUpon>LoginIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Login\Login.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Api\Api.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Token\Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Setting\SettingIndex.xaml.cs">
+      <DependentUpon>SettingIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Setting\SettingIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Setting\SettingBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\DeviceRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Inventory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventorySync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IDeviceRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryIndex.xaml.cs">
+      <DependentUpon>InventoryIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryDetail.xaml.cs">
+      <DependentUpon>InventoryDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryDetailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Collaborator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Asset.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Location.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AppShell\AppShellIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AppShell\AppShellBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Setting\SettingCreateViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Setting\SettingCreate.xaml.cs">
+      <DependentUpon>SettingCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IInventoryRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\InventoryRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ICollaboratorRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\CollaboratorRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\LocationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ILocationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\AssetRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAssetRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Setting\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\SettingRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISettingRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\InventoryDetailRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IInventoryDetailRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLoad.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sesion\UserInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IUserInformationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\UserInformationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Authorization\LoginIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Authorization\LoginBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Shared\LoadingIndex.xaml.cs">
+      <DependentUpon>LoadingIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Shared\LoadingIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutHeaderControl.xaml.cs">
+      <DependentUpon>FlyoutHeaderControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Person\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Person\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Person\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Repositories\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Repositories\Implements\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Dashboard\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Authorization\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Login\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Api\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Token\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Setting\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Setting\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Setting\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Startup\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Inventory\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\AppShell\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Sesion\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Authorization\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Shared\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Shared\" />
+  </ItemGroup>
+</Project>

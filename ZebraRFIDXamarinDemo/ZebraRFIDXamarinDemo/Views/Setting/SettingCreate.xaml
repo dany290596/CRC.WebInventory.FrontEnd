@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:ZebraRFIDXamarinDemo.Controls"
+    x:Class="ZebraRFIDXamarinDemo.Views.Setting.SettingCreate">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Orientation="Vertical" Spacing="25" Padding="30,0">
+                <StackLayout Spacing="5">
+                    <Label Text="Crear - Dispositivo" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout  Orientation="Vertical" >
+                    <Frame  HasShadow="True" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                        <StackLayout Orientation="Horizontal">
+                            <Frame HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="100">
+                                <Image Source="cell.png" HeightRequest="25" WidthRequest="25"></Image>
+                            </Frame>
+
+                            <control:CustomEntry Text="{Binding Device.Id}" Placeholder="Dispositivo*" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0, 0, 20, 0"></control:CustomEntry>
+                        </StackLayout>
+                    </Frame>
+
+                    <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding SaveSettingCommand}" />
+                    <!--
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Cancelar" Command="{Binding CancelSettingCommand}" HorizontalOptions="FillAndExpand" CornerRadius="20" BackgroundColor="Black" TextColor="White"></Button>
+                        <Button Text="Guardar" Command="{Binding SaveSettingCommand}" HorizontalOptions="FillAndExpand" CornerRadius="20" BackgroundColor="Black" TextColor="White"></Button>
+                    </StackLayout>
+                    -->
+
+                </StackLayout>
+
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

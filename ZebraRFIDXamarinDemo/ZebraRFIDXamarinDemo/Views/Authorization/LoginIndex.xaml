@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ZebraRFIDXamarinDemo.Views.Authorization.LoginIndex"
+    xmlns:control="clr-namespace:ZebraRFIDXamarinDemo.Controls"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+    <!--
+    <ContentPage.Content>
+        <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+            <Label Text="Email"></Label>
+            <Entry x:Name="txtEmail" Placeholder="Email"></Entry>
+            <Label x:Name="txtPassword" Text="Contraseña"></Label>
+            <Entry IsPassword="True" Placeholder="Contraseña"></Entry>
+            <Button Text="Ingresar" Clicked="OnLoginButton"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+    -->
+      <StackLayout
+        Orientation="Vertical"
+            Spacing="25" 
+            Padding="30,0" 
+            VerticalOptions="Center">
+
+        <Image Source="webinventory.png" HeightRequest="100" WidthRequest="100" />
+
+        <StackLayout Spacing="5">
+            <Label Text="¡Bienvenido!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center" />
+            <Label Text="WebInventory" FontSize="18" TextColor="Gray" HorizontalTextAlignment="Center" />
+        </StackLayout>
+
+
+        <StackLayout Orientation="Horizontal">
+           
+            <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
+                <Image Source="person.png" HeightRequest="5" WidthRequest="5" />
+            </Frame>
+                   
+            <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
+                 <control:CustomEntry Text="{Binding Login.Email}" x:Name="txtEmail" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Email*" Keyboard="Email"></control:CustomEntry>
+          <!--      <handlers:BorderlessEntry Text="{Binding Email}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="User Name" Keyboard="Email" />-->
+            </Frame>
+           
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
+                <Image Source="security.png" HeightRequest="5" WidthRequest="5" />
+            </Frame>
+            <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
+                <control:CustomEntry Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Contraseña*"></control:CustomEntry>
+                <!--<handlers:BorderlessEntry Text="{Binding Password}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Password" IsPassword="True" />-->
+            </Frame>
+        </StackLayout>
+
+        <Button BackgroundColor="DarkOrange" TextColor="White" Text="Ingresar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding StartLoginCommand}" />
+
+        <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
+            <Label Text="¿Has olvidado tu contraseña?" TextColor="Gray" />
+            <!--<Label Text="Registrate aquí" TextColor="#50b3f2" />-->
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZebraRFIDXamarinDemo.Views.ReaderWiFi">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="0" CompressedLayout.IsHeadless="true">
+            <StackLayout  Padding="0,0,0,0">
+                <Grid RowSpacing="2" ColumnSpacing="0" BackgroundColor="#E6E6E6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name = "lbSavedProfiles" 
+                       TextColor="#8c8c8c" 
+                       Margin="10,0,0,0" 
+                       Text="Saved Network" 
+                       HorizontalOptions="Start" 
+                       FontSize = "12" 
+                       VerticalTextAlignment="Center"  
+                       Grid.Row="0" Grid.Column="0"/>
+                </Grid>
+                <ListView x:Name="lvSavedProfiles" 
+                      IsVisible= "true" 
+                      ItemsSource="{Binding SavedProfilesList}" 
+                      ItemTapped="OnItemTappedSavedProfiles">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell TextColor="Black" Text="{Binding SavedProfileSSID}" Detail="Tap to share WiFi access from network" ></TextCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout  Padding="0,0,0,0">
+                <Grid RowSpacing="2" ColumnSpacing="0" BackgroundColor="#E6E6E6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name = "lbAvilableProfiles" 
+                       TextColor="#8c8c8c" 
+                       Margin="10,0,0,0" 
+                       Text="Other Avilable Networks" 
+                       HorizontalOptions="Start" 
+                       FontSize = "12" 
+                       VerticalTextAlignment="Center"  
+                       Grid.Row="0" Grid.Column="0"/>
+                    <Button 
+                    Text="Refresh" 
+                    HorizontalOptions="End" 
+                    Clicked="RefreshClicked"
+                    Margin="0,0,0,0" 
+                    TextColor="#8c8c8c"   
+                    FontSize = "12" 
+                    VerticalOptions="Center"  
+                    Grid.Row="0" 
+                    Grid.Column="1" />
+                </Grid>
+                <ListView x:Name="lvAvilableProfiles" 
+                      IsVisible= "true" 
+                      ItemsSource="{Binding AvilableProfilesList}" 
+                      ItemTapped="OnItemTappedAvilableProfiles">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell TextColor="Black" Text="{Binding AvilableProfileSSID}" ></TextCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Person"
+    xmlns:model="clr-namespace:ZebraRFIDXamarinDemo.Models.Person"
+    x:Class="ZebraRFIDXamarinDemo.Views.Person.PersonIndex">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Crear" Command="{Binding CreatePersonCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <RefreshView x:DataType="local:PersonIndexViewModel" Command="{Binding LoadPersonCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+            <CollectionView ItemsSource="{Binding PersonData}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                   <DataTemplate>
+                            <StackLayout x:DataType="model:Person">
+                                <SwipeView>
+    <SwipeView.RightItems>
+                                        <SwipeItem Text="Eliminar" BackgroundColor="Red"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type local:PersonIndexViewModel}},
+                                                   Path=DeletePersonCommand}" CommandParameter="{Binding .}"></SwipeItem>
+                                        <SwipeItem IsDestructive="True" Text="Cerrar" BackgroundColor="Gray"></SwipeItem>
+                                    </SwipeView.RightItems>
+                                
+                                <Grid Padding="5">
+                                    <Frame CornerRadius="10" HasShadow="True">
+                                        <StackLayout Orientation="Horizontal">
+                        <StackLayout>
+                                            <Label Grid.Column="1" Text="{Binding Id}" FontAttributes="Bold"></Label>
+                                    <Label Grid.Column="1" Text="{Binding Nombre}" FontAttributes="Bold"></Label>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Apellido}" VerticalOptions="End"></Label>
+                                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Pais}" VerticalOptions="End"></Label>
+                        </StackLayout>
+                                            <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                                                <Image Source="edit.png" Grid.Column="3" WidthRequest="30" HeightRequest="30" VerticalOptions="End">
+                    <Image.GestureRecognizers>
+<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PersonIndexViewModel}},
+                      Path=EditPersonCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                    </SwipeView>
+                                </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                    <CollectionView.Header>
+<StackLayout>
+<Label Text="Lista de Personas" FontSize="Large" TextColor="Black" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                    </CollectionView.Header>
+            </CollectionView>
+                </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
