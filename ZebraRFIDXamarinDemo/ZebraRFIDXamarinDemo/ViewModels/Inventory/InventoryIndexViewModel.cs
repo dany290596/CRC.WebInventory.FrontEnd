@@ -295,6 +295,41 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                         dataAsset.CampoLibre5 = itemdetalleinventario.Activo.CampoLibre5;
                                                         dataAsset.AreaId = itemdetalleinventario.Activo.AreaId;
                                                         await App.assetRepository.AddAsync(dataAsset);
+
+                                                        try
+                                                        {
+                                                            if (dataAsset.EstadoFisicoId != null && dataAsset.EstadoFisicoId != Guid.Empty)
+                                                            {
+                                                                var physicalStateByIdSQLITE = await App.physicalStateRepository.GetByIdAsync((Guid)dataAsset.EstadoFisicoId);
+                                                                if (physicalStateByIdSQLITE == null)
+                                                                {
+                                                                    var physicalStateById = await App.physicalStateRepository.GetPhysicalStateById(userInformationGetByLasSQLITE.Token, (Guid)userInformationGetByLasSQLITE.EmpresaId, (Guid)dataAsset.EstadoFisicoId);
+                                                                    if (physicalStateById.Respuesta == true)
+                                                                    {
+
+                                                                        PhysicalState dataPhysicalState = new PhysicalState();
+                                                                        dataPhysicalState.UsuarioCreadorId = physicalStateById.Data.UsuarioCreadorId;
+                                                                        dataPhysicalState.UsuarioModificadorId = physicalStateById.Data.UsuarioModificadorId;
+                                                                        dataPhysicalState.UsuarioBajaId = physicalStateById.Data.UsuarioBajaId;
+                                                                        dataPhysicalState.UsuarioReactivadorId = physicalStateById.Data.UsuarioReactivadorId;
+                                                                        dataPhysicalState.FechaCreacion = physicalStateById.Data.FechaCreacion;
+                                                                        dataPhysicalState.FechaModificacion = physicalStateById.Data.FechaModificacion;
+                                                                        dataPhysicalState.FechaBaja = physicalStateById.Data.FechaBaja;
+                                                                        dataPhysicalState.FechaReactivacion = physicalStateById.Data.FechaReactivacion;
+                                                                        dataPhysicalState.Estado = physicalStateById.Data.Estado;
+                                                                        dataPhysicalState.EmpresaId = physicalStateById.Data.EmpresaId;
+                                                                        dataPhysicalState.Id = physicalStateById.Data.Id;
+                                                                        dataPhysicalState.Nombre = physicalStateById.Data.Nombre;
+                                                                        dataPhysicalState.Descripcion = physicalStateById.Data.Descripcion;
+                                                                        await App.physicalStateRepository.AddAsync(dataPhysicalState);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            throw ex;
+                                                        }
                                                     }
                                                 }
 

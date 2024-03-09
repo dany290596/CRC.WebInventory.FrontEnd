@@ -77,12 +77,23 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
         public async Task<List<Inventory>> GetAllAsync()
         {
-            var collaboratordi = await _database.QueryAsync<Collaborator>("SELECT * FROM Collaborator");
-            var assetdi = await _database.QueryAsync<Asset>("SELECT * FROM Asset");
-            var devicedi = await _database.QueryAsync<Device>("SELECT * FROM Device");
+            var collaboratordi = await App.collaboratorRepository.GetAllAsync();
+            //var collaboratordi = await _database.QueryAsync<Collaborator>("SELECT * FROM Collaborator");
+
+            var assetdi = await App.assetRepository.GetAllAsync();
+            //var assetdi = await _database.QueryAsync<Asset>("SELECT * FROM Asset");
+
+            var devicedi = await App.deviceRepository.GetAllAsync();
+            //var devicedi = await _database.QueryAsync<Device>("SELECT * FROM Device");
+
+            //var inventorydi = await App.inventoryRepository.GetAllAsync();
             var inventorydi = await _database.QueryAsync<Inventory>("SELECT * FROM Inventory");
-            var locationdi = await _database.QueryAsync<Location>("SELECT * FROM Location");
-            var inventoryDetaildi = await _database.QueryAsync<InventoryDetail>("SELECT * FROM InventoryDetail");
+
+            var locationdi = await App.locationRepository.GetAllAsync();
+            //var locationdi = await _database.QueryAsync<Location>("SELECT * FROM Location");
+
+            var inventoryDetaildi = await App.inventoryDetailRepository.GetAllAsync();
+            //var inventoryDetaildi = await _database.QueryAsync<InventoryDetail>("SELECT * FROM InventoryDetail");
             var querydi = from id in inventoryDetaildi
 
                           join a in assetdi on id.ActivoId equals a.Id

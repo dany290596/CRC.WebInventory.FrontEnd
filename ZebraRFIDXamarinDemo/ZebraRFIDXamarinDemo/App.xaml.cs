@@ -21,6 +21,7 @@ namespace ZebraRFIDXamarinDemo
         static InventoryDetailRepository _inventoryDetailRepository;
         static AssetRepository _assetRepository;
         static UserInformationRepository _userInformationRepository;
+        static PhysicalStateRepository _physicalStateRepository;
 
         public static PersonRepository personRepository
         {
@@ -127,6 +128,18 @@ namespace ZebraRFIDXamarinDemo
                     _userInformationRepository = new UserInformationRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WebInventory.db"));
                 }
                 return _userInformationRepository;
+            }
+        }
+
+        public static PhysicalStateRepository physicalStateRepository
+        {
+            get
+            {
+                if (_physicalStateRepository == null)
+                {
+                    _physicalStateRepository = new PhysicalStateRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WebInventory.db"));
+                }
+                return _physicalStateRepository;
             }
         }
 

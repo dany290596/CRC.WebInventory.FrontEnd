@@ -17,8 +17,8 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public string? Modelo { get; set; }
         public string? Descripcion { get; set; }
         public string? Nombre { get; set; }
-        public string? Observaciones { get; set; }
-        public Guid? EstadoFisicoId { get; set; }
+        public string? Observaciones { get; set; } // Este campo se va a modificar
+        public Guid? EstadoFisicoId { get; set; } // Este campo se va a modificar
         public Guid? TagId { get; set; }
         public Guid? ColaboradorHabitualId { get; set; }
         public Guid? ColaboradorResponsableId { get; set; }

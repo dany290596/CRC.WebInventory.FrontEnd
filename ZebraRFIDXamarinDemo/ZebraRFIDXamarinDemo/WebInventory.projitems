@@ -55,6 +55,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryLocationDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -144,6 +148,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutHeaderControl.xaml.cs">
       <DependentUpon>FlyoutHeaderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryLocationDetail.xaml.cs">
+      <DependentUpon>InventoryLocationDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryLocationDetailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\PhysicalState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPhysicalStateRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\PhysicalStateRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

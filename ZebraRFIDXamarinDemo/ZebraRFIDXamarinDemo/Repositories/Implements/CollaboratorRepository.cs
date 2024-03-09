@@ -76,7 +76,8 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
         public async Task<List<Collaborator>> GetAllAsync()
         {
-            return await Task.FromResult(await _database.Table<Collaborator>().ToListAsync());
+            var list = await _database.Table<Collaborator>().ToListAsync();
+            return await Task.FromResult(list);
         }
 
         public async Task<Collaborator> GetByIdAsync(Guid id)
