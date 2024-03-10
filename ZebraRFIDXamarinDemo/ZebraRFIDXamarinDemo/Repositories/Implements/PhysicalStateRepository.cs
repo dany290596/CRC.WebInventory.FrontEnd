@@ -150,5 +150,39 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
             return await Task.FromResult(data);
         }
+
+        public async Task<Api<List<PhysicalState>>> GetAllPhysicalState(string token, Guid company)
+        {
+            Api<List<PhysicalState>> data = new Api<List<PhysicalState>>(false, "", 200, null);
+
+            ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+            var httpClient = new HttpClient(httpClientHandler);
+            //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
+            Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/EstadoFisico/GetAllEstadoFisico?PageSize=1");
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+            httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
+            var response = await httpClient.GetAsync(uri);
+
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string content = response.Content.ReadAsStringAsync().Result;
+                    data = JsonConvert.DeserializeObject<Api<List<PhysicalState>>>(content);
+                }
+            }
+            else
+            {
+
+                return await Task.FromResult(data);
+            }
+
+            return await Task.FromResult(data);
+        }
     }
 }

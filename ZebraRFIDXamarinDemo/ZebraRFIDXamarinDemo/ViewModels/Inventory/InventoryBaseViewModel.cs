@@ -9,12 +9,18 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
     public class InventoryBaseViewModel : INotifyPropertyChanged
     {
-        private Models.Startup.Inventory _inventorySync;
+        private InventoryQuery _inventorySync;
+        private Location _locationSync;
         public INavigation Navigation { get; set; }
-        public Models.Startup.Inventory InventorySync
+        public InventoryQuery InventorySync
         {
             get { return _inventorySync; }
             set { _inventorySync = value; OnPropertyChanged(); }
+        }
+        public Location LocationSync
+        {
+            get { return _locationSync; }
+            set { _locationSync = value; OnPropertyChanged(); }
         }
         bool isBusy = false;
         public bool IsBusy

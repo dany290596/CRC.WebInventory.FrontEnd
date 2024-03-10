@@ -12,6 +12,6 @@ namespace ZebraRFIDXamarinDemo.Repositories.Interfaces
         Task<bool> DeleteAsync(Guid id);
         Task<bool> DeleteAllAsync();
         Task<Inventory> GetByIdAsync(Guid id);
-        Task<List<Inventory>> GetAllAsync();
+        Task<List<InventoryQuery>> GetAllAsync();
     }
 }

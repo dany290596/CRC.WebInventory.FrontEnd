@@ -18,7 +18,7 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
         }
 
         
-        public InventoryDetail(Models.Startup.Inventory inventorySync)
+        public InventoryDetail(InventoryQuery inventorySync)
         {
             InitializeComponent();
             BindingContext = new InventoryDetailViewModel();

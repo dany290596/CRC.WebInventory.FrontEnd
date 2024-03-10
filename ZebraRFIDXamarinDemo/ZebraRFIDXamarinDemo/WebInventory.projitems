@@ -155,6 +155,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\PhysicalState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPhysicalStateRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\PhysicalStateRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

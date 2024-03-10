@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.ViewModels.Inventory;
-using ZebraRFIDXamarinDemo.ViewModels.Person;
 
 namespace ZebraRFIDXamarinDemo.Views.Inventory
 {
     public partial class InventoryLocationDetail : ContentPage
     {
-        public Models.Startup.Inventory InventorySync { get; set; }
+        public Location LocationSync { get; set; }
         InventoryLocationDetailViewModel inventoryLocationDetailViewModel;
 
         public InventoryLocationDetail()
         {
             InitializeComponent();
-            BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel();
+            BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel(Navigation);
         }
 
-        public InventoryLocationDetail(Models.Startup.Inventory inventorySync)
+        public InventoryLocationDetail(Location locationSync)
         {
             InitializeComponent();
-            BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel();
-            if (inventorySync != null)
+            BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel(Navigation);
+            if (locationSync != null)
             {
-                ((InventoryLocationDetailViewModel)BindingContext).InventorySync = inventorySync;
+                ((InventoryLocationDetailViewModel)BindingContext).LocationSync = locationSync;
             }
         }
 

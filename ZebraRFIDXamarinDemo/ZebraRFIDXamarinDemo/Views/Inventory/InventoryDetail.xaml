@@ -40,11 +40,11 @@
                                         </Frame>
 
 
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventorySync.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventorySync.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventorySync.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.Inventario.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.Inventario.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventorySync.Inventario.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventorySync.Inventario.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventorySync.Inventario.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                         </Frame>
 
                                     </Grid>
@@ -75,8 +75,8 @@
                                         <Label Grid.Column="0" Grid.Row="4" Text="Teléfono móvil: " FontAttributes="Bold"/>
                                         -->
                                         
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.ColaboradorResponsable.NumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
-                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventorySync.ColaboradorResponsable.CollaboratorName}" TextColor="Silver" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.Inventario.ColaboradorResponsable.NumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
+                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventorySync.Inventario.ColaboradorResponsable.CollaboratorName}" TextColor="Silver" FontAttributes="Bold"/>
 
                                         <!--
                                         <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.ColaboradorResponsable.Email}" TextColor="Silver" FontAttributes="Bold"/>
@@ -94,7 +94,7 @@
             
              <StackLayout>
    
-                <CollectionView ItemsSource="{Binding InventorySync.Ubicaciones}" SelectionMode="None">
+                <CollectionView ItemsSource="{Binding InventorySync.Inventario.Ubicaciones}" SelectionMode="None">
 
                     <CollectionView.ItemTemplate>
 

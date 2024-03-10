@@ -86,13 +86,7 @@
 
             
              <StackLayout>
-                <CollectionView ItemsSource="{Binding InventorySync.Ubicaciones}" SelectionMode="None">
-
-                    <CollectionView.ItemTemplate>
-
-                        <DataTemplate>
-                          
-                            <StackLayout x:DataType="model:Location">
+           
                                <StackLayout>
                     <Label Text="Lista de activos" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
                 </StackLayout>
@@ -123,7 +117,7 @@
 
                                                     <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" HasShadow="True" CornerRadius="20">
                                                         <StackLayout>
-                                                    <CollectionView ItemsSource="{Binding DetalleInventario}" SelectionMode="None">
+                                                    <CollectionView ItemsSource="{Binding LocationSync.DetalleInventario}" SelectionMode="None">
                                                         <CollectionView.ItemTemplate>
                                                             <DataTemplate>
                                                                 <StackLayout x:DataType="model:InventoryDetail">
@@ -149,14 +143,14 @@
                                                                     <Label Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
 
                                                                     <Picker Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Title="-- Seleccione --"
-                                                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ShowResponseReason}"
+                                                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerItems}"
                                                                             ItemDisplayBinding="{Binding Nombre}"
-                                                                            SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ReasonValue}"
-                                                                            SelectedIndexChanged="SelectedAssetChanged">
+                                                                            SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerSelectedIndex}"
+                                                                            >
 
                                                                     </Picker>
 
-                                                                    <Editor Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1">
+                                                                    <Editor Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}">
                                                                     </Editor>
 
                                                                     <!--
@@ -246,12 +240,7 @@
                                                 -->
 
                              
-                             </StackLayout>
-                                 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
+            
                   
                         
             </StackLayout>

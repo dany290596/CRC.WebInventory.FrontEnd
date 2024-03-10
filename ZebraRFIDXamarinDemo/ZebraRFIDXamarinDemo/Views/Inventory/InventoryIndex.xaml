@@ -27,7 +27,7 @@
             <CollectionView ItemsSource="{Binding InventoryData}" SelectionMode="None">
                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout x:DataType="model:Inventory">
+                            <StackLayout x:DataType="model:InventoryQuery">
                                <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItem IsDestructive="True" Text="Cerrar" BackgroundColor="DarkGray"></SwipeItem>
@@ -50,12 +50,12 @@
                                                         <Label Text="Estado: " FontAttributes="Bold"/>
                                                     </Frame>
 
-                                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
-                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Inventario.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding Inventario.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
+                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding Inventario.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
                                                     <!--<Label Grid.Column="1" Grid.Row="4" Text="{Binding EstadoNombre}" TextColor="Silver" FontAttributes="Bold"></Label>-->
-                                                    <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                                        <Label HeightRequest="20" Margin="0" Text="{Binding EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+                                                    <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding Inventario.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                                        <Label HeightRequest="20" Margin="0" Text="{Binding Inventario.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                                     </Frame>
                                                 
                                                 </Grid>

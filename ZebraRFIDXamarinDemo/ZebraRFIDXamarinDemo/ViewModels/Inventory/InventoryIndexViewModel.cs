@@ -21,13 +21,13 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public Xamarin.Forms.Command DetailInventoryCommand { get; }
         public Command SyncInventoryCommand { get; }
         public Command UploadInventoryCommand { get; }
-        public ObservableCollection<Models.Startup.Inventory> InventoryData { get; }
+        public ObservableCollection<InventoryQuery> InventoryData { get; }
 
         public InventoryIndexViewModel(INavigation _navigation)
         {
             LoadInventoryCommand = new Command(async () => await ExecuteLoadPersonCommand());
-            InventoryData = new ObservableCollection<Models.Startup.Inventory>();
-            DetailInventoryCommand = new Command<Models.Startup.Inventory>(OnDetailInventory);
+            InventoryData = new ObservableCollection<InventoryQuery>();
+            DetailInventoryCommand = new Command<InventoryQuery>(OnDetailInventory);
             SyncInventoryCommand = new Command(OnSyncInventoryCommand);
             UploadInventoryCommand = new Command(OnUploadInventoryCommand);
             Navigation = _navigation;
@@ -115,7 +115,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
-        private async void OnDetailInventory(Models.Startup.Inventory inventorySync)
+        private async void OnDetailInventory(InventoryQuery inventorySync)
         {
             await Navigation.PushAsync(new Views.Inventory.InventoryDetail(inventorySync));
         }
@@ -419,11 +419,38 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                         await Application.Current.MainPage.DisplayAlert("Mensaje", "No hay inventarios disponibles en este momento", "Aceptar");
                     }
 
-                    InventoryData.Clear();
-                    var inventoryAllSQLITE = await App.inventoryRepository.GetAllAsync();
-                    foreach (var item in inventoryAllSQLITE)
+                    try
                     {
-                        InventoryData.Add(item);
+                        InventoryData.Clear();
+                        var inventoryAllSQLITE = await App.inventoryRepository.GetAllAsync();
+                        foreach (var item in inventoryAllSQLITE)
+                        {
+                            InventoryData.Add(item);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                    try
+                    {
+                        var physicalStateGetAll = await App.physicalStateRepository.GetAllPhysicalState(userInformationGetByLasSQLITE.Token, (Guid)userInformationGetByLasSQLITE.EmpresaId);
+                        if (physicalStateGetAll.Data.Count() > 0)
+                        {
+                            foreach (var itemPhysicalState in physicalStateGetAll.Data)
+                            {
+                                var physicalStateByIdSQLITE = await App.physicalStateRepository.GetByIdAsync(itemPhysicalState.Id);
+                                if (physicalStateByIdSQLITE == null)
+                                {
+                                    await App.physicalStateRepository.AddAsync(itemPhysicalState);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
             }
@@ -435,6 +462,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void OnUploadInventoryCommand()
         {
+            /*
             try
             {
                 var list = await App.settingRepository.GetAllAsync();
@@ -466,6 +494,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             {
                 throw ex;
             }
+            */
         }
     }
 }

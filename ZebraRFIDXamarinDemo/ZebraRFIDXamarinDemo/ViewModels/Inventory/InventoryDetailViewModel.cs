@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.Views.Inventory;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
@@ -12,12 +13,13 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         public InventoryDetailViewModel()
         {
-            SeeDetailInventoryCommand = new Command(OnSeeDetailInventory);
+            SeeDetailInventoryCommand = new Command<Location>(OnSeeDetailInventory);
         }
 
-        private async void OnSeeDetailInventory()
+        private async void OnSeeDetailInventory(Location locationSync)
         {
-          await Application.Current.MainPage.Navigation.PushAsync(new Views.Inventory.InventoryLocationDetail(InventorySync));
+            var asa = "";
+          await Application.Current.MainPage.Navigation.PushAsync(new Views.Inventory.InventoryLocationDetail(locationSync));
 
            // var secondPage = new InventoryLocationDetail(InventorySync);
            // await Device.InvokeOnMainThreadAsync(async () => await Application.Current.MainPage.Navigation.PushAsync(secondPage, true));
