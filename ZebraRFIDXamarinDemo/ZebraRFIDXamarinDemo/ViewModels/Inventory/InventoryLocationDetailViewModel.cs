@@ -191,7 +191,69 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void OnSaveAsset()
         {
-            var asset = InventorySync;
+            try
+            {
+                var dataLocation = LocationSync;
+                if (dataLocation.DetalleInventario.Count() > 0)
+                {
+                    foreach (var itemDetalleInventario in dataLocation.DetalleInventario)
+                    {
+                        if (itemDetalleInventario.Activo != null)
+                        {
+                            var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(itemDetalleInventario.Activo.Id);
+                            if (dataAssetSQLITE != null)
+                            {
+                                Asset asset = new Asset();
+                                asset.UsuarioCreadorId = dataAssetSQLITE.UsuarioCreadorId;
+                                asset.UsuarioModificadorId = dataAssetSQLITE.UsuarioModificadorId;
+                                asset.UsuarioBajaId = dataAssetSQLITE.UsuarioBajaId;
+                                asset.UsuarioReactivadorId = dataAssetSQLITE.UsuarioReactivadorId;
+                                asset.FechaCreacion = dataAssetSQLITE.FechaCreacion;
+                                asset.FechaModificacion = dataAssetSQLITE.FechaModificacion;
+                                asset.FechaBaja = dataAssetSQLITE.FechaBaja;
+                                asset.FechaReactivacion = dataAssetSQLITE.FechaReactivacion;
+                                asset.Estado = dataAssetSQLITE.Estado;
+                                asset.EmpresaId = dataAssetSQLITE.EmpresaId;
+                                asset.Id = dataAssetSQLITE.Id;
+                                asset.UbicacionId = dataAssetSQLITE.UbicacionId;
+                                asset.GrupoActivoId = dataAssetSQLITE.GrupoActivoId;
+                                asset.TipoActivoId = dataAssetSQLITE.TipoActivoId;
+                                asset.Codigo = dataAssetSQLITE.Codigo;
+                                asset.Serie = dataAssetSQLITE.Serie;
+                                asset.Marca = dataAssetSQLITE.Marca;
+                                asset.Modelo = dataAssetSQLITE.Modelo;
+                                asset.Descripcion = dataAssetSQLITE.Descripcion;
+                                asset.Nombre = dataAssetSQLITE.Nombre;
+                                asset.Observaciones = itemDetalleInventario.Activo.Observaciones; // Este campo se va a modificar
+                                asset.EstadoFisicoId = itemDetalleInventario.Activo.EstadoFisicoId; // Este campo se va a modificar
+                                asset.TagId = dataAssetSQLITE.TagId;
+                                asset.ColaboradorHabitualId = dataAssetSQLITE.ColaboradorHabitualId;
+                                asset.ColaboradorResponsableId = dataAssetSQLITE.ColaboradorResponsableId;
+                                asset.ValorCompra = dataAssetSQLITE.ValorCompra;
+                                asset.FechaCompra = dataAssetSQLITE.FechaCompra;
+                                asset.Proveedor = dataAssetSQLITE.Proveedor;
+                                asset.FechaFinGarantia = dataAssetSQLITE.FechaFinGarantia;
+                                asset.TieneFoto = dataAssetSQLITE.TieneFoto;
+                                asset.TieneArchivo = dataAssetSQLITE.TieneArchivo;
+                                asset.FechaCapitalizacion = dataAssetSQLITE.FechaCapitalizacion;
+                                asset.FichaResguardo = dataAssetSQLITE.FichaResguardo;
+                                asset.CampoLibre1 = dataAssetSQLITE.CampoLibre1;
+                                asset.CampoLibre2 = dataAssetSQLITE.CampoLibre2;
+                                asset.CampoLibre3 = dataAssetSQLITE.CampoLibre3;
+                                asset.CampoLibre4 = dataAssetSQLITE.CampoLibre4;
+                                asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
+                                asset.AreaId = dataAssetSQLITE.AreaId;
+                                await App.assetRepository.UpdateAsync(asset);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             await Shell.Current.GoToAsync("..");
         }
 
