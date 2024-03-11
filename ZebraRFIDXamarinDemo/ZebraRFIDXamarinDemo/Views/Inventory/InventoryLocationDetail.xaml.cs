@@ -40,6 +40,7 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
 
         void SelectedAssetChanged(System.Object sender, System.EventArgs e)
         {
+            var aa = sender;
         }
     }
 }

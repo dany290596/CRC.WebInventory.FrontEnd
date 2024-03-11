@@ -93,7 +93,7 @@
 
             
              <StackLayout>
-   
+   <Label Text="Lista de las ubicaciones" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
                 <CollectionView ItemsSource="{Binding InventorySync.Inventario.Ubicaciones}" SelectionMode="None">
 
                     <CollectionView.ItemTemplate>
@@ -101,12 +101,9 @@
                         <DataTemplate>
                           
                             <StackLayout x:DataType="model:Location">
-                               <StackLayout>
-                    <Label Text="Lista de las ubicaciones" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
-                </StackLayout>
-                                <Frame HasShadow="True" CornerRadius="20">
-                                             <StackLayout>
-                                    <StackLayout Orientation="Horizontal">   
+
+                              
+                                       
                                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
 
@@ -239,16 +236,14 @@
                                     
                                  
                                     </Grid>
-                                    </StackLayout>
-                                            </StackLayout>
-                                </Frame>
+
+                      
                              
                              </StackLayout>
                                  
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                        
             </StackLayout>
           
 
