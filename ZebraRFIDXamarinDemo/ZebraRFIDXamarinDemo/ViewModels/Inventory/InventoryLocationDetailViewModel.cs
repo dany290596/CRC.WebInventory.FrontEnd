@@ -11,6 +11,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
     public class InventoryLocationDetailViewModel : InventoryBaseViewModel
     {
+        public Command LoadAssetCommand { get; }
         public ObservableCollection<object> StartValue
         {
             get;
@@ -18,6 +19,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         }
 
         public Command SaveAssetCommand { get; }
+        public Command FinalizeLocationCommand { get; }
         // public List<PhysicalState> PhysicalStateData { get; set; }
 
         PhysicalState selectedItem;
@@ -30,15 +32,25 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
 
         public ObservableCollection<PhysicalState> PhysicalStateData = new ObservableCollection<PhysicalState>();
-
+        public Command PlanoPagamentoAlteradoCommand { get; }
+        public ObservableCollection<InventoryDetail> listAsset = new ObservableCollection<InventoryDetail>();
+        public ObservableCollection<InventoryDetail> ListAsset
+        {
+            get { return listAsset; }
+            set { listAsset = value; }
+        }
         public InventoryLocationDetailViewModel(INavigation _navigation)
         {
             Navigation = _navigation;
+            LoadAssetCommand = new Command(async () => await ExecuteLoadPersonCommand());
             StartValue = new ObservableCollection<object>();
             SaveAssetCommand = new Command(OnSaveAsset);
+            FinalizeLocationCommand = new Command(OnFinalizeLocation);
             //LocationSync = new Location();
             // PhysicalStateData = new List<PhysicalState>();
+
             PhysicalStateData = new ObservableCollection<PhysicalState>();
+            PickerItems = new ObservableCollection<PhysicalState>();
             // ReasonValue.Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07");
 
             /*
@@ -64,7 +76,13 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07")
             };
 
-            // pickerSelectedIndex = 3;
+            pickerSelectedIndex = 3;
+
+
+            ListAsset = new ObservableCollection<InventoryDetail>();
+
+            //
+            PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
         }
 
         public PhysicalState SelectedFilterItem
@@ -118,7 +136,11 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public ObservableCollection<PhysicalState> PickerItems
         {
             get { return pickerItems; }
-            set { pickerItems = value; }
+            set
+            {
+                pickerItems = value;
+
+            }
         }
 
 
@@ -140,10 +162,62 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
+        async Task ExecuteLoadPersonCommand()
+        {
+            IsBusy = true;
+            try
+            {
+                var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
+                PickerItems.Clear();
+                for (int i = 0; i < physicalStateAll.Count(); i++)
+                {
+                    /*
+                    if (PickerItems[i].Nombre == myEstadoFisico)
+                    {
+                        EstadoFisicoPicker.SelectedIndex = i;
+                    }
+                    */
+
+                    PickerItems.Add(physicalStateAll[i]);
+                }
+
+
+                ListAsset.Clear();
+                for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
+                {
+                    ListAsset.Add(LocationSync.DetalleInventario[i]);
+                }
+
+
+                foreach (var itemInventoryDetail in LocationSync.DetalleInventario)
+                {
+
+                    for (int i = 0; i < physicalStateAll.Count(); i++)
+                    {
+                        if (PickerItems[i].Id == itemInventoryDetail.EstadoFisicoId)
+                        {
+                            //   pickerSelectedIndex = i;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         public async void OnAppearing()
         {
             IsBusy = true;
+
+
+
+
             var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
             /*
             PhysicalStateData.Clear();
@@ -161,9 +235,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             StartValue.Add(selectedItem);
             */
 
-            string myEstadoFisico = "A300";
 
-            PickerItems = new ObservableCollection<PhysicalState>();
+
+            PickerItems.Clear();
             for (int i = 0; i < physicalStateAll.Count(); i++)
             {
                 /*
@@ -176,13 +250,22 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 PickerItems.Add(physicalStateAll[i]);
             }
 
+
+            ListAsset.Clear();
+            for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
+            {
+                ListAsset.Add(LocationSync.DetalleInventario[i]);
+            }
+
+
             foreach (var itemInventoryDetail in LocationSync.DetalleInventario)
             {
+
                 for (int i = 0; i < physicalStateAll.Count(); i++)
                 {
                     if (PickerItems[i].Id == itemInventoryDetail.EstadoFisicoId)
                     {
-                        pickerSelectedIndex = i;
+                        //   pickerSelectedIndex = i;
                     }
                 }
             }
@@ -281,6 +364,53 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(_PropertyName));
+            }
+        }
+
+        private async void WhenSelectedIndexChanged(InventoryDetail inventoryDetail)
+        {
+            var ss = inventoryDetail;
+            await Application.Current.MainPage.Navigation.PushAsync(new ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationEdit(inventoryDetail));
+            // do something
+        }
+
+        private async void OnFinalizeLocation()
+        {
+            try
+            {
+                var data = ListAsset;
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        if (item.UbicacionId != null)
+                        {
+                            var dataLocationSQLITE = await App.locationRepository.GetByIdAsync((Guid)item.UbicacionId);
+                            if (dataLocationSQLITE != null)
+                            {
+                                if (dataLocationSQLITE.Status == 1)
+                                {
+                                    Location dataLocation = new Location();
+                                    dataLocation.Id = dataLocationSQLITE.Id;
+                                    dataLocation.Nombre = dataLocationSQLITE.Nombre;
+                                    dataLocation.Status = 2;
+
+                                    await App.locationRepository.UpdateAsync(dataLocation);
+                                    await Application.Current.MainPage.DisplayAlert("Mensaje", "La ubicación se ha finalizado correctamente", "Aceptar");
+                                    await Shell.Current.GoToAsync("../../");
+                                }
+                                else
+                                {
+                                    await Application.Current.MainPage.DisplayAlert("Advertencia", "No hay ubicaciones disponibles para finalizar en este momento.", "Aceptar");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

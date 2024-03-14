@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryLocationEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -156,6 +160,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IPhysicalStateRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\PhysicalStateRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\BehavourBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehaviour.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryLocationEditViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryLocationEdit.xaml.cs">
+      <DependentUpon>InventoryLocationEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomLabel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
@@ -183,5 +194,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Authorization\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Shared\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Shared\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
   </ItemGroup>
 </Project>

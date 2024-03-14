@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Inventory"
+    x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationEdit"
+    xmlns:control="clr-namespace:ZebraRFIDXamarinDemo.Controls">
+
+    <ContentPage.BindingContext>
+        <local:InventoryLocationEditViewModel></local:InventoryLocationEditViewModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Spacing="25" 
+            Padding="30,0" >
+        <StackLayout Spacing="5">
+            <Label Text="Editar - Activo" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+        </StackLayout>
+        <StackLayout>
+            <StackLayout>
+            <Grid VerticalOptions="CenterAndExpand">
+                <control:CustomLabel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Margin="0,0,0,0" Text="Escribe las observaciones"></control:CustomLabel>
+                <Entry Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Margin="0,0,0,0" Text="{Binding InventoryDetailSync.Activo.Observaciones}" Placeholder="Pais" FontSize="Medium"></Entry>
+                <control:CustomLabel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Margin="0,0,0,0" Text="Seleccione el estado físico"></control:CustomLabel>
+                <Picker
+                    Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1"
+                    Margin="0,0,0,0"
+                    x:Name="PickerSelectedIndexx"
+                    Title="-- Seleccione -- "
+                    ItemsSource="{Binding PickerItemss}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationEditViewModel}}, Path=PickerSelectedIndexx}"
+                    SelectedItem="{Binding PickerSelectedIndexx}"
+                    SelectedIndexChanged="SelectedIndexChanged"></Picker>
+
+                    <!--   
+                    <Entry Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding InventoryDetailSync.Activo.EstadoFisicoId}" Placeholder="Pais" FontSize="Medium"></Entry>
+                    -->
+
+                    
+            </Grid>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelAssetCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                <Button Text="Guardar" Command="{Binding SaveAssetCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+            </StackLayout>
+        </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

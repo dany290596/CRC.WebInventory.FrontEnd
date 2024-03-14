@@ -147,7 +147,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             return data;
         }
 
-        public async Task<Api<string>> GetInventoryLoad(string token, string company, InventoryLoad inventory)
+        public async Task<Api<string>> PutInventoryLoad(string token, string company, InventoryLoad inventory)
         {
             List<InventorySync> inventorySync = new List<InventorySync>();
             Api<string> data = new Api<string>(false, "", 200, null);

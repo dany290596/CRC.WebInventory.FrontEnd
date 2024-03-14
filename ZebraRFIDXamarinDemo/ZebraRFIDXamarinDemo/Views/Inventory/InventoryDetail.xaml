@@ -101,37 +101,19 @@
                         <DataTemplate>
                           
                             <StackLayout x:DataType="model:Location">
-
+                                <StackLayout> 
                               
                                        
                                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
-
                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Ubicación" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                                                     <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
+                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Status: " FontAttributes="Bold"/>
 
                                                     <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                    <BoxView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
 
-                                                    <BoxView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
-
-                                                    <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HasShadow="False" CornerRadius="20">
-                                                        <StackLayout Orientation="Horizontal">
-                                                      
-                                                            <Button Text="Ver detalle" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.SeeDetailInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
-                                                            <Button Text="Inventariar" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.InventoryInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
-                                                            
-
-
-                                                            <!--
-                                                                  <Image Source="view.png" Grid.Column="3" WidthRequest="30" HeightRequest="30" VerticalOptions="End">
-                                                     <Image.GestureRecognizers>
-<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryDetailViewModel}},
-                      Path=SeeDetailInventoryCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
-                                                    </Image.GestureRecognizers>
-                                                </Image>
-                                                            -->
-                                                        </StackLayout>
-                                                    </Frame>
 
                                                     <!--
                                                     <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" HasShadow="False" CornerRadius="20">
@@ -234,11 +216,15 @@
                                         -->
                                         <!--<Label Grid.Column="1" Grid.Row="15" Text="{Binding Ubicacion.Campo1}" TextColor="Silver" FontAttributes="Bold"/>-->
                                     
-                                 
-                                    </Grid>
+                                        
+                                    </Grid>                     
+                                </StackLayout>
 
-                      
-                             
+                                
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="Ver detalle" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.SeeDetailInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                                    <Button Text="Inventariar" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.InventoryInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                                </StackLayout>
                              </StackLayout>
                                  
                         </DataTemplate>

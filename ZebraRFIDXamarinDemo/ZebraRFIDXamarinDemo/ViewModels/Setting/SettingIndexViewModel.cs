@@ -71,7 +71,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Setting
             if (action == true)
             {
                 await App.settingRepository.DeleteAsync(data.Id);
-
                 await App.personRepository.DeleteAllAsync();
                 await App.inventoryRepository.DeleteAllAsync();
                 await App.deviceRepository.DeleteAllAsync();
@@ -80,6 +79,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Setting
                 await App.locationRepository.DeleteAllAsync();
                 await App.inventoryDetailRepository.DeleteAllAsync();
                 await App.assetRepository.DeleteAllAsync();
+
 
                 await ExecuteLoadPersonCommand();
                 return;

@@ -95,6 +95,8 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             var inventoryDetaildi = await App.inventoryDetailRepository.GetAllAsync();
             //var inventoryDetaildi = await _database.QueryAsync<InventoryDetail>("SELECT * FROM InventoryDetail");
 
+            var physicalStatedi = await App.physicalStateRepository.GetAllAsync();
+
             var querydi = (from i in inventorydi
 
                            join c in collaboratordi on i.ColaboradorResponsableId equals c.Id
@@ -154,6 +156,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                    {
                                        Id = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Id,
                                        Nombre = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Nombre,
+                                       Status = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Status,
                                        DetalleInventario = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).Select(q => new InventoryDetail()
                                        {
                                            UsuarioCreadorId = q.UsuarioCreadorId,
@@ -176,7 +179,49 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                            PresenciaAusensia = q.PresenciaAusensia,
                                            Observaciones = q.Observaciones,
                                            Mantenimiento = q.Mantenimiento,
-                                           Activo = assetdi.FirstOrDefault(x => x.Id == q.ActivoId)
+                                           Activo = new Asset()
+                                           {
+                                               UsuarioCreadorId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).UsuarioCreadorId,
+                                               UsuarioModificadorId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).UsuarioModificadorId,
+                                               UsuarioBajaId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).UsuarioBajaId,
+                                               UsuarioReactivadorId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).UsuarioReactivadorId,
+                                               FechaCreacion = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaCreacion,
+                                               FechaModificacion = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaModificacion,
+                                               FechaBaja = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaBaja,
+                                               FechaReactivacion = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaReactivacion,
+                                               Estado = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Estado,
+                                               EmpresaId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).EmpresaId,
+                                               Id = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Id,
+                                               UbicacionId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).UbicacionId,
+                                               GrupoActivoId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).GrupoActivoId,
+                                               TipoActivoId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).TipoActivoId,
+                                               Codigo = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Codigo,
+                                               Serie = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Serie,
+                                               Marca = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Marca,
+                                               Modelo = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Modelo,
+                                               Descripcion = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Descripcion,
+                                               Nombre = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Nombre,
+                                               Observaciones = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Observaciones,
+                                               EstadoFisicoId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).EstadoFisicoId,
+                                               TagId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).TagId,
+                                               ColaboradorHabitualId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).ColaboradorHabitualId,
+                                               ColaboradorResponsableId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).ColaboradorResponsableId,
+                                               ValorCompra = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).ValorCompra,
+                                               FechaCompra = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaCompra,
+                                               Proveedor = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).Proveedor,
+                                               FechaFinGarantia = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaFinGarantia,
+                                               TieneFoto = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).TieneFoto,
+                                               TieneArchivo = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).TieneArchivo,
+                                               FechaCapitalizacion = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FechaCapitalizacion,
+                                               FichaResguardo = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).FichaResguardo,
+                                               CampoLibre1 = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).CampoLibre1,
+                                               CampoLibre2 = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).CampoLibre2,
+                                               CampoLibre3 = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).CampoLibre3,
+                                               CampoLibre4 = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).CampoLibre4,
+                                               CampoLibre5 = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).CampoLibre5,
+                                               AreaId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).AreaId,
+                                               EstadoFisico = physicalStatedi.FirstOrDefault(x => x.Id == assetdi.FirstOrDefault(x => x.Id == q.ActivoId).EstadoFisicoId)
+                                           }
                                        }).Where(y => y.UbicacionId == s.UbicacionId).ToList()
                                    }).ToList()
                                }
@@ -767,28 +812,65 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
         public async Task<List<InventoryLoad>> GetAllLoad()
         {
+            var collaboratordi = await App.collaboratorRepository.GetAllAsync();
+            //var collaboratordi = await _database.QueryAsync<Collaborator>("SELECT * FROM Collaborator");
+
+            var assetdi = await App.assetRepository.GetAllAsync();
+            //var assetdi = await _database.QueryAsync<Asset>("SELECT * FROM Asset");
+
+            var devicedi = await App.deviceRepository.GetAllAsync();
+            //var devicedi = await _database.QueryAsync<Device>("SELECT * FROM Device");
+
+            //var inventorydi = await App.inventoryRepository.GetAllAsync();
             var inventorydi = await _database.QueryAsync<Inventory>("SELECT * FROM Inventory");
-            var inventoryDetaildi = await _database.QueryAsync<InventoryDetail>("SELECT * FROM InventoryDetail");
-            var querydi = from id in inventoryDetaildi
 
-                          join i in inventorydi on id.InventarioId equals i.Id
-                          into InventoryDetailInventory
-                          from idi in InventoryDetailInventory.DefaultIfEmpty()
+            var locationdi = await App.locationRepository.GetAllAsync();
+            //var locationdi = await _database.QueryAsync<Location>("SELECT * FROM Location");
 
-                          select new InventoryLoad()
-                          {
-                              Id = idi.Id,
-                              Observaciones = idi.Observaciones,
-                              FechaInventario = idi.FechaInventario,
-                              DetalleInventario = inventoryDetaildi.Where(w => w.Id == id.Id).Select(s => new InventoryDetailLoad()
-                              {
-                                  Id = s.Id,
-                                  ActivoId = s.ActivoId,
-                                  Observaciones = s.Observaciones,
-                                  EstadoFisicoId = s.EstadoFisicoId
-                              }).ToList()
-                          };
-            return await Task.FromResult(querydi.ToList());
+            var inventoryDetaildi = await App.inventoryDetailRepository.GetAllAsync();
+            //var inventoryDetaildi = await _database.QueryAsync<InventoryDetail>("SELECT * FROM InventoryDetail");
+
+            var physicalStatedi = await App.physicalStateRepository.GetAllAsync();
+
+            var querydi = (from i in inventorydi
+
+                           join c in collaboratordi on i.ColaboradorResponsableId equals c.Id
+                           into InventoryCollaborator
+                           from cic in InventoryCollaborator.DefaultIfEmpty()
+
+                           join id in inventoryDetaildi on i.Id equals id.InventarioId
+                           into InventoryDetailInventory
+                           from ididi in InventoryDetailInventory.DefaultIfEmpty()
+
+                           group i by new { i, cic } into g
+
+                           select new InventoryLoad()
+                           {
+                               Id = g.Key.i.Id,
+                               Observaciones = g.Key.i.Observaciones,
+                               FechaInventario = g.Key.i.FechaInventario,
+                               DetalleInventario = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).Select(q => new InventoryDetailLoad()
+                               {
+                                   Id = q.Id,
+                                   ActivoId = q.ActivoId,
+                                   Observaciones = q.Observaciones,
+                                   EstadoFisicoId = q.EstadoFisicoId,
+                                   UbicacionId = q.UbicacionId,
+                                   Ubicacion = locationdi.FirstOrDefault(p => p.Id == q.UbicacionId)
+                               }).Where(x => x.Ubicacion.Status == 2).ToList(),
+                               //}).Where(x => x.Ubicacion.Status == 2).ToList()
+                               DetalleInventarioTotal = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).Select(q => new InventoryDetailLoad()
+                               {
+                                   Id = q.Id,
+                                   ActivoId = q.ActivoId,
+                                   Observaciones = q.Observaciones,
+                                   EstadoFisicoId = q.EstadoFisicoId,
+                                   UbicacionId = q.UbicacionId,
+                                   Ubicacion = locationdi.FirstOrDefault(p => p.Id == q.UbicacionId)
+                               }).ToList().Count(),
+                           }).ToList();
+
+            return await Task.FromResult(querydi);
         }
     }
 }

@@ -4,23 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Inventory"
     xmlns:model="clr-namespace:ZebraRFIDXamarinDemo.Models.Startup"
-    x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationDetail">
-
-
-     <ContentPage.BindingContext>
-        <local:InventoryDetailViewModel></local:InventoryDetailViewModel>
-    </ContentPage.BindingContext>
+    x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationDetail"
+    xmlns:behaviors="clr-namespace:ZebraRFIDXamarinDemo.Common"
+    x:Name="ContentPage1">
 
     <ContentPage.Content>
-        <ScrollView>
         <StackLayout Orientation="Vertical" Spacing="25" 
             Padding="30,0" >
-         <StackLayout Spacing="5">
-            <Label Text="Detalle" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
 
+        <StackLayout Spacing="5">
+            <Label Text="Lista - Activos" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <!--
             <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding SaveAssetCommand}" />
+            -->
         </StackLayout>
-        
 
                 <!--
             <StackLayout>
@@ -86,9 +83,11 @@
 
             
              <StackLayout>
-           
-                               <StackLayout>
-                    <Label Text="Lista de activos" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <StackLayout Orientation="Vertical">
+                    <Button BackgroundColor="DarkOrange" TextColor="White" Text="Finalizar ubicación" WidthRequest="180" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Total de activos: 1" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
 
                                     <!--
@@ -97,8 +96,6 @@
                                     <StackLayout Orientation="Horizontal">
                                     -->
 
-
-                                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
                                                      <!--
                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Ubicación" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -113,79 +110,105 @@
                                                     </Frame>
 
                                                     -->
+                                           
 
-
-                                                    <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" HasShadow="True" CornerRadius="20">
-                                                        <StackLayout>
-                                                    <CollectionView ItemsSource="{Binding LocationSync.DetalleInventario}" SelectionMode="None">
-                                                        <CollectionView.ItemTemplate>
+                                                    <ListView x:Name="listAsset" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
+                                                        <ListView.ItemTemplate>
                                                             <DataTemplate>
-                                                                <StackLayout x:DataType="model:InventoryDetail">
-
-                                                                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-
+                                                                
+                                                               <ViewCell>
+                                                                    <ViewCell.View>
+                                                                    <StackLayout>
+                                                                    <StackLayout>
+                                                                    <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
+                                                                    <Grid>
+                                                                    <!--
                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Total de activos: 1" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
-                                                                    <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
-
-                                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                    <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Descripción: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Código: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Text="Marca: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="1" Text="Serie: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1" Text="Estado fisico: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="1" Text="Observaciones: " FontAttributes="Bold"/>
+                                                                    -->
                                                                     
-                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Activo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Activo.Codigo}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding Activo.Marca}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
 
-                                                                    <Picker Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Title="-- Seleccione --"
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
+                                                                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Descripción: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Código: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Marca: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Serie: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Text="Estado fisico: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="1" Text="Observaciones: " FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1" Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
+
+
+
+                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Activo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Activo.Codigo}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Activo.Marca}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Text="{Binding Activo.StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    
+                                                                    
+                                                                    
+                                                                    <!--
+                                                                    <Picker Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Title="Seleccione"
                                                                             ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerItems}"
                                                                             ItemDisplayBinding="{Binding Nombre}"
                                                                             SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerSelectedIndex}"
+                                                                            SelectedIndexChanged="SelectedAssetChanged"
                                                                             >
-
+                                                                
+                                                                        <Picker.Behaviors>
+                                                                            <behaviors:EventToCommandBehaviour
+                                                                                EventName="SelectedIndexChanged"
+                                                                                Command="{Binding Path=BindingContext.PlanoPagamentoAlteradoCommand, Source={x:Reference Name=listAsset}}"
+                                                                                >
+                                                                            </behaviors:EventToCommandBehaviour>
+                                                                        </Picker.Behaviors>
                                                                     </Picker>
-
-                                                                    <Editor Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}">
-                                                                    </Editor>
+                                                                    -->
 
                                                                     <!--
-                                                                    <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="Dispositivo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                    <Label Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="1" Text="Número: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="1" Text="Ip: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="1" Text="Mac: " FontAttributes="Bold"/>
-
-                                                                    <Label Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1" Text="{Binding Dispositivo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="1" Text="{Binding Dispositivo.Numero}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="1" Text="{Binding Dispositivo.Ip}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="12" Grid.ColumnSpan="1" Text="{Binding Dispositivo.Mac}" TextColor="Silver" FontAttributes="Bold"/>
-
-
-                                                                    <Label Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="2" Text="Inventario" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                    <Label Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="1" Text="Descripción: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="1" Text="No. Inventario: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="1" Text="Fecha: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="17" Grid.ColumnSpan="1" Text="Estado: " FontAttributes="Bold"/>
-   
-                                                                    <Label Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1" Text="{Binding Inventario.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                                    <Label Grid.Column="1" Grid.Row="15" Grid.ColumnSpan="1" Text="{Binding Inventario.NoInventario}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                                    <Label Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="1" Text="{Binding Inventario.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                                    <Label Grid.Column="1" Grid.Row="17" Grid.ColumnSpan="1" Text="{Binding Inventario.EstadoNombre}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                                                    <Editor Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1" Text="{Binding Observaciones}">
+                                                                    </Editor>
+                                                                    
+                                                                    <Label Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisicoId}">
+                                                                    </Label>
                                                                     -->
 
                                                                     </Grid>
+                                                                  
+                                                                    </StackLayout>
+                                                                    <StackLayout Orientation="Vertical">
+                                                                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
+                                                                            <Frame Grid.Column="0" Grid.Row="0" HasShadow="False">
+                                                                                <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
+                                                                            </Frame>
 
-                                                                </StackLayout>
+                                                                            <Frame Grid.Column="1" Grid.Row="0" HasShadow="False">
+                                                                                <Switch OnColor="White" ThumbColor="DarkOrange"></Switch>
+                                                                            </Frame>
+                                                                        </Grid>
+                                                                    </StackLayout>
+                                                                    <StackLayout Orientation="Vertical">
+                                                                    <Button x:Name="ZoomIn" Text="Editar"
+                                                                            Command="{Binding Path=BindingContext.PlanoPagamentoAlteradoCommand, Source={x:Reference Name=listAsset}}" 
+                                                                            CommandParameter="{Binding .}"
+                                                                            BackgroundColor="DarkOrange"
+                                                                            TextColor="White"
+                                                                            CornerRadius="20"
+                                                                            WidthRequest="100"
+                                                                            HorizontalOptions="Center"
+                                                                            VerticalOptions="Center"/>
+                                                                    </StackLayout>
+                                                                    </StackLayout>
+                                                                </ViewCell.View>
+                                                               </ViewCell>
+                                                                
                                                             </DataTemplate>
-                                                        </CollectionView.ItemTemplate>
-                                                    </CollectionView>
-                                                        </StackLayout>
-                                                    </Frame>
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>
+                                         
                 
 
                                         <!--
@@ -231,7 +254,7 @@
 
 
                                               
-                                    </Grid>
+                              
 
                                                 <!--
                                     </StackLayout>
@@ -244,12 +267,6 @@
                   
                         
             </StackLayout>
-          
-
-
             </StackLayout>
-            </ScrollView>
     </ContentPage.Content>
-
 </ContentPage>
-

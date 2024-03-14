@@ -11,6 +11,8 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
     {
         private InventoryQuery _inventorySync;
         private Location _locationSync;
+        private InventoryDetail _inventoryDetailSync;
+
         public INavigation Navigation { get; set; }
         public InventoryQuery InventorySync
         {
@@ -22,6 +24,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             get { return _locationSync; }
             set { _locationSync = value; OnPropertyChanged(); }
         }
+        public InventoryDetail InventoryDetailSync
+        {
+            get { return _inventoryDetailSync; }
+            set { _inventoryDetailSync = value; OnPropertyChanged(); }
+        }
+
         bool isBusy = false;
         public bool IsBusy
         {

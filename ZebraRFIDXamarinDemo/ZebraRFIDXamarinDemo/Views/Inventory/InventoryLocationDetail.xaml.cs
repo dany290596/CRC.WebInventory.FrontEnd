@@ -34,13 +34,8 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
             inventoryLocationDetailViewModel.OnAppearing();
         }
 
-        void Picker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
-        {
-        }
-
         void SelectedAssetChanged(System.Object sender, System.EventArgs e)
         {
-            var aa = sender;
         }
     }
 }

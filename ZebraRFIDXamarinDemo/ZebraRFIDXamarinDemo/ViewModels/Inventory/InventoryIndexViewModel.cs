@@ -10,6 +10,7 @@ using Location = ZebraRFIDXamarinDemo.Models.Startup.Location;
 using InventoryDetail = ZebraRFIDXamarinDemo.Models.Startup.InventoryDetail;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using Android.Service.Autofill;
+using static Android.App.DownloadManager;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -210,15 +211,14 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                         if (locationByIdSQLITE == null)
                                         {
                                             Location dataLocation = new Location();
-
                                             dataLocation.Id = itemlocation.Id;
                                             dataLocation.Nombre = itemlocation.Nombre;
+                                            dataLocation.Status = 1;
 
                                             await App.locationRepository.AddAsync(dataLocation);
                                         }
                                         foreach (var itemdetalleinventario in itemlocation.DetalleInventario)
                                         {
-                                            Console.Write("ITEM DETALLE INVENTORY ::: ", itemdetalleinventario);
                                             var detalleInventarioByIdSQLITE = await App.inventoryDetailRepository.GetByIdAsync(itemdetalleinventario.Id);
                                             if (detalleInventarioByIdSQLITE == null)
                                             {
@@ -294,6 +294,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                         dataAsset.CampoLibre4 = itemdetalleinventario.Activo.CampoLibre4;
                                                         dataAsset.CampoLibre5 = itemdetalleinventario.Activo.CampoLibre5;
                                                         dataAsset.AreaId = itemdetalleinventario.Activo.AreaId;
+                                                        dataAsset.Status = false;
                                                         await App.assetRepository.AddAsync(dataAsset);
 
                                                         try
@@ -401,9 +402,10 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                     var locationdiByIdSQLITE = await App.locationRepository.GetByIdAsync(itemdetalleinventario.Ubicacion.Id);
                                                     if (locationdiByIdSQLITE == null)
                                                     {
-                                                        Models.Startup.Location dataLocation = new Location();
+                                                        Location dataLocation = new Location();
                                                         dataLocation.Id = itemdetalleinventario.Ubicacion.Id;
                                                         dataLocation.Nombre = itemdetalleinventario.Ubicacion.Nombre;
+                                                        dataLocation.Status = 1;
                                                         await App.locationRepository.AddAsync(dataLocation);
                                                     }
                                                 }
@@ -462,7 +464,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void OnUploadInventoryCommand()
         {
-            /*
             try
             {
                 var list = await App.settingRepository.GetAllAsync();
@@ -476,13 +477,25 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     if (inventoryAllSQLITE.Count() > 0)
                     {
                         var userInformationGetByLasSQLITE = await App.userInformationRepository.GetByLastOrDefaultAsync();
-
-                        foreach (var item in inventoryAllSQLITE)
+                        if (userInformationGetByLasSQLITE != null)
                         {
-                            var load = await App.settingRepository.GetInventoryLoad(userInformationGetByLasSQLITE.Token, userInformationGetByLasSQLITE.EmpresaId.ToString(), item);
-
-                            await Application.Current.MainPage.DisplayAlert("Mensaje", "Los inventarios se cargaron correctamente.", "Aceptar");
+                            foreach (var item in inventoryAllSQLITE)
+                            {
+                                if (item.DetalleInventario.Count() > 0)
+                                {
+                                    if (item.DetalleInventario.Count() == item.DetalleInventarioTotal)
+                                    {
+                                        await App.settingRepository.PutInventoryLoad(userInformationGetByLasSQLITE.Token, userInformationGetByLasSQLITE.EmpresaId.ToString(), item);
+                                        //await Application.Current.MainPage.DisplayAlert("Mensaje", "Los inventarios se cargaron correctamente.", "Aceptar");
+                                    }
+                                    else
+                                    {
+                                        //await Application.Current.MainPage.DisplayAlert("Advertencia", "No hay inventarios disponibles para procesar en este momento.", "Aceptar");
+                                    }
+                                }
+                            }
                         }
+                        await Application.Current.MainPage.DisplayAlert("Mensaje", "Los inventarios se cargaron correctamente.", "Aceptar");
                     }
                     else
                     {
@@ -494,7 +507,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             {
                 throw ex;
             }
-            */
         }
     }
 }

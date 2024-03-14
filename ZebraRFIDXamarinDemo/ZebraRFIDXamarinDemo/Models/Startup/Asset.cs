@@ -1,5 +1,6 @@
 ﻿using System;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace ZebraRFIDXamarinDemo.Models.Startup
 {
@@ -18,7 +19,10 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public string? Descripcion { get; set; }
         public string? Nombre { get; set; }
         public string? Observaciones { get; set; } // Este campo se va a modificar
+
+        [ForeignKey(typeof(PhysicalState))]
         public Guid? EstadoFisicoId { get; set; } // Este campo se va a modificar
+
         public Guid? TagId { get; set; }
         public Guid? ColaboradorHabitualId { get; set; }
         public Guid? ColaboradorResponsableId { get; set; }
@@ -36,5 +40,24 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public string? CampoLibre4 { get; set; }
         public string? CampoLibre5 { get; set; }
         public Guid? AreaId { get; set; }
+        public bool Status { get; set; }
+        public string StatusNombre { get { return OnStatusNombre(Status); } }
+
+        [ManyToOne]
+        public PhysicalState EstadoFisico { get; set; }
+
+        public string OnStatusNombre(bool status)
+        {
+            string s = "";
+            if (status == true)
+            {
+                s = "Sí";
+            }
+            if (status == false)
+            {
+                s = "No";
+            }
+            return s;
+        }
     }
 }

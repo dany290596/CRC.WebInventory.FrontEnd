@@ -19,7 +19,8 @@ namespace ZebraRFIDXamarinDemo
 			Routing.RegisterRoute(nameof(PersonCreate), typeof(PersonCreate));
 			Routing.RegisterRoute(nameof(InventoryDetail), typeof(InventoryDetail));
 			Routing.RegisterRoute(nameof(SettingCreate), typeof(SettingCreate));
-            Routing.RegisterRoute(nameof(InventoryLocationDetail), typeof(InventoryLocationDetail));
-        }
+			Routing.RegisterRoute(nameof(InventoryLocationDetail), typeof(InventoryLocationDetail));
+			Routing.RegisterRoute(nameof(InventoryLocationEdit), typeof(InventoryLocationEdit));
+		}
 	}
 }
