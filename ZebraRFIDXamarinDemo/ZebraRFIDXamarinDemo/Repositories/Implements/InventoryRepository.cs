@@ -152,11 +152,11 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                        Email = g.Key.cic.Email,
                                        Email_secundario = g.Key.cic.Email_secundario
                                    },
-                                   Ubicaciones = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).Select(s => new Location()
+                                   Ubicaciones = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).GroupBy(ss => new { ss.Ubicacion, ss.UbicacionId }).Select(s => new Location()
                                    {
-                                       Id = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Id,
-                                       Nombre = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Nombre,
-                                       Status = locationdi.FirstOrDefault(f => f.Id == s.UbicacionId).Status,
+                                       Id = locationdi.FirstOrDefault(f => f.Id == s.Key.UbicacionId).Id,
+                                       Nombre = locationdi.FirstOrDefault(f => f.Id == s.Key.UbicacionId).Nombre,
+                                       Status = locationdi.FirstOrDefault(f => f.Id == s.Key.UbicacionId).Status,
                                        DetalleInventario = inventoryDetaildi.Where(a => a.InventarioId == g.Key.i.Id).Select(q => new InventoryDetail()
                                        {
                                            UsuarioCreadorId = q.UsuarioCreadorId,
@@ -222,7 +222,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                                AreaId = assetdi.FirstOrDefault(x => x.Id == q.ActivoId).AreaId,
                                                EstadoFisico = physicalStatedi.FirstOrDefault(x => x.Id == assetdi.FirstOrDefault(x => x.Id == q.ActivoId).EstadoFisicoId)
                                            }
-                                       }).Where(y => y.UbicacionId == s.UbicacionId).ToList()
+                                       }).Where(y => y.UbicacionId == s.Key.UbicacionId).ToList()
                                    }).ToList()
                                }
                            }).ToList();
