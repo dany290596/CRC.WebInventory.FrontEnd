@@ -87,7 +87,7 @@
                     <Button BackgroundColor="DarkOrange" TextColor="White" Text="Finalizar ubicación" WidthRequest="180" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="Total de activos: 1" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
+                    <Label Text="Total de activos: 2" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
 
                                     <!--
@@ -111,15 +111,18 @@
 
                                                     -->
                                            
-
-                                                    <ListView x:Name="listAsset" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
+                                                
+                                                    <ListView x:Name="listAsset" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
                                                         <ListView.ItemTemplate>
+
                                                             <DataTemplate>
                                                                 
                                                                <ViewCell>
                                                                     <ViewCell.View>
+                                                                    <Frame>
                                                                     <StackLayout>
                                                                     <StackLayout>
+                                                                    <Label Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                                                                     <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
                                                                     <Grid>
                                                                     <!--
@@ -127,7 +130,7 @@
                                                                     -->
                                                                     
 
-                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
+                                                                    
                                                                     <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Descripción: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Código: " FontAttributes="Bold"/>
@@ -184,9 +187,17 @@
                                                                             <Frame Grid.Column="0" Grid.Row="0" HasShadow="False">
                                                                                 <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
                                                                             </Frame>
+                                                                             <Frame Grid.Column="0" Grid.Row="1" HasShadow="False">
+                                                                                <Label Text="¿Motivo? " FontAttributes="Bold"></Label>
+                                                                            </Frame>
 
                                                                             <Frame Grid.Column="1" Grid.Row="0" HasShadow="False">
                                                                                 <Switch OnColor="White" ThumbColor="DarkOrange"></Switch>
+                                                                            </Frame>
+                                                                            <Frame Grid.Column="1" Grid.Row="1" HasShadow="False">
+                                                                                <Picker
+                                                                                    Title="-- Seleccione -- "
+                                                                                    Margin="0,0,0,0"></Picker>
                                                                             </Frame>
                                                                         </Grid>
                                                                     </StackLayout>
@@ -202,12 +213,14 @@
                                                                             VerticalOptions="Center"/>
                                                                     </StackLayout>
                                                                     </StackLayout>
+                                                                    </Frame>
                                                                 </ViewCell.View>
                                                                </ViewCell>
                                                                 
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
                                                     </ListView>
+                                                
                                          
                 
 

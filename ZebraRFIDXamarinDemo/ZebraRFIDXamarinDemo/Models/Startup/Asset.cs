@@ -42,6 +42,7 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public Guid? AreaId { get; set; }
         public bool Status { get; set; }
         public string StatusNombre { get { return OnStatusNombre(Status); } }
+        public Guid? Motivo { get; set; } = null;
 
         [ManyToOne]
         public PhysicalState EstadoFisico { get; set; }
