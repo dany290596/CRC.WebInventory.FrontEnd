@@ -138,9 +138,9 @@
                                                                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Serie: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Text="Estado fisico: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="1" Text="Observaciones: " FontAttributes="Bold"/>
+                                                                    <!--
                                                                     <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1" Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
-
-
+                                                                    -->
 
                                                                     <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Activo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
@@ -149,8 +149,9 @@
                                                                     <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     <Label Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <!--
                                                                     <Label Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Text="{Binding Activo.StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    
+                                                                    -->
                                                                     
                                                                     
                                                                     <!--
@@ -184,20 +185,22 @@
                                                                     </StackLayout>
                                                                     <StackLayout Orientation="Vertical">
                                                                         <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-                                                                            <Frame Grid.Column="0" Grid.Row="0" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="0" HasShadow="False">
                                                                                 <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
                                                                             </Frame>
-                                                                             <Frame Grid.Column="0" Grid.Row="1" HasShadow="False">
+                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="1" HasShadow="False">
                                                                                 <Label Text="¿Motivo? " FontAttributes="Bold"></Label>
                                                                             </Frame>
 
-                                                                            <Frame Grid.Column="1" Grid.Row="0" HasShadow="False">
-                                                                                <Switch OnColor="White" ThumbColor="DarkOrange"></Switch>
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" HasShadow="False">
+                                                                                <Switch OnColor="DarkOrange" ThumbColor="DarkOrange" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"></Switch>
                                                                             </Frame>
-                                                                            <Frame Grid.Column="1" Grid.Row="1" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker
+                                                                                    HorizontalOptions="CenterAndExpand"
+                                                                                    VerticalOptions="Center"
                                                                                     Title="-- Seleccione -- "
-                                                                                    Margin="0,0,0,0"></Picker>
+                                                                                   ></Picker>
                                                                             </Frame>
                                                                         </Grid>
                                                                     </StackLayout>
