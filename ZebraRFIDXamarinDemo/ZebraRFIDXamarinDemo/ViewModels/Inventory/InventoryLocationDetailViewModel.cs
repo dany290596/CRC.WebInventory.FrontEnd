@@ -13,15 +13,8 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
     public class InventoryLocationDetailViewModel : InventoryBaseViewModel
     {
         public Command LoadAssetCommand { get; }
-        public ObservableCollection<object> StartValue
-        {
-            get;
-            set;
-        }
-
         public Command SaveAssetCommand { get; }
         public Command FinalizeLocationCommand { get; }
-        // public List<PhysicalState> PhysicalStateData { get; set; }
 
         PhysicalState selectedItem;
         PhysicalState selectedFilterItem;
@@ -29,13 +22,11 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public PhysicalState ReasonValue { get; set; }
         Guid selectedFilter;
 
-        //selectedFilter. new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07");
-
-
         public ObservableCollection<PhysicalState> PhysicalStateData = new ObservableCollection<PhysicalState>();
 
         public Command PlanoPagamentoAlteradoCommand { get; }
         public Command PhysicalStatePickerCommand { get; }
+        public Command StatusSwitchCommand { get; }
 
         public ObservableCollection<InventoryDetail> listAsset = new ObservableCollection<InventoryDetail>();
         public ObservableCollection<InventoryDetail> ListAsset
@@ -46,25 +37,14 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public InventoryLocationDetailViewModel()
         {
             LoadAssetCommand = new Command(async () => await ExecuteLoadPersonCommand());
-            StartValue = new ObservableCollection<object>();
             SaveAssetCommand = new Command(OnSaveAsset);
             FinalizeLocationCommand = new Command(OnFinalizeLocation);
-            //LocationSync = new Location();
-            // PhysicalStateData = new List<PhysicalState>();
+
 
             PhysicalStateData = new ObservableCollection<PhysicalState>();
             PhysicalStatePickerItems = new ObservableCollection<PhysicalState>();
             ParamsPickerItems = new ObservableCollection<Params>();
-            // ReasonValue.Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07");
 
-            /*
-            selectedFilter = new PhysicalState
-            {
-                Nombre = "A300",
-                Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07")
-            };
-            */
-            //selectedFilter = "A300";
 
             selectedItem = new PhysicalState
             {
@@ -89,6 +69,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
             PhysicalStatePickerCommand = new Command<object>(WhenPhysicalStateSelectedIndexChanged);
+            StatusSwitchCommand = new Command<object>(WhenStatusToggled);
             PhysicalStatePickerSelectedItem = new PhysicalState();
         }
 
@@ -415,6 +396,14 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     }
                 }
                 */
+            }
+        }
+
+        private async void WhenStatusToggled(object sender)
+        {
+            var toggled = (InventoryDetail)sender;
+            if (toggled != null)
+            {
             }
         }
 

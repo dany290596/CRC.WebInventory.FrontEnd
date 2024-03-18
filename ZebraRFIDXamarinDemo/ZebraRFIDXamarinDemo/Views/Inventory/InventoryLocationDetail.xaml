@@ -213,7 +213,15 @@
                                                                             
 
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Switch OnColor="DarkOrange" ThumbColor="DarkOrange" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"></Switch>
+                                                                                <Switch OnColor="DarkOrange" ThumbColor="DarkOrange" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                                                                                    <Switch.Behaviors>
+                                                                                        <behaviors:EventToCommandBehaviorView
+                                                                                            EventName="Toggled"
+                                                                                            Command="{Binding Path=BindingContext.StatusSwitchCommand, Source={x:Reference Name=listAsset}}"
+                                                                                            CommandParameter="{Binding .}">
+                                                                                        </behaviors:EventToCommandBehaviorView>
+                                                                                    </Switch.Behaviors>
+                                                                                </Switch>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Entry Text="{Binding Activo.Observaciones}" Placeholder="" FontSize="Medium"></Entry>

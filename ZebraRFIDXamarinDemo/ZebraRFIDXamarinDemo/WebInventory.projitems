@@ -170,6 +170,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Setting\Params.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\ParamsRepositoty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IParamsRepositoty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehaviorView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
