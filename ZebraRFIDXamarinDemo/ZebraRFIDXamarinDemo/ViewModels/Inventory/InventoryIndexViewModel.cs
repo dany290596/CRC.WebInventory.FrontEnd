@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
-using Xamarin.Essentials;
-using ZebraRFIDXamarinDemo.Repositories.Implements;
 using System.Linq;
 using Location = ZebraRFIDXamarinDemo.Models.Startup.Location;
 using InventoryDetail = ZebraRFIDXamarinDemo.Models.Startup.InventoryDetail;
 using ZebraRFIDXamarinDemo.Models.Startup;
-using Android.Service.Autofill;
-using static Android.App.DownloadManager;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
     public class InventoryIndexViewModel : InventoryBaseViewModel
     {
-        DeviceRepository _deviceRepository = new DeviceRepository();
-
-        public Xamarin.Forms.Command LoadInventoryCommand { get; }
-        public Xamarin.Forms.Command DetailInventoryCommand { get; }
+        public Command LoadInventoryCommand { get; }
+        public Command DetailInventoryCommand { get; }
         public Command SyncInventoryCommand { get; }
         public Command UploadInventoryCommand { get; }
         public ObservableCollection<InventoryQuery> InventoryData { get; }
-
         public InventoryIndexViewModel(INavigation _navigation)
         {
             LoadInventoryCommand = new Command(async () => await ExecuteLoadPersonCommand());
@@ -34,9 +26,50 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             Navigation = _navigation;
         }
 
-        public void OnAppearing()
+        public async void OnAppearing()
         {
             IsBusy = true;
+
+            /*
+            paramsList = new List<Params>()
+            {
+               new Params
+               {
+                   Nombre = "Cambio de ubicación",
+                TipoParamId = new Guid("eb2245f4-6c99-4793-a893-066f65f8be85"),
+                Orden = 1,
+                Id = new Guid("ed0694d3-0823-4550-81f9-430463c2cbd0"),
+                UsuarioCreadorId = new Guid("03340f13-ced3-4893-83f1-25a783c5a772"),
+                FechaCreacion =new  DateTime().ToLocalTime(),
+                Estado = 1,
+                EmpresaId = new Guid("2dabcd06-394f-4cd6-a0d6-b5b4150c073e")
+               },
+               new Params
+               {
+                Nombre = "No sé encontró",
+                TipoParamId = new Guid("eb2245f4-6c99-4793-a893-066f65f8be85"),
+                Orden = 1,
+                Id = new Guid("4377fd23-4253-44f2-a8cf-d7285a8d97eb"),
+                UsuarioCreadorId = new Guid("03340f13-ced3-4893-83f1-25a783c5a772"),
+                FechaCreacion = new  DateTime().ToLocalTime(),
+                Estado =1,
+                EmpresaId = new Guid("2dabcd06-394f-4cd6-a0d6-b5b4150c073e")
+               }
+            };
+            */
+            /*
+            foreach (var itemparams in paramsList)
+            {
+                var paramsGetByIdSQLITE = await App.paramsRepositoty.GetByIdAsync(itemparams.Id);
+                if (paramsGetByIdSQLITE == null)
+                {
+                    if (itemparams != null)
+                    {
+                        await App.paramsRepositoty.AddAsync(itemparams);
+                    }
+                }
+            }
+            */
         }
 
         /*

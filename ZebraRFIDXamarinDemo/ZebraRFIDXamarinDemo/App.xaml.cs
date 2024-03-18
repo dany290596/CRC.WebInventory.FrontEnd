@@ -22,6 +22,7 @@ namespace ZebraRFIDXamarinDemo
         static AssetRepository _assetRepository;
         static UserInformationRepository _userInformationRepository;
         static PhysicalStateRepository _physicalStateRepository;
+        static ParamsRepositoty _paramsRepositoty;
 
         public static PersonRepository personRepository
         {
@@ -143,6 +144,18 @@ namespace ZebraRFIDXamarinDemo
             }
         }
 
+        public static ParamsRepositoty paramsRepositoty
+        {
+            get
+            {
+                if (_paramsRepositoty == null)
+                {
+                    _paramsRepositoty = new ParamsRepositoty(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WebInventory.db"));
+                }
+                return _paramsRepositoty;
+            }
+        }
+
         public App()
         {
             InitializeComponent();
@@ -152,19 +165,16 @@ namespace ZebraRFIDXamarinDemo
         protected override void OnStart()
         {
             // Handle when your app starts
-
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
-
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
-
         }
     }
 }

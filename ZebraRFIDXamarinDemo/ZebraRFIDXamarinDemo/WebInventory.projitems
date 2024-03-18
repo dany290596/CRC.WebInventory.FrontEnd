@@ -167,6 +167,9 @@
       <DependentUpon>InventoryLocationEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomLabel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Setting\Params.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\ParamsRepositoty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IParamsRepositoty.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
