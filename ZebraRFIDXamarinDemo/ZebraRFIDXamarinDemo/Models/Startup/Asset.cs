@@ -1,6 +1,7 @@
 ﻿using System;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
+using ZebraRFIDXamarinDemo.Models.Setting;
 
 namespace ZebraRFIDXamarinDemo.Models.Startup
 {
@@ -42,11 +43,17 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public Guid? AreaId { get; set; }
         public bool Status { get; set; }
         public string StatusNombre { get { return OnStatusNombre(Status); } }
-        public Guid? Motivo { get; set; } = null;
+
+        [ForeignKey(typeof(Params))]
+        public Guid? MotivoId { get; set; } = null;
+
         public int PhysicalStateSelectedIndex { get { return 1; } }
 
         [ManyToOne]
         public PhysicalState EstadoFisico { get; set; }
+
+        [ManyToOne]
+        public Params Motivo { get; set; }
 
         public string OnStatusNombre(bool status)
         {

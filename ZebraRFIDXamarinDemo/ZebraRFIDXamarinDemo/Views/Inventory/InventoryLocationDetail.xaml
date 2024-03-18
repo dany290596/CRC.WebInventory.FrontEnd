@@ -231,18 +231,26 @@
                                                                                     Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
                                                                                     VerticalOptions="Center"
-                                                                                    x:Name="ParamsPickerSelectedIndex"
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
-                                                                                   ></Picker>
+                                                                                    SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerSelectedIndex, Mode=TwoWay}"
+                                                                                    SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerSelectedItem}">
+                                                                                        
+                                                                                    <Picker.Behaviors>
+                                                                                        <behaviors:EventToCommandBehavior
+                                                                                            EventName="SelectedIndexChanged"
+                                                                                            Command="{Binding Path=BindingContext.ParamsPickerCommand, Source={x:Reference Name=listAsset}}"
+                                                                                            CommandParameter="{Binding .}">
+                                                                                        </behaviors:EventToCommandBehavior>
+                                                                                    </Picker.Behaviors>
+                                                                                </Picker>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker
                                                                                     Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
                                                                                     VerticalOptions="Center"
-                                                                                    x:Name="sqqqqqqsaxsxasxaas"
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"

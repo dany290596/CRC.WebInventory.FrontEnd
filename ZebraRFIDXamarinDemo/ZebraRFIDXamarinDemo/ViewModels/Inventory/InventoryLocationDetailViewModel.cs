@@ -20,6 +20,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         public Command PlanoPagamentoAlteradoCommand { get; }
         public Command PhysicalStatePickerCommand { get; }
+        public Command ParamsPickerCommand { get; }
         public Command StatusSwitchCommand { get; }
 
         public ObservableCollection<InventoryDetail> listAsset = new ObservableCollection<InventoryDetail>();
@@ -28,6 +29,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             get { return listAsset; }
             set { listAsset = value; }
         }
+
         public InventoryLocationDetailViewModel()
         {
             LoadAssetCommand = new Command(async () => await ExecuteLoadPersonCommand());
@@ -43,6 +45,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
             PhysicalStatePickerCommand = new Command<object>(WhenPhysicalStateSelectedIndexChanged);
+            ParamsPickerCommand = new Command<object>(WhenParamsSelectedIndexChanged);
             StatusSwitchCommand = new Command<object>(WhenStatusToggled);
             PhysicalStatePickerSelectedItem = new PhysicalState();
         }
@@ -87,6 +90,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
+        private Params _paramsPickerSelectedItem;
+        public Params ParamsPickerSelectedItem
+        {
+            get { return _paramsPickerSelectedItem; }
+            set
+            {
+                _paramsPickerSelectedItem = value;
+            }
+        }
+
         private int _physicalStatePickerSelectedIndex;
         public int PhysicalStatePickerSelectedIndex
         {
@@ -103,9 +116,20 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
-        public int ListAssetCount  //In xaml just bind to this
+        private int _paramsPickerSelectedIndex;
+        public int ParamsPickerSelectedIndex
         {
-            get => ListAsset.Count();
+            get
+            {
+                return _paramsPickerSelectedIndex;
+            }
+            set
+            {
+                if (_paramsPickerSelectedIndex != value)
+                {
+                    _paramsPickerSelectedIndex = value;
+                }
+            }
         }
 
         async Task ExecuteLoadPersonCommand()
@@ -312,28 +336,41 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             var picker = (InventoryDetail)sender;
             if (picker != null)
             {
-                var index = PhysicalStatePickerSelectedIndex;
-                var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.Activo.EstadoFisicoId);
-                if (item.Id != null)
+                if (picker.Activo != null)
                 {
-                    var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
-                    if (data != null)
+                    if (picker.Activo.EstadoFisicoId != null)
                     {
-                        if (picker.Activo.EstadoFisicoId != null)
+                        var index = PhysicalStatePickerSelectedIndex;
+                        var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.Activo.EstadoFisicoId);
+                        if (item.Id != null)
                         {
-                            data.Activo.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                            var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                            if (data != null)
+                            {
+                                if (picker.Activo.EstadoFisicoId != null)
+                                {
+                                    data.Activo.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                                }
+                            }
                         }
                     }
                 }
-                /*
-                for (int i = 0; i < ListAsset.Count(); i++)
+            }
+        }
+
+        private async void WhenParamsSelectedIndexChanged(object sender)
+        {
+            var picker = (InventoryDetail)sender;
+            if (picker != null)
+            {
+                if (picker.Activo != null)
                 {
-                    if (ListAsset[i].Activo.EstadoFisicoId == picker.Activo.EstadoFisicoId)
+                    if (picker.Activo.MotivoId != null)
                     {
-                        PhysicalStatePickerSelectedIndex = +i;
+                        var index = ParamsPickerSelectedIndex;
+                        var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.Activo.MotivoId);
                     }
                 }
-                */
             }
         }
 
