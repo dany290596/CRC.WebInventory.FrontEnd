@@ -15,9 +15,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public Command LoadAssetCommand { get; }
         public Command SaveAssetCommand { get; }
         public Command FinalizeLocationCommand { get; }
-
-        public ObservableCollection<PhysicalState> PhysicalStateData = new ObservableCollection<PhysicalState>();
-
         public Command PlanoPagamentoAlteradoCommand { get; }
         public Command PhysicalStatePickerCommand { get; }
         public Command ParamsPickerCommand { get; }
@@ -36,11 +33,8 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             SaveAssetCommand = new Command(OnSaveAsset);
             FinalizeLocationCommand = new Command(OnFinalizeLocation);
 
-
-            PhysicalStateData = new ObservableCollection<PhysicalState>();
             PhysicalStatePickerItems = new ObservableCollection<PhysicalState>();
             ParamsPickerItems = new ObservableCollection<Params>();
-
             ListAsset = new ObservableCollection<InventoryDetail>();
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
@@ -48,16 +42,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             ParamsPickerCommand = new Command<object>(WhenParamsSelectedIndexChanged);
             StatusSwitchCommand = new Command<object>(WhenStatusToggled);
             PhysicalStatePickerSelectedItem = new PhysicalState();
-        }
-
-        public ObservableCollection<PhysicalState> ShowResponseReason
-        {
-            get => PhysicalStateData;
-            set
-            {
-                PhysicalStateData = value;
-                OnPropertyChanged(nameof(ShowResponseReason));
-            }
         }
 
         private ObservableCollection<PhysicalState> _physicalStatePickerItems;
@@ -296,39 +280,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
         }
 
-        void SelectedAssetChanged(object sender, EventArgs e)
-        {
-            if (sender is Picker picker)
-            {
-
-            }
-            //int key = ((KeyValuePair<int, string>)picker.SelectedItem).Key;
-        }
-
-        /*
-        void FilterItems()
-        {
-            PhysicalStateData.Where(a => a.Id == SelectedFilter.Id);
-        }
-        */
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisedOnPropertyChanged(string _PropertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(_PropertyName));
-            }
-        }
-
         private async void WhenSelectedIndexChanged(InventoryDetail inventoryDetail)
         {
-
-            var ss = inventoryDetail;
             await Application.Current.MainPage.Navigation.PushAsync(new ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationEdit(inventoryDetail));
-            // do something
         }
 
         private async void WhenPhysicalStateSelectedIndexChanged(object sender)
