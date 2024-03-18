@@ -94,11 +94,11 @@
              <StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Button FontSize="Default" BackgroundColor="DarkOrange" TextColor="White" Text="Finalizar ubicación" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
-                    <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding SaveAssetCommand}" />
+                    <Button BackgroundColor="DarkOrange" TextColor="White" Text="Actualizar activos" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding SaveAssetCommand}" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Total de activos: " TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
-                    <Label Text="2" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
+                    <Label Text="{Binding ListAsset.Count}" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
 
                                     <!--
@@ -134,6 +134,7 @@
                                                                     <StackLayout>
                                                                     <StackLayout>
                                                                         <StackLayout Orientation="Vertical">
+                                                                            <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
                                                                                 <Grid RowSpacing="0">
                                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                                                                                     <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Activo.Nombre}" FontSize="Subtitle" FontAttributes="Bold"/>
@@ -197,20 +198,27 @@
                                                                     </StackLayout>
                                                                     <StackLayout Orientation="Vertical">
                                                                         <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="0" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
                                                                             </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="1" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
+                                                                                <Label Text="¿Observaciones? " FontAttributes="Bold"></Label>
+                                                                            </Frame>
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Label Text="¿Motivo? " FontAttributes="Bold"></Label>
                                                                             </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="2" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Label Text="¿Estado físico? " FontAttributes="Bold"></Label>
                                                                             </Frame>
+                                                                            
 
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" HasShadow="False">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Switch OnColor="DarkOrange" ThumbColor="DarkOrange" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"></Switch>
                                                                             </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HasShadow="False" HorizontalOptions="CenterAndExpand">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
+                                                                                <Entry Text="{Binding Activo.Observaciones}" Placeholder="" FontSize="Medium"></Entry>
+                                                                            </Frame>
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker
                                                                                     Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
@@ -221,9 +229,8 @@
                                                                                     ItemDisplayBinding="{Binding Nombre}"
                                                                                    ></Picker>
                                                                             </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" HasShadow="False" HorizontalOptions="CenterAndExpand">
+                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker
-                                                                                    
                                                                                     Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
                                                                                     VerticalOptions="Center"
@@ -253,6 +260,7 @@
                                                                             </Frame>
                                                                         </Grid>
                                                                     </StackLayout>
+                                                                    <!--
                                                                     <StackLayout Orientation="Vertical">
                                                                         <Button x:Name="ZoomIn" Text="Editar"
                                                                             Command="{Binding Path=BindingContext.PlanoPagamentoAlteradoCommand, Source={x:Reference Name=listAsset}}" 
@@ -264,6 +272,7 @@
                                                                             HorizontalOptions="Center"
                                                                             VerticalOptions="Center"/>
                                                                     </StackLayout>
+                                                                    -->
                                                                     </StackLayout>
                                                                     </Frame>
                                                                 </ViewCell.View>

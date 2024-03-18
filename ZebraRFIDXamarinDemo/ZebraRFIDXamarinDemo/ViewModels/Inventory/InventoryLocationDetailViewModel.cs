@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Android.Telecom;
 using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Models.Setting;
 using ZebraRFIDXamarinDemo.Models.Startup;
@@ -185,43 +184,44 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
+        public int ListAssetCount  //In xaml just bind to this
+        {
+            get => ListAsset.Count();
+        }
+
         async Task ExecuteLoadPersonCommand()
         {
             IsBusy = true;
             try
             {
+                var paramsAll = await App.paramsRepositoty.GetAllAsync();
                 var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
+                var inventoryDetailAllById = await App.inventoryDetailRepository.GetByIdLocation(LocationSync.Id);
+
                 PhysicalStatePickerItems.Clear();
                 for (int i = 0; i < physicalStateAll.Count(); i++)
                 {
-                    /*
-                    if (PickerItems[i].Nombre == myEstadoFisico)
-                    {
-                        EstadoFisicoPicker.SelectedIndex = i;
-                    }
-                    */
-
                     PhysicalStatePickerItems.Add(physicalStateAll[i]);
                 }
 
+                ParamsPickerItems.Clear();
+                for (int i = 0; i < paramsAll.Count(); i++)
+                {
+                    ParamsPickerItems.Add(paramsAll[i]);
+                }
 
+                /*
                 ListAsset.Clear();
                 for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
                 {
                     ListAsset.Add(LocationSync.DetalleInventario[i]);
                 }
-
-
-                foreach (var itemInventoryDetail in LocationSync.DetalleInventario)
+                */
+                ListAsset.Clear();
+                LocationSync.DetalleInventario = inventoryDetailAllById;
+                for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
                 {
-
-                    for (int i = 0; i < physicalStateAll.Count(); i++)
-                    {
-                        if (PhysicalStatePickerItems[i].Id == itemInventoryDetail.EstadoFisicoId)
-                        {
-                            //   pickerSelectedIndex = i;
-                        }
-                    }
+                    ListAsset.Add(LocationSync.DetalleInventario[i]);
                 }
             }
             catch (Exception ex)
@@ -238,38 +238,13 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             IsBusy = true;
 
-
-
             var paramsAll = await App.paramsRepositoty.GetAllAsync();
             var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
-            /*
-            PhysicalStateData.Clear();
-            var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
-            foreach (var item in physicalStateAll)
-            {
-                PhysicalStateData.Add(item);
-                //if (item.Id == selectedFilter)
-                //  PhysicalStateData.SelectedIndex = item.Id;
-            }
-
-            ShowResponseReason = PhysicalStateData;
-            //FilterItems();
-
-            StartValue.Add(selectedItem);
-            */
-
-
+            var inventoryDetailAllById = await App.inventoryDetailRepository.GetByIdLocation(LocationSync.Id);
 
             PhysicalStatePickerItems.Clear();
             for (int i = 0; i < physicalStateAll.Count(); i++)
             {
-                /*
-                if (PickerItems[i].Nombre == myEstadoFisico)
-                {
-                    EstadoFisicoPicker.SelectedIndex = i;
-                }
-                */
-
                 PhysicalStatePickerItems.Add(physicalStateAll[i]);
             }
 
@@ -279,23 +254,18 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 ParamsPickerItems.Add(paramsAll[i]);
             }
 
-
+            /*
             ListAsset.Clear();
             for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
             {
                 ListAsset.Add(LocationSync.DetalleInventario[i]);
             }
-
-
-            foreach (var itemInventoryDetail in LocationSync.DetalleInventario)
+            */
+            ListAsset.Clear();
+            LocationSync.DetalleInventario = inventoryDetailAllById;
+            for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
             {
-                for (int i = 0; i < physicalStateAll.Count(); i++)
-                {
-                    if (PhysicalStatePickerItems[i].Id == itemInventoryDetail.EstadoFisicoId)
-                    {
-                        //   pickerSelectedIndex = i;
-                    }
-                }
+                ListAsset.Add(LocationSync.DetalleInventario[i]);
             }
         }
 
@@ -313,14 +283,19 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                             var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(itemDetalleInventario.Activo.Id);
                             if (dataAssetSQLITE != null)
                             {
-                                if (itemDetalleInventario.Activo.EstadoFisicoId != null)
-                                    return;
+                                if (itemDetalleInventario.Activo.EstadoFisicoId == null)
                                 {
-                                }
-                                if (itemDetalleInventario.Activo.Observaciones != null && itemDetalleInventario.Activo.Observaciones != "")
-                                {
+                                    // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese el estado fisico", "Aceptar");
                                     return;
                                 }
+
+
+                                if (itemDetalleInventario.Activo.Observaciones == null || itemDetalleInventario.Activo.Observaciones == "")
+                                {
+                                    // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese las observaciones", "Aceptar");
+                                    return;
+                                }
+
                                 Asset asset = new Asset();
                                 asset.UsuarioCreadorId = dataAssetSQLITE.UsuarioCreadorId;
                                 asset.UsuarioModificadorId = dataAssetSQLITE.UsuarioModificadorId;
@@ -362,6 +337,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                 asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
                                 asset.AreaId = dataAssetSQLITE.AreaId;
                                 await App.assetRepository.UpdateAsync(asset);
+                                // await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
                             }
                         }
                     }
@@ -372,7 +348,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 throw ex;
             }
 
+            // await ExecuteLoadPersonCommand();
             await Shell.Current.GoToAsync("..");
+            await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
         }
 
         void SelectedAssetChanged(object sender, EventArgs e)
@@ -417,7 +395,17 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             {
                 var index = PhysicalStatePickerSelectedIndex;
                 var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.Activo.EstadoFisicoId);
-
+                if (item.Id != null)
+                {
+                    var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                    if (data != null)
+                    {
+                        if (picker.Activo.EstadoFisicoId != null)
+                        {
+                            data.Activo.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                        }
+                    }
+                }
                 /*
                 for (int i = 0; i < ListAsset.Count(); i++)
                 {
