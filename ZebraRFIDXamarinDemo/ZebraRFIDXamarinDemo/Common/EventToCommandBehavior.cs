@@ -5,14 +5,14 @@ using Xamarin.Forms;
 
 namespace ZebraRFIDXamarinDemo.Common
 {
-    public class EventToCommandBehaviour : BehavourBase<VisualElement>
+    public class EventToCommandBehavior : BehavourBase<VisualElement>
     {
         Delegate eventHandler;
 
-        public static readonly BindableProperty EventNameProperty = BindableProperty.Create("EventName", typeof(string), typeof(EventToCommandBehaviour), null, propertyChanged: OnEventNameChanged);
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(EventToCommandBehaviour), null);
-        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameter", typeof(object), typeof(EventToCommandBehaviour), null);
-        public static readonly BindableProperty InputConverterProperty = BindableProperty.Create("Converter", typeof(IValueConverter), typeof(EventToCommandBehaviour), null);
+        public static readonly BindableProperty EventNameProperty = BindableProperty.Create("EventName", typeof(string), typeof(EventToCommandBehavior), null, propertyChanged: OnEventNameChanged);
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(EventToCommandBehavior), null);
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameter", typeof(object), typeof(EventToCommandBehavior), null);
+        public static readonly BindableProperty InputConverterProperty = BindableProperty.Create("Converter", typeof(IValueConverter), typeof(EventToCommandBehavior), null);
 
         public string EventName
         {
@@ -76,7 +76,7 @@ namespace ZebraRFIDXamarinDemo.Common
             {
                 throw new ArgumentException(string.Format("EventToCommandBehavior: Can't register the '{0}' event.", EventName));
             }
-            MethodInfo methodInfo = typeof(EventToCommandBehaviour).GetTypeInfo().GetDeclaredMethod("OnEvent");
+            MethodInfo methodInfo = typeof(EventToCommandBehavior).GetTypeInfo().GetDeclaredMethod("OnEvent");
             eventHandler = methodInfo.CreateDelegate(eventInfo.EventHandlerType, this);
             eventInfo.AddEventHandler(AssociatedObject, eventHandler);
         }
@@ -130,7 +130,7 @@ namespace ZebraRFIDXamarinDemo.Common
 
         static void OnEventNameChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var behavior = (EventToCommandBehaviour)bindable;
+            var behavior = (EventToCommandBehavior)bindable;
             if (behavior.AssociatedObject == null)
             {
                 return;
@@ -142,7 +142,5 @@ namespace ZebraRFIDXamarinDemo.Common
             behavior.DeregisterEvent(oldEventName);
             behavior.RegisterEvent(newEventName);
         }
-
-
     }
 }

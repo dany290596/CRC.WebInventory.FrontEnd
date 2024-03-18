@@ -161,7 +161,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\PhysicalStateRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryQuery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BehavourBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Inventory\InventoryLocationEditViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Inventory\InventoryLocationEdit.xaml.cs">
       <DependentUpon>InventoryLocationEdit.xaml</DependentUpon>
@@ -171,6 +170,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\ParamsRepositoty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IParamsRepositoty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehaviorView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

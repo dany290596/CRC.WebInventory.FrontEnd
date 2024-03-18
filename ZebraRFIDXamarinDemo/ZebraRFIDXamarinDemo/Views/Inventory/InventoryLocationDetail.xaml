@@ -13,8 +13,8 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Behaviors>
-        <behaviors:EventToCommandBehaviour EventName="Appearing" Command="{Binding AppearingCommand}"/>
-        <behaviors:EventToCommandBehaviour EventName="Disappearing" Command="{Binding DisappearingCommand}"/>
+        <behaviors:EventToCommandBehavior EventName="Appearing" Command="{Binding AppearingCommand}"/>
+        <behaviors:EventToCommandBehavior EventName="Disappearing" Command="{Binding DisappearingCommand}"/>
     </ContentPage.Behaviors>
 
     <ContentPage.Content>
@@ -253,7 +253,7 @@
                                                                                     -->
                                                                                 
                                                                                 <Picker.Behaviors>
-                                                                                    <behaviors:EventToCommandBehaviour
+                                                                                    <behaviors:EventToCommandBehavior
                                                                                         EventName="SelectedIndexChanged"
                                                                                         Command="{Binding Path=BindingContext.PhysicalStatePickerCommand, Source={x:Reference Name=listAsset}}"
                                                                                         CommandParameter="{Binding .}">
@@ -261,7 +261,7 @@
                                                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}, AncestorLevel={x:Reference Name=listAsset}}, Path=PhysicalStatePickerCommand}"
                                                                                         -->
                                                                                         
-                                                                                    </behaviors:EventToCommandBehaviour>
+                                                                                    </behaviors:EventToCommandBehavior>
                                                                                 </Picker.Behaviors>
                                                                                 
                                                                                 </Picker>

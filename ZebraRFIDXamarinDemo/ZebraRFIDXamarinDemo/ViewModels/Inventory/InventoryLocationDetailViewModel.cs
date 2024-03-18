@@ -16,12 +16,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public Command SaveAssetCommand { get; }
         public Command FinalizeLocationCommand { get; }
 
-        PhysicalState selectedItem;
-        PhysicalState selectedFilterItem;
-
-        public PhysicalState ReasonValue { get; set; }
-        Guid selectedFilter;
-
         public ObservableCollection<PhysicalState> PhysicalStateData = new ObservableCollection<PhysicalState>();
 
         public Command PlanoPagamentoAlteradoCommand { get; }
@@ -45,68 +39,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             PhysicalStatePickerItems = new ObservableCollection<PhysicalState>();
             ParamsPickerItems = new ObservableCollection<Params>();
 
-
-            selectedItem = new PhysicalState
-            {
-                Nombre = "A300",
-                Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07")
-            };
-
-            selectedFilter = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07");
-
-            selectedFilterItem = new PhysicalState
-            {
-                Nombre = "A300",
-                Id = new Guid("4a7b5ca4-cc71-49c6-9466-f1039c3ffc07")
-            };
-
-
-
-
             ListAsset = new ObservableCollection<InventoryDetail>();
-            //_physicalStatePickerSelectedIndex = 1;
-            //
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
             PhysicalStatePickerCommand = new Command<object>(WhenPhysicalStateSelectedIndexChanged);
             StatusSwitchCommand = new Command<object>(WhenStatusToggled);
             PhysicalStatePickerSelectedItem = new PhysicalState();
-        }
-
-        public PhysicalState SelectedFilterItem
-        {
-            get
-            {
-                return selectedFilterItem;
-            }
-            set
-            {
-                if (selectedFilterItem != value)
-                {
-                    selectedFilterItem = value;
-                    this.RaisedOnPropertyChanged("SelectedFilterItem");
-                }
-                //if (SetProperty(ref selectedFilter, value))
-                //    FilterItems();
-            }
-        }
-
-        public Guid SelectedFilter
-        {
-            get
-            {
-                return selectedFilter;
-            }
-            set
-            {
-                if (selectedFilter != value)
-                {
-                    selectedFilter = value;
-                    this.RaisedOnPropertyChanged("SelectedFilter");
-                }
-                //if (SetProperty(ref selectedFilter, value))
-                //    FilterItems();
-            }
         }
 
         public ObservableCollection<PhysicalState> ShowResponseReason
