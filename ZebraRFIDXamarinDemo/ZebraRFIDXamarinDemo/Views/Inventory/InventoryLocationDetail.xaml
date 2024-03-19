@@ -152,9 +152,9 @@
                                                                     <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Serie: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Estado fisico: " FontAttributes="Bold"/>
                                                                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: " FontAttributes="Bold"/>
-                                                                    <!--
-                                                                    <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="1" Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
-                                                                    -->
+                                                                
+                                                                    <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Text="Estatus correcto: " FontAttributes="Bold"></Label>
+                                                                
 
                                                        
                                                                     <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
@@ -163,9 +163,9 @@
                                                                     <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <!--
-                                                                    <Label Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Text="{Binding Activo.StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    -->
+                                                                    
+                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding Activo.StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                
                                                                     
                                                                     
                                                                     <!--
@@ -213,7 +213,12 @@
                                                                             
 
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Switch OnColor="DarkOrange" ThumbColor="DarkOrange" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                                                                                <Switch
+                                                                                    OnColor="DarkOrange"
+                                                                                    ThumbColor="DarkOrange"
+                                                                                    HorizontalOptions="CenterAndExpand"
+                                                                                    VerticalOptions="Center"
+                                                                                    IsToggled="{Binding Activo.Status, Mode=TwoWay}">
                                                                                     <Switch.Behaviors>
                                                                                         <behaviors:EventToCommandBehaviorView
                                                                                             EventName="Toggled"

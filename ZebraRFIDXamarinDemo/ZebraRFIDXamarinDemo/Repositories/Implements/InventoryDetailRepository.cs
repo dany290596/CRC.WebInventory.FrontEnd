@@ -181,7 +181,10 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                    CampoLibre4 = assetdi.FirstOrDefault(x => x.Id == id.ActivoId).CampoLibre4,
                                    CampoLibre5 = assetdi.FirstOrDefault(x => x.Id == id.ActivoId).CampoLibre5,
                                    AreaId = assetdi.FirstOrDefault(x => x.Id == id.ActivoId).AreaId,
+                                   Status = assetdi.FirstOrDefault(x => x.Id == id.ActivoId).Status,
+                                   //EstadoFisico = physicalStatedi.FirstOrDefault(x => x.Id == id.ActivoId)
                                    EstadoFisico = physicalStatedi.FirstOrDefault(x => x.Id == assetdi.FirstOrDefault(x => x.Id == id.ActivoId).EstadoFisicoId)
+
                                }
                            }).ToList();
 

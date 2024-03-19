@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -114,6 +112,13 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     _paramsPickerSelectedIndex = value;
                 }
             }
+        }
+
+        private bool _statusSwitchToggled = false;
+        public bool StatusSwitchToggled
+        {
+            get { return _statusSwitchToggled; }
+            set { _statusSwitchToggled = value; }
         }
 
         async Task ExecuteLoadPersonCommand()
@@ -263,6 +268,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                 asset.CampoLibre4 = dataAssetSQLITE.CampoLibre4;
                                 asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
                                 asset.AreaId = dataAssetSQLITE.AreaId;
+                                asset.Status = itemDetalleInventario.Activo.Status; // Este campo se va a modificar
                                 await App.assetRepository.UpdateAsync(asset);
                                 // await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
                             }
@@ -330,10 +336,20 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void WhenStatusToggled(object sender)
         {
+            /*
+            var switchToggled = StatusSwitchToggled;
             var toggled = (InventoryDetail)sender;
             if (toggled != null)
             {
-            }
+              
+                var data = ListAsset.FirstOrDefault(f => f.Id == toggled.Value);
+                if (data != null)
+                {
+                   // data.Activo.Status = toggled.Va.Status;
+                }
+                
+            }*/
+
         }
 
         private async void OnFinalizeLocation()
