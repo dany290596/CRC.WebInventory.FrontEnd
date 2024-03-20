@@ -79,7 +79,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Setting
                 await App.locationRepository.DeleteAllAsync();
                 await App.inventoryDetailRepository.DeleteAllAsync();
                 await App.assetRepository.DeleteAllAsync();
-
+                await App.paramsRepositoty.DeleteAllAsync();
+                await App.inventoryLocationRepository.DeleteAllAsync();
+                await App.inventoryLocationAssetRepository.DeleteAllAsync();
 
                 await ExecuteLoadPersonCommand();
                 return;

@@ -111,9 +111,9 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             return await Task.FromResult(ok);
         }
 
-        public async Task<Api<List<Params>>> GetParams(string token, string company)
+        public async Task<Api<ParamsSync>> GetParams(string token, Guid company)
         {
-            Api<List<Params>> data = new Api<List<Params>>(false, "", 200, null);
+            Api<ParamsSync> data = new Api<ParamsSync>(false, "", 200, null);
 
             ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
@@ -125,7 +125,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/TipoParam/GetConParams/eb2245f4-6c99-4793-a893-066f65f8be85");
 
             httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-            httpClient.DefaultRequestHeaders.Add("Empresa", company);
+            httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
             var response = await httpClient.GetAsync(uri);
 
             if (response.IsSuccessStatusCode)
@@ -133,7 +133,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     string content = response.Content.ReadAsStringAsync().Result;
-                    data = JsonConvert.DeserializeObject<Api<List<Params>>>(content);
+                    data = JsonConvert.DeserializeObject<Api<ParamsSync>>(content);
                 }
             }
             else

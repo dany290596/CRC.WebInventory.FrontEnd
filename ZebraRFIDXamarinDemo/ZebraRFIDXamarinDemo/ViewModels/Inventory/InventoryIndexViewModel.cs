@@ -6,6 +6,7 @@ using System.Linq;
 using Location = ZebraRFIDXamarinDemo.Models.Startup.Location;
 using InventoryDetail = ZebraRFIDXamarinDemo.Models.Startup.InventoryDetail;
 using ZebraRFIDXamarinDemo.Models.Startup;
+using ZebraRFIDXamarinDemo.Repositories.Implements;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -442,6 +443,28 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                         await App.locationRepository.AddAsync(dataLocation);
                                                     }
                                                 }
+
+                                                if (itemdetalleinventario.Ubicacion != null && itemdetalleinventario.Inventario != null)
+                                                {
+                                                    InventoryLocation dataInventoryLocation = new InventoryLocation();
+                                                    dataInventoryLocation.Id = Guid.NewGuid();
+                                                    dataInventoryLocation.InventarioId = itemdetalleinventario.Inventario.Id;
+                                                    dataInventoryLocation.UbicacionId = itemdetalleinventario.Ubicacion.Id;
+
+                                                    var addInventoryLocation = await App.inventoryLocationRepository.AddAsync(dataInventoryLocation);
+                                                    if (addInventoryLocation == true)
+                                                    {
+                                                        if (dataInventoryLocation.Id != null && dataInventoryLocation.Id != Guid.Empty && itemdetalleinventario.Activo != null)
+                                                        {
+                                                            InventoryLocationAsset dataInventoryLocationAsset = new InventoryLocationAsset();
+                                                            dataInventoryLocationAsset.Id = Guid.NewGuid();
+                                                            dataInventoryLocationAsset.InventarioUbicacionId = dataInventoryLocation.Id;
+                                                            dataInventoryLocationAsset.ActivoId = itemdetalleinventario.Activo.Id;
+
+                                                            await App.inventoryLocationAssetRepository.AddAsync(dataInventoryLocationAsset);
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -471,14 +494,43 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     try
                     {
                         var physicalStateGetAll = await App.physicalStateRepository.GetAllPhysicalState(userInformationGetByLasSQLITE.Token, (Guid)userInformationGetByLasSQLITE.EmpresaId);
-                        if (physicalStateGetAll.Data.Count() > 0)
+                        if (physicalStateGetAll.Respuesta == true)
                         {
-                            foreach (var itemPhysicalState in physicalStateGetAll.Data)
+                            if (physicalStateGetAll.Data.Count() > 0)
                             {
-                                var physicalStateByIdSQLITE = await App.physicalStateRepository.GetByIdAsync(itemPhysicalState.Id);
-                                if (physicalStateByIdSQLITE == null)
+                                foreach (var itemPhysicalState in physicalStateGetAll.Data)
                                 {
-                                    await App.physicalStateRepository.AddAsync(itemPhysicalState);
+                                    var physicalStateByIdSQLITE = await App.physicalStateRepository.GetByIdAsync(itemPhysicalState.Id);
+                                    if (physicalStateByIdSQLITE == null)
+                                    {
+                                        await App.physicalStateRepository.AddAsync(itemPhysicalState);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                    try
+                    {
+                        var paramsGetAll = await App.paramsRepositoty.GetParams(userInformationGetByLasSQLITE.Token, (Guid)userInformationGetByLasSQLITE.EmpresaId);
+                        if (paramsGetAll.Respuesta == true)
+                        {
+                            if (paramsGetAll.Data.Param != null)
+                            {
+                                if (paramsGetAll.Data.Param.Count() > 0)
+                                {
+                                    foreach (var itemParams in paramsGetAll.Data.Param)
+                                    {
+                                        var paramsByIdSQLITE = await App.physicalStateRepository.GetByIdAsync(itemParams.Id);
+                                        if (paramsByIdSQLITE == null)
+                                        {
+                                            await App.paramsRepositoty.AddAsync(itemParams);
+                                        }
+                                    }
                                 }
                             }
                         }

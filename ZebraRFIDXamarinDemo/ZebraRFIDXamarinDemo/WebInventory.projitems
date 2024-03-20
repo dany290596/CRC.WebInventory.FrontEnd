@@ -171,6 +171,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IParamsRepositoty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehaviorView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EventToCommandBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLocationAsset.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\InventoryLocationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IInventoryLocationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\InventoryLocationAssetRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IInventoryLocationAssetRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Setting\ParamsSync.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
