@@ -9,7 +9,7 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
 {
     public partial class InventoryLocationDetail : ContentPage
     {
-        public Location LocationSync { get; set; }
+        public InventoryLocationAQ InventoryLocationSync { get; set; }
         InventoryLocationDetailViewModel inventoryLocationDetailViewModel;
         public Command PhysicalStatePickerCommand { get; }
 
@@ -19,46 +19,23 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
             BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel();
         }
 
-        public InventoryLocationDetail(Location locationSync)
+        public InventoryLocationDetail(InventoryLocationAQ inventoryLocation)
         {
             InitializeComponent();
             BindingContext = inventoryLocationDetailViewModel = new InventoryLocationDetailViewModel();
             PhysicalStatePickerCommand = new Command<InventoryDetail>(WhenPhysicalStateSelectedIndexChanged);
-            if (locationSync != null)
+            if (inventoryLocation != null)
             {
-                LocationSync = locationSync;
-                ((InventoryLocationDetailViewModel)BindingContext).LocationSync = locationSync;
+                InventoryLocationSync = inventoryLocation;
+                ((InventoryLocationDetailViewModel)BindingContext).InventoryLocationSync = inventoryLocation;
             }
-            
+
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             inventoryLocationDetailViewModel.OnAppearing();
-
-            var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
-
-            for (int i = 0; i < physicalStateAll.Count(); i++)
-            {
-                if (LocationSync != null)
-                {
-                    if (LocationSync.DetalleInventario != null)
-                    {
-                        if (LocationSync.DetalleInventario.Count() > 0)
-                        {
-                            //PhysicalStatePickerSelectedIndex.SelectedIndex = 1;
-                            /*
-                            if (physicalStateAll[i].Id == LocationSync.Activo.EstadoFisicoId)
-                            {
-                                PhysicalStatePickerSelectedIndex.SelectedIndex = i;
-                            }
-                            */
-                   
-                        }
-                    }
-                }
-            }
         }
 
         void SelectedAssetChanged(System.Object sender, System.EventArgs e)

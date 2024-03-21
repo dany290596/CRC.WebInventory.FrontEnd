@@ -100,5 +100,12 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
             return await Task.FromResult(ok);
         }
+
+        public async Task<List<InventoryLocation>> GetByFilter(Guid inventarioId, Guid ubicacionId)
+        {
+            var inventoryLocationdi = await _database.Table<InventoryLocation>().Where(w => w.InventarioId == inventarioId && w.UbicacionId == ubicacionId).ToListAsync();
+
+            return await Task.FromResult(inventoryLocationdi.ToList());
+        }
     }
 }

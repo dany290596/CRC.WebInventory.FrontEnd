@@ -13,21 +13,20 @@
 
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout Orientation="Vertical" Spacing="25" 
-            Padding="30,0" >
-         <StackLayout Spacing="5">
-            <Label Text="Detalle - Inventario" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-        </StackLayout>
-        
-             
-            <StackLayout>
-               <StackLayout>
+                <StackLayout
+                    Orientation="Vertical"
+                    Spacing="25" 
+                    Padding="30,0" >
+                <StackLayout Spacing="5">
+                    <Label Text="Detalle - Inventario" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                    <StackLayout>
+                        <StackLayout>
                             <Label Text="Datos del inventario" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
                         </StackLayout>      
- <Frame CornerRadius="20" HasShadow="True">
-                        <StackLayout>
-                       
-<StackLayout Orientation="Horizontal">
+                        <Frame CornerRadius="20" HasShadow="True">
+                            <StackLayout> 
+                                <StackLayout Orientation="Horizontal">
                                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
                                         <Label Grid.Column="0" Grid.Row="0" Text="No. Inventario: " FontSize="Medium" FontAttributes="Bold"/>
@@ -40,25 +39,20 @@
                                         </Frame>
 
 
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.Inventario.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.Inventario.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventorySync.Inventario.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventorySync.Inventario.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventorySync.Inventario.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventoryLocationAssetQuery.InventarioNoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventoryLocationAssetQuery.InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventoryLocationAssetQuery.InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventoryLocationAssetQuery.InventarioEstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventoryLocationAssetQuery.InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                         </Frame>
 
                                     </Grid>
-                             <StackLayout>
-                                        </StackLayout>
-                                    </StackLayout>
+                                </StackLayout>
                             </StackLayout>
-                                </Frame>
-                         
-             </StackLayout>
+                        </Frame> 
+                    </StackLayout>
+                <StackLayout>
 
-
-
-             <StackLayout>
                 <StackLayout>
                             <Label Text="Datos del colaborador" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
                         </StackLayout>
@@ -75,8 +69,8 @@
                                         <Label Grid.Column="0" Grid.Row="4" Text="Teléfono móvil: " FontAttributes="Bold"/>
                                         -->
                                         
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.Inventario.ColaboradorResponsable.NumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
-                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventorySync.Inventario.ColaboradorResponsable.CollaboratorName}" TextColor="Silver" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventoryLocationAssetQuery.ColaboradorNumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
+                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventoryLocationAssetQuery.ColaboradorNombreCompleto}" TextColor="Silver" FontAttributes="Bold"/>
 
                                         <!--
                                         <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.ColaboradorResponsable.Email}" TextColor="Silver" FontAttributes="Bold"/>
@@ -94,13 +88,13 @@
             
              <StackLayout>
    <Label Text="Lista de las ubicaciones" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
-                <CollectionView ItemsSource="{Binding InventorySync.Inventario.Ubicaciones}" SelectionMode="None">
+                <CollectionView ItemsSource="{Binding InventoryLocationAssetQuery.Ubicacion}" SelectionMode="None">
 
                     <CollectionView.ItemTemplate>
 
                         <DataTemplate>
                           
-                            <StackLayout x:DataType="model:Location">
+                            <StackLayout x:DataType="model:InventoryLocationAQ">
                                 <StackLayout> 
                               
                                        
@@ -110,8 +104,8 @@
                                                     <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Nombre: " FontAttributes="Bold"/>
                                                     <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Status: " FontAttributes="Bold"/>
 
-                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding UbicacionNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding InventarioUbicacionStatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                     <BoxView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
 
 

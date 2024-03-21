@@ -178,6 +178,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\InventoryLocationAssetRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IInventoryLocationAssetRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Setting\ParamsSync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryQuerySpecial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLocationAssetQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLoadCount.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

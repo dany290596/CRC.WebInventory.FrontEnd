@@ -18,8 +18,8 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public Command ParamsPickerCommand { get; }
         public Command StatusSwitchCommand { get; }
 
-        public ObservableCollection<InventoryDetail> listAsset = new ObservableCollection<InventoryDetail>();
-        public ObservableCollection<InventoryDetail> ListAsset
+        public ObservableCollection<Asset> listAsset = new ObservableCollection<Asset>();
+        public ObservableCollection<Asset> ListAsset
         {
             get { return listAsset; }
             set { listAsset = value; }
@@ -33,7 +33,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
             PhysicalStatePickerItems = new ObservableCollection<PhysicalState>();
             ParamsPickerItems = new ObservableCollection<Params>();
-            ListAsset = new ObservableCollection<InventoryDetail>();
+            ListAsset = new ObservableCollection<Asset>();
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
             PhysicalStatePickerCommand = new Command<object>(WhenPhysicalStateSelectedIndexChanged);
@@ -150,10 +150,10 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 }
                 */
                 ListAsset.Clear();
-                LocationSync.DetalleInventario = inventoryDetailAllById;
-                for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
+                //LocationSync.DetalleInventario = inventoryDetailAllById;
+                for (int i = 0; i < InventoryLocationSync.Activo.Count(); i++)
                 {
-                    ListAsset.Add(LocationSync.DetalleInventario[i]);
+                    ListAsset.Add(InventoryLocationSync.Activo[i]);
                 }
             }
             catch (Exception ex)
@@ -172,7 +172,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
             var paramsAll = await App.paramsRepositoty.GetAllAsync();
             var physicalStateAll = await App.physicalStateRepository.GetAllAsync();
-            var inventoryDetailAllById = await App.inventoryDetailRepository.GetByIdLocation(LocationSync.Id);
+            //var inventoryDetailAllById = await App.inventoryDetailRepository.GetByIdLocation(LocationSync.Id);
 
             PhysicalStatePickerItems.Clear();
             for (int i = 0; i < physicalStateAll.Count(); i++)
@@ -194,10 +194,10 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
             */
             ListAsset.Clear();
-            LocationSync.DetalleInventario = inventoryDetailAllById;
-            for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
+            //LocationSync.DetalleInventario = inventoryDetailAllById;
+            for (int i = 0; i < InventoryLocationSync.Activo.Count(); i++)
             {
-                ListAsset.Add(LocationSync.DetalleInventario[i]);
+                ListAsset.Add(InventoryLocationSync.Activo[i]);
             }
         }
 
@@ -205,72 +205,83 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             try
             {
-                var dataLocation = LocationSync;
-                if (dataLocation.DetalleInventario.Count() > 0)
+                var dataAsset = InventoryLocationSync;
+                if (dataAsset != null)
                 {
-                    foreach (var itemDetalleInventario in dataLocation.DetalleInventario)
+                    if (dataAsset.Activo.Count() > 0)
                     {
-                        if (itemDetalleInventario.Activo != null)
+                        foreach (var itemAsset in dataAsset.Activo)
                         {
-                            var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(itemDetalleInventario.Activo.Id);
-                            if (dataAssetSQLITE != null)
+                            if (itemAsset != null)
                             {
-                                if (itemDetalleInventario.Activo.EstadoFisicoId == null)
+                                var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(itemAsset.Id);
+                                if (dataAssetSQLITE != null)
                                 {
-                                    // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese el estado fisico", "Aceptar");
-                                    return;
+                                    if (itemAsset.EstadoFisicoId == null)
+                                    {
+                                        // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese el estado fisico", "Aceptar");
+                                        return;
+                                    }
+
+
+                                    if (itemAsset.Observaciones == null || itemAsset.Observaciones == "")
+                                    {
+                                        // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese las observaciones", "Aceptar");
+                                        return;
+                                    }
+
+
+
+                                    Asset asset = new Asset();
+                                    asset.UsuarioCreadorId = dataAssetSQLITE.UsuarioCreadorId;
+                                    asset.UsuarioModificadorId = dataAssetSQLITE.UsuarioModificadorId;
+                                    asset.UsuarioBajaId = dataAssetSQLITE.UsuarioBajaId;
+                                    asset.UsuarioReactivadorId = dataAssetSQLITE.UsuarioReactivadorId;
+                                    asset.FechaCreacion = dataAssetSQLITE.FechaCreacion;
+                                    asset.FechaModificacion = dataAssetSQLITE.FechaModificacion;
+                                    asset.FechaBaja = dataAssetSQLITE.FechaBaja;
+                                    asset.FechaReactivacion = dataAssetSQLITE.FechaReactivacion;
+                                    asset.Estado = dataAssetSQLITE.Estado;
+                                    asset.EmpresaId = dataAssetSQLITE.EmpresaId;
+                                    asset.Id = dataAssetSQLITE.Id;
+                                    asset.UbicacionId = dataAssetSQLITE.UbicacionId;
+                                    asset.GrupoActivoId = dataAssetSQLITE.GrupoActivoId;
+                                    asset.TipoActivoId = dataAssetSQLITE.TipoActivoId;
+                                    asset.Codigo = dataAssetSQLITE.Codigo;
+                                    asset.Serie = dataAssetSQLITE.Serie;
+                                    asset.Marca = dataAssetSQLITE.Marca;
+                                    asset.Modelo = dataAssetSQLITE.Modelo;
+                                    asset.Descripcion = dataAssetSQLITE.Descripcion;
+                                    asset.Nombre = dataAssetSQLITE.Nombre;
+                                    asset.Observaciones = itemAsset.Observaciones; // Este campo se va a modificar
+                                    asset.EstadoFisicoId = itemAsset.EstadoFisicoId; // Este campo se va a modificar
+                                    asset.TagId = dataAssetSQLITE.TagId;
+                                    asset.ColaboradorHabitualId = dataAssetSQLITE.ColaboradorHabitualId;
+                                    asset.ColaboradorResponsableId = dataAssetSQLITE.ColaboradorResponsableId;
+                                    asset.ValorCompra = dataAssetSQLITE.ValorCompra;
+                                    asset.FechaCompra = dataAssetSQLITE.FechaCompra;
+                                    asset.Proveedor = dataAssetSQLITE.Proveedor;
+                                    asset.FechaFinGarantia = dataAssetSQLITE.FechaFinGarantia;
+                                    asset.TieneFoto = dataAssetSQLITE.TieneFoto;
+                                    asset.TieneArchivo = dataAssetSQLITE.TieneArchivo;
+                                    asset.FechaCapitalizacion = dataAssetSQLITE.FechaCapitalizacion;
+                                    asset.FichaResguardo = dataAssetSQLITE.FichaResguardo;
+                                    asset.CampoLibre1 = dataAssetSQLITE.CampoLibre1;
+                                    asset.CampoLibre2 = dataAssetSQLITE.CampoLibre2;
+                                    asset.CampoLibre3 = dataAssetSQLITE.CampoLibre3;
+                                    asset.CampoLibre4 = dataAssetSQLITE.CampoLibre4;
+                                    asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
+                                    asset.AreaId = dataAssetSQLITE.AreaId;
+                                    asset.Status = itemAsset.Status; // Este campo se va a modificar
+                                    if (itemAsset.MotivoId != null)
+                                    {
+
+
+                                        asset.MotivoId = itemAsset.MotivoId; // Este campo se va a modificar
+                                    }
+                                    await App.assetRepository.UpdateAsync(asset);
+                                    // await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
                                 }
-
-
-                                if (itemDetalleInventario.Activo.Observaciones == null || itemDetalleInventario.Activo.Observaciones == "")
-                                {
-                                    // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese las observaciones", "Aceptar");
-                                    return;
-                                }
-
-                                Asset asset = new Asset();
-                                asset.UsuarioCreadorId = dataAssetSQLITE.UsuarioCreadorId;
-                                asset.UsuarioModificadorId = dataAssetSQLITE.UsuarioModificadorId;
-                                asset.UsuarioBajaId = dataAssetSQLITE.UsuarioBajaId;
-                                asset.UsuarioReactivadorId = dataAssetSQLITE.UsuarioReactivadorId;
-                                asset.FechaCreacion = dataAssetSQLITE.FechaCreacion;
-                                asset.FechaModificacion = dataAssetSQLITE.FechaModificacion;
-                                asset.FechaBaja = dataAssetSQLITE.FechaBaja;
-                                asset.FechaReactivacion = dataAssetSQLITE.FechaReactivacion;
-                                asset.Estado = dataAssetSQLITE.Estado;
-                                asset.EmpresaId = dataAssetSQLITE.EmpresaId;
-                                asset.Id = dataAssetSQLITE.Id;
-                                asset.UbicacionId = dataAssetSQLITE.UbicacionId;
-                                asset.GrupoActivoId = dataAssetSQLITE.GrupoActivoId;
-                                asset.TipoActivoId = dataAssetSQLITE.TipoActivoId;
-                                asset.Codigo = dataAssetSQLITE.Codigo;
-                                asset.Serie = dataAssetSQLITE.Serie;
-                                asset.Marca = dataAssetSQLITE.Marca;
-                                asset.Modelo = dataAssetSQLITE.Modelo;
-                                asset.Descripcion = dataAssetSQLITE.Descripcion;
-                                asset.Nombre = dataAssetSQLITE.Nombre;
-                                asset.Observaciones = itemDetalleInventario.Activo.Observaciones; // Este campo se va a modificar
-                                asset.EstadoFisicoId = itemDetalleInventario.Activo.EstadoFisicoId; // Este campo se va a modificar
-                                asset.TagId = dataAssetSQLITE.TagId;
-                                asset.ColaboradorHabitualId = dataAssetSQLITE.ColaboradorHabitualId;
-                                asset.ColaboradorResponsableId = dataAssetSQLITE.ColaboradorResponsableId;
-                                asset.ValorCompra = dataAssetSQLITE.ValorCompra;
-                                asset.FechaCompra = dataAssetSQLITE.FechaCompra;
-                                asset.Proveedor = dataAssetSQLITE.Proveedor;
-                                asset.FechaFinGarantia = dataAssetSQLITE.FechaFinGarantia;
-                                asset.TieneFoto = dataAssetSQLITE.TieneFoto;
-                                asset.TieneArchivo = dataAssetSQLITE.TieneArchivo;
-                                asset.FechaCapitalizacion = dataAssetSQLITE.FechaCapitalizacion;
-                                asset.FichaResguardo = dataAssetSQLITE.FichaResguardo;
-                                asset.CampoLibre1 = dataAssetSQLITE.CampoLibre1;
-                                asset.CampoLibre2 = dataAssetSQLITE.CampoLibre2;
-                                asset.CampoLibre3 = dataAssetSQLITE.CampoLibre3;
-                                asset.CampoLibre4 = dataAssetSQLITE.CampoLibre4;
-                                asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
-                                asset.AreaId = dataAssetSQLITE.AreaId;
-                                asset.Status = itemDetalleInventario.Activo.Status; // Este campo se va a modificar
-                                await App.assetRepository.UpdateAsync(asset);
-                                // await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
                             }
                         }
                     }
@@ -293,23 +304,23 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void WhenPhysicalStateSelectedIndexChanged(object sender)
         {
-            var picker = (InventoryDetail)sender;
+            var picker = (Asset)sender;
             if (picker != null)
             {
-                if (picker.Activo != null)
+                if (picker != null)
                 {
-                    if (picker.Activo.EstadoFisicoId != null)
+                    if (picker.EstadoFisicoId != null)
                     {
                         var index = PhysicalStatePickerSelectedIndex;
-                        var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.Activo.EstadoFisicoId);
+                        var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.EstadoFisicoId);
                         if (item.Id != null)
                         {
                             var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
                             if (data != null)
                             {
-                                if (picker.Activo.EstadoFisicoId != null)
+                                if (picker.EstadoFisicoId != null)
                                 {
-                                    data.Activo.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                                    data.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
                                 }
                             }
                         }
@@ -320,15 +331,43 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void WhenParamsSelectedIndexChanged(object sender)
         {
-            var picker = (InventoryDetail)sender;
+            var picker = (Asset)sender;
             if (picker != null)
             {
-                if (picker.Activo != null)
+                if (picker != null)
                 {
-                    if (picker.Activo.MotivoId != null)
+                    if (picker.MotivoId != null)
                     {
                         var index = ParamsPickerSelectedIndex;
-                        var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.Activo.MotivoId);
+                        var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.MotivoId);
+                        if (item.Id != null)
+                        {
+                            var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                            if (data != null)
+                            {
+                                if (picker.MotivoId != null)
+                                {
+                                    data.MotivoId = ParamsPickerItems[index].Id;
+                                }
+                            }
+                        }
+                    }
+                    if (picker.MotivoId == null)
+                    {
+                        var item = ParamsPickerSelectedItem;
+                        if (item != null)
+                        {
+                            var itemData = ParamsPickerItems.FirstOrDefault(f => f.Id == item.Id);
+                            if (itemData != null)
+                            {
+                                var index = ParamsPickerSelectedIndex;
+                                var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                                if (data != null)
+                                {
+                                    data.MotivoId = ParamsPickerItems[index].Id;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -336,54 +375,62 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void WhenStatusToggled(object sender)
         {
-            /*
-            var switchToggled = StatusSwitchToggled;
-            var toggled = (InventoryDetail)sender;
-            if (toggled != null)
-            {
-              
-                var data = ListAsset.FirstOrDefault(f => f.Id == toggled.Value);
-                if (data != null)
-                {
-                   // data.Activo.Status = toggled.Va.Status;
-                }
-                
-            }*/
-
         }
 
         private async void OnFinalizeLocation()
         {
             try
             {
-                var data = ListAsset;
-                if (data.Count() > 0)
+                var countData = ListAsset.Count();
+                var data = ListAsset.Where(w => w.MotivoId != null && w.Status == true).ToList();
+                if (countData == data.Count())
                 {
-                    foreach (var item in data)
+                    var dataSQLITE = await App.inventoryLocationRepository.GetByFilter(InventoryLocationSync.InventarioId, InventoryLocationSync.UbicacionId);
+                    foreach (var item in dataSQLITE)
                     {
-                        if (item.UbicacionId != null)
+                        InventoryLocation inventoryLocation = new InventoryLocation();
+                        inventoryLocation.Id = item.Id;
+                        inventoryLocation.InventarioId = item.InventarioId;
+                        inventoryLocation.UbicacionId = item.UbicacionId;
+                        inventoryLocation.Status = item.Status = 2;
+                        await App.inventoryLocationRepository.UpdateAsync(inventoryLocation);
+                    }
+                    await Application.Current.MainPage.DisplayAlert("Mensaje", "La ubicación se ha finalizado correctamente", "Aceptar");
+                    await Shell.Current.GoToAsync("..");
+                    /*
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
                         {
-                            var dataLocationSQLITE = await App.locationRepository.GetByIdAsync((Guid)item.UbicacionId);
-                            if (dataLocationSQLITE != null)
+                            if (item.UbicacionId != null)
                             {
-                                if (dataLocationSQLITE.Status == 1)
+                                var dataLocationSQLITE = await App.locationRepository.GetByIdAsync((Guid)item.UbicacionId);
+                                if (dataLocationSQLITE != null)
                                 {
-                                    Location dataLocation = new Location();
-                                    dataLocation.Id = dataLocationSQLITE.Id;
-                                    dataLocation.Nombre = dataLocationSQLITE.Nombre;
-                                    dataLocation.Status = 2;
+                                    if (dataLocationSQLITE.Status == 1)
+                                    {
+                                        Location dataLocation = new Location();
+                                        dataLocation.Id = dataLocationSQLITE.Id;
+                                        dataLocation.Nombre = dataLocationSQLITE.Nombre;
+                                        dataLocation.Status = 2;
 
-                                    await App.locationRepository.UpdateAsync(dataLocation);
-                                    await Application.Current.MainPage.DisplayAlert("Mensaje", "La ubicación se ha finalizado correctamente", "Aceptar");
-                                    await Shell.Current.GoToAsync("../../");
-                                }
-                                else
-                                {
-                                    await Application.Current.MainPage.DisplayAlert("Advertencia", "No hay ubicaciones disponibles para finalizar en este momento.", "Aceptar");
+                                        await App.locationRepository.UpdateAsync(dataLocation);
+                                        await Application.Current.MainPage.DisplayAlert("Mensaje", "La ubicación se ha finalizado correctamente", "Aceptar");
+                                        await Shell.Current.GoToAsync("../../");
+                                    }
+                                    else
+                                    {
+                                        await Application.Current.MainPage.DisplayAlert("Advertencia", "No hay ubicaciones disponibles para finalizar en este momento.", "Aceptar");
+                                    }
                                 }
                             }
                         }
                     }
+                    */
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Todos los activos deben de contar con un motivo y un estatus activo.", "Aceptar");
                 }
             }
             catch (Exception ex)

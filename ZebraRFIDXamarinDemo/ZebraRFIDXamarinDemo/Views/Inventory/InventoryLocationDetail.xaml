@@ -157,14 +157,14 @@
                                                                 
 
                                                        
-                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Activo.Codigo}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Activo.Marca}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Activo.Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Codigo}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Marca}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Serie}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     
-                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding Activo.StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                 
                                                                     
                                                                     
@@ -218,7 +218,7 @@
                                                                                     ThumbColor="DarkOrange"
                                                                                     HorizontalOptions="CenterAndExpand"
                                                                                     VerticalOptions="Center"
-                                                                                    IsToggled="{Binding Activo.Status, Mode=TwoWay}">
+                                                                                    IsToggled="{Binding Status, Mode=TwoWay}">
                                                                                     <Switch.Behaviors>
                                                                                         <behaviors:EventToCommandBehaviorView
                                                                                             EventName="Toggled"
@@ -229,7 +229,7 @@
                                                                                 </Switch>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Entry Text="{Binding Activo.Observaciones}" Placeholder="" FontSize="Medium"></Entry>
+                                                                                <Entry Text="{Binding Observaciones}" Placeholder="" FontSize="Medium"></Entry>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker

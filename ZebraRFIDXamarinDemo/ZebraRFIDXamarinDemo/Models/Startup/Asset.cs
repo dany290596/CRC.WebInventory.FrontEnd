@@ -45,7 +45,7 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public string StatusNombre { get { return OnStatusNombre(Status); } }
 
         [ForeignKey(typeof(Params))]
-        public Guid? MotivoId { get; set; } = null;
+        public Guid? MotivoId { get; set; }
 
         public int PhysicalStateSelectedIndex { get { return 1; } }
 

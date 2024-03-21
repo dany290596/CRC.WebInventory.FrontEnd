@@ -8,6 +8,7 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public Guid Id { get; set; }
         public string? Observaciones { get; set; }
         public DateTime? FechaInventario { get; set; }
+        public string? NoInventario { get; set; }
         public List<InventoryDetailLoad>? DetalleInventario { get; set; }
         public int? DetalleInventarioTotal { get; set; } = null;
     }
@@ -18,7 +19,7 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public Guid? ActivoId { get; set; }
         public string? Observaciones { get; set; }
         public Guid? EstadoFisicoId { get; set; }
-
+        
         public Guid? UbicacionId { get; set; }
         public Location? Ubicacion { get; set; }
     }

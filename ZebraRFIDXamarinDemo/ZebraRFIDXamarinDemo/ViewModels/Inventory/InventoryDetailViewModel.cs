@@ -13,16 +13,39 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         public InventoryDetailViewModel()
         {
-            SeeDetailInventoryCommand = new Command<Location>(OnSeeDetailInventory);
+
+            SeeDetailInventoryCommand = new Command<InventoryLocationAQ>(OnSeeDetailInventory);
         }
 
-        private async void OnSeeDetailInventory(Location locationSync)
-        {
-            var asa = "";
-          await Application.Current.MainPage.Navigation.PushAsync(new Views.Inventory.InventoryLocationDetail(locationSync));
 
-           // var secondPage = new InventoryLocationDetail(InventorySync);
-           // await Device.InvokeOnMainThreadAsync(async () => await Application.Current.MainPage.Navigation.PushAsync(secondPage, true));
+
+        public async void OnAppearing()
+        {
+            IsBusy = true;
+            try
+            {
+                var data = InventoryLocationAsset;
+                var dataSQLITE = await App.inventoryRepository.GetByInventoryIdAsync(data.InventarioId);
+                if (dataSQLITE != null)
+                {
+                    InventoryLocationAssetQuery = dataSQLITE;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        private async void OnSeeDetailInventory(InventoryLocationAQ inventoryLocationSync)
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new InventoryLocationDetail(inventoryLocationSync));
+
+            // var secondPage = new InventoryLocationDetail(InventorySync);
+            // await Device.InvokeOnMainThreadAsync(async () => await Application.Current.MainPage.Navigation.PushAsync(secondPage, true));
         }
     }
 }

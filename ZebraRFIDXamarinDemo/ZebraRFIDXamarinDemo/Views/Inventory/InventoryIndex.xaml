@@ -27,7 +27,7 @@
             <CollectionView ItemsSource="{Binding InventoryData}" SelectionMode="None">
                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout x:DataType="model:InventoryQuery">
+                            <StackLayout x:DataType="model:InventoryLocationAssetQuery">
                                <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItem IsDestructive="True" Text="Cerrar" BackgroundColor="DarkGray"></SwipeItem>
@@ -45,19 +45,21 @@
 
                                                     <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>                                                   
                                                     <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
-                                                    <!--<Label Grid.Column="0" Grid.Row="4" Text="Estado: " FontAttributes="Bold"/>-->
+                                     
                                                     <Frame Padding="0" Margin="15" Grid.Column="0" Grid.Row="4" HasShadow="False">
                                                         <Label Text="Estado: " FontAttributes="Bold"/>
                                                     </Frame>
 
-                                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Inventario.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding Inventario.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
-                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding Inventario.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                    <!--<Label Grid.Column="1" Grid.Row="4" Text="{Binding EstadoNombre}" TextColor="Silver" FontAttributes="Bold"></Label>-->
-                                                    <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding Inventario.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                                        <Label HeightRequest="20" Margin="0" Text="{Binding Inventario.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+                                                    
+                                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventarioNoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
+                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                             
+                                                    <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                                        <Label HeightRequest="20" Margin="0" Text="{Binding InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                                     </Frame>
-                                                
+                                                   
+
                                                 </Grid>
                                             </StackLayout>
                                                <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">

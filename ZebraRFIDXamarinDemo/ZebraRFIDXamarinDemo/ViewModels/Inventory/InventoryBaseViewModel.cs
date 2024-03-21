@@ -9,15 +9,15 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
     public class InventoryBaseViewModel : INotifyPropertyChanged
     {
-        private InventoryQuery _inventorySync;
+        private InventoryLocationAssetQuery _inventoryLocationAsset;
         private Location _locationSync;
         private InventoryDetail _inventoryDetailSync;
 
         public INavigation Navigation { get; set; }
-        public InventoryQuery InventorySync
+        public InventoryLocationAssetQuery InventoryLocationAsset
         {
-            get { return _inventorySync; }
-            set { _inventorySync = value; OnPropertyChanged(); }
+            get { return _inventoryLocationAsset; }
+            set { _inventoryLocationAsset = value; OnPropertyChanged(); }
         }
         public Location LocationSync
         {
@@ -28,6 +28,24 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             get { return _inventoryDetailSync; }
             set { _inventoryDetailSync = value; OnPropertyChanged(); }
+        }
+        private InventoryLocationAssetQuery _inventoryLocationAssetQuery;
+        public InventoryLocationAssetQuery InventoryLocationAssetQuery
+        {
+            get { return _inventoryLocationAssetQuery; }
+            set
+            {
+                _inventoryLocationAssetQuery = value; OnPropertyChanged();
+            }
+        }
+        private InventoryLocationAQ _inventoryLocationSync;
+        public InventoryLocationAQ InventoryLocationSync
+        {
+            get { return _inventoryLocationSync; }
+            set
+            {
+                _inventoryLocationSync = value; OnPropertyChanged();
+            }
         }
 
         bool isBusy = false;
