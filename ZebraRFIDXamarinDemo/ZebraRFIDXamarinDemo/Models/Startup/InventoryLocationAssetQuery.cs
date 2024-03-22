@@ -45,7 +45,7 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
             string s = "";
             if (estado == 1)
             {
-                s = "#69bb7b";
+                s = "#00d391";
             }
             if (estado == 2)
             {

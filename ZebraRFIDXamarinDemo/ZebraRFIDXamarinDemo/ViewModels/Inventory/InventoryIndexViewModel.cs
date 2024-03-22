@@ -6,7 +6,6 @@ using System.Linq;
 using Location = ZebraRFIDXamarinDemo.Models.Startup.Location;
 using InventoryDetail = ZebraRFIDXamarinDemo.Models.Startup.InventoryDetail;
 using ZebraRFIDXamarinDemo.Models.Startup;
-using ZebraRFIDXamarinDemo.Repositories.Implements;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -30,80 +29,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         public async void OnAppearing()
         {
             IsBusy = true;
-
-            /*
-            paramsList = new List<Params>()
-            {
-               new Params
-               {
-                   Nombre = "Cambio de ubicación",
-                TipoParamId = new Guid("eb2245f4-6c99-4793-a893-066f65f8be85"),
-                Orden = 1,
-                Id = new Guid("ed0694d3-0823-4550-81f9-430463c2cbd0"),
-                UsuarioCreadorId = new Guid("03340f13-ced3-4893-83f1-25a783c5a772"),
-                FechaCreacion =new  DateTime().ToLocalTime(),
-                Estado = 1,
-                EmpresaId = new Guid("2dabcd06-394f-4cd6-a0d6-b5b4150c073e")
-               },
-               new Params
-               {
-                Nombre = "No sé encontró",
-                TipoParamId = new Guid("eb2245f4-6c99-4793-a893-066f65f8be85"),
-                Orden = 1,
-                Id = new Guid("4377fd23-4253-44f2-a8cf-d7285a8d97eb"),
-                UsuarioCreadorId = new Guid("03340f13-ced3-4893-83f1-25a783c5a772"),
-                FechaCreacion = new  DateTime().ToLocalTime(),
-                Estado =1,
-                EmpresaId = new Guid("2dabcd06-394f-4cd6-a0d6-b5b4150c073e")
-               }
-            };
-            */
-            /*
-            foreach (var itemparams in paramsList)
-            {
-                var paramsGetByIdSQLITE = await App.paramsRepositoty.GetByIdAsync(itemparams.Id);
-                if (paramsGetByIdSQLITE == null)
-                {
-                    if (itemparams != null)
-                    {
-                        await App.paramsRepositoty.AddAsync(itemparams);
-                    }
-                }
-            }
-            */
         }
-
-        /*
-        public async void OnAppearing()
-        {
-            IsBusy = true;
-            var listDevice = await App.deviceRepository.GetAllAsync();
-            if (listDevice.Count() == 0)
-            {
-                await Application.Current.MainPage.DisplayAlert("Mensaje", "Ingrese el identificador del dispositivo en la sección de configuración para sincronizar inventarios", "Aceptar");
-            }
-            else
-            {
-                InventoryData.Clear();
-                var token = Preferences.Get("token", "default_value");
-                var company = Preferences.Get("company", "default_value");
-
-                var device = await App.deviceRepository.GetByLastOrDefaultAsync();
-                var inventoryList = await _deviceRepository.InventorySync(token, company, device.Id);
-                if (inventoryList.Data != null)
-                {
-                    foreach (var item in inventoryList.Data)
-                    {
-                        InventoryData.Add(item);
-                    }
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Mensaje", "No hay inventarios disponibles en este momento", "Aceptar");
-                }
-            }
-        }
-        */
 
         async Task ExecuteLoadPersonCommand()
         {
@@ -506,7 +432,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                 {
                                     foreach (var itemParams in paramsGetAll.Data.Param)
                                     {
-                                        var paramsByIdSQLITE = await App.physicalStateRepository.GetByIdAsync(itemParams.Id);
+                                        var paramsByIdSQLITE = await App.paramsRepositoty.GetByIdAsync(itemParams.Id);
                                         if (paramsByIdSQLITE == null)
                                         {
                                             await App.paramsRepositoty.AddAsync(itemParams);

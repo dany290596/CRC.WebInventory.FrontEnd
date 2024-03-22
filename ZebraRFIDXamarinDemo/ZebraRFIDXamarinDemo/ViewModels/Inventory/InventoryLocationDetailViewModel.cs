@@ -382,7 +382,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             try
             {
                 var countData = ListAsset.Count();
-                var data = ListAsset.Where(w => w.MotivoId != null && w.Status == true).ToList();
+                var data = ListAsset.Where(w => w.MotivoId != null || w.Status == true).ToList();
                 if (countData == data.Count())
                 {
                     var dataSQLITE = await App.inventoryLocationRepository.GetByFilter(InventoryLocationSync.InventarioId, InventoryLocationSync.UbicacionId);
@@ -430,7 +430,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Todos los activos deben de contar con un motivo y un estatus activo.", "Aceptar");
+                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Todos los activos deben de contar con un motivo o un estatus activo.", "Aceptar");
                 }
             }
             catch (Exception ex)

@@ -46,7 +46,7 @@
                                                     <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>                                                   
                                                     <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
                                      
-                                                    <Frame Padding="0" Margin="15" Grid.Column="0" Grid.Row="4" HasShadow="False">
+                                                    <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="4" HasShadow="False">
                                                         <Label Text="Estado: " FontAttributes="Bold"/>
                                                     </Frame>
 
@@ -55,23 +55,22 @@
                                                     <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
                                                     <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
                                              
-                                                    <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                                    <Frame Padding="0, 0, 0, 0" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
                                                         <Label HeightRequest="20" Margin="0" Text="{Binding InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                                     </Frame>
                                                    
 
                                                 </Grid>
                                             </StackLayout>
-                                               <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">
 
-
+                                            <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">
                                                 <Image Source="view.png" Grid.Column="3" WidthRequest="30" HeightRequest="30" VerticalOptions="End">
-                                                     <Image.GestureRecognizers>
-<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}},
-                      Path=DetailInventoryCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}},
+                                                        Path=DetailInventoryCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
                                                     </Image.GestureRecognizers>
                                                 </Image>
-                                    </StackLayout>
+                                            </StackLayout>
 
                                             <!--
                                              <Frame

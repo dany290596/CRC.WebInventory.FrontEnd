@@ -130,14 +130,15 @@
                                                                 
                                                                <ViewCell>
                                                                     <ViewCell.View>
-                                                                    <Frame>
+                                                                    <Frame
+                                                                        Padding="0, 0, 0, 0">
                                                                     <StackLayout>
                                                                     <StackLayout>
                                                                         <StackLayout Orientation="Vertical">
                                                                             <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
                                                                                 <Grid RowSpacing="0">
                                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Activo.Nombre}" FontSize="Subtitle" FontAttributes="Bold"/>
+                                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Nombre}" FontSize="Subtitle" FontAttributes="Bold"/>
                                                                                 </Grid>
                                                                             <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
                                                                         </StackLayout>
@@ -196,7 +197,7 @@
 
                                                                     </Grid>
                                                                     </StackLayout>
-                                                                    <StackLayout Orientation="Vertical">
+                                                                    <StackLayout Orientation="Horizontal">
                                                                         <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
                                                                                 <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
@@ -229,13 +230,18 @@
                                                                                 </Switch>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Entry Text="{Binding Observaciones}" Placeholder="" FontSize="Medium"></Entry>
+                                                                                <Entry
+                                                                                    Text="{Binding Observaciones}"
+                                                                                    Placeholder=""
+                                                                                    FontSize="Medium"
+                                                                                    WidthRequest="200"></Entry>
                                                                             </Frame>
                                                                             <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
                                                                                 <Picker
                                                                                     Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
                                                                                     VerticalOptions="Center"
+                                                                                    WidthRequest="200"
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
@@ -251,11 +257,17 @@
                                                                                     </Picker.Behaviors>
                                                                                 </Picker>
                                                                             </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
+                                                                            <Frame
+                                                                                Padding="0, 0, 0, 0"
+                                                                                Grid.Column="1"
+                                                                                Grid.Row="3"
+                                                                                Grid.ColumnSpan="1"
+                                                                                HasShadow="False">
                                                                                 <Picker
-                                                                                    Margin="0,0,0,0"
                                                                                     HorizontalOptions="CenterAndExpand"
-                                                                                    VerticalOptions="Center"
+                                                                                    VerticalOptions="CenterAndExpand"
+                                                                                    WidthRequest="200"
+
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
@@ -301,66 +313,7 @@
                                                                 
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
-                                                    </ListView>
-                                                
-                                         
-                
-
-                                        <!--
-                                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        <Label Grid.Column="0" Grid.Row="1" Text="Nombre: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="3" Text="Código: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="4" Text="Marca: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="5" Text="Proveedor: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="6" Text="Valor de compra: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="7" Text="Serie: " FontAttributes="Bold"/>
-                                        
-                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding Activo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding Activo.Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding Activo.Codigo}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="4" Text="{Binding Activo.Marca}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="5" Text="{Binding Activo.Proveedor}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="6" Text="{Binding Activo.ValorCompra}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="7" Text="{Binding Activo.Serie}" TextColor="Silver" FontAttributes="Bold"/>
-
-
-                                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Text="Dispositivo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        <Label Grid.Column="0" Grid.Row="9" Text="Nombre: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="10" Text="Número: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="11" Text="Ip: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="12" Text="Mac: " FontAttributes="Bold"/>
-
-                                        <Label Grid.Column="1" Grid.Row="9" Text="{Binding Dispositivo.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="10" Text="{Binding Dispositivo.Numero}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="11" Text="{Binding Dispositivo.Ip}" TextColor="Silver" FontAttributes="Bold"/>
-                                        <Label Grid.Column="1" Grid.Row="12" Text="{Binding Dispositivo.Mac}" TextColor="Silver" FontAttributes="Bold"/>
-
-
-                                        <Label Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="2" Text="Ubicación" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                        <Label Grid.Column="0" Grid.Row="14" Text="Nombre: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="15" Text="Campo 1: " FontAttributes="Bold"/>
-
-                                        <Label Grid.Column="1" Grid.Row="14" Text="{Binding Ubicacion.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                        -->
-                                        <!--<Label Grid.Column="1" Grid.Row="15" Text="{Binding Ubicacion.Campo1}" TextColor="Silver" FontAttributes="Bold"/>-->
-                                    
-
-
-
-                                              
-                              
-
-                                                <!--
-                                    </StackLayout>
-                                            </StackLayout>
-                                </Frame>
-                                                -->
-
-                             
-            
-                  
-                        
+                                                    </ListView>        
             </StackLayout>
             </StackLayout>
     </ContentPage.Content>

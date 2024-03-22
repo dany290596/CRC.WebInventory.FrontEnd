@@ -24,17 +24,17 @@
                         <StackLayout>
                             <Label Text="Datos del inventario" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
                         </StackLayout>      
-                        <Frame CornerRadius="20" HasShadow="True">
-                            <StackLayout> 
-                                <StackLayout Orientation="Horizontal">
-                                   <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
+                        <Frame Margin="0, 0, 0, 0" CornerRadius="20" HasShadow="True">
+                         
+                                <StackLayout Orientation="Vertical">
+                                   <Grid Margin="0, 0, 0, 0" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
                                         <Label Grid.Column="0" Grid.Row="0" Text="No. Inventario: " FontSize="Medium" FontAttributes="Bold"/>
                                         <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
                                         <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>
                                         
                                         <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
-                                        <Frame Padding="0" Margin="15" Grid.Column="0" Grid.Row="4" HasShadow="False">
+                                        <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="4" HasShadow="False">
                                             <Label Text="Estado: " FontAttributes="Bold"/>
                                         </Frame>
 
@@ -42,13 +42,13 @@
                                         <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventoryLocationAssetQuery.InventarioNoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
                                         <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventoryLocationAssetQuery.InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
                                         <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventoryLocationAssetQuery.InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventoryLocationAssetQuery.InventarioEstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                        <Frame Padding="0, 0, 0, 0" HeightRequest="10" BackgroundColor="{Binding InventoryLocationAssetQuery.InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
                                             <Label HeightRequest="20" Margin="0" Text="{Binding InventoryLocationAssetQuery.InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                         </Frame>
 
                                     </Grid>
                                 </StackLayout>
-                            </StackLayout>
+                  
                         </Frame> 
                     </StackLayout>
                 <StackLayout>
@@ -58,7 +58,7 @@
                         </StackLayout>
                               <Frame Margin="0, 0, 0, 0" HasShadow="True" CornerRadius="20" >
                                  <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Vertical">
                                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
 
                                         <Label Grid.Column="0" Grid.Row="0" Text="No. Empleado: " FontAttributes="Bold"/>
