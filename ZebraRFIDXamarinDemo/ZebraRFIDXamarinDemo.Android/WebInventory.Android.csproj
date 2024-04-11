@@ -111,6 +111,8 @@
     <Compile Include="Controls\CustomLabelRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Firma\WebInventory_Keys\WebInventory.keyInfo" />
+    <None Include="Firma\WebInventory_Keys\WebInventory.keystore" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -348,6 +350,9 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\drawable\Web.gif" />
   </ItemGroup>
   <Import Project="..\ZebraRFIDXamarinDemo\WebInventory.projitems" Label="Shared" Condition="Exists('..\ZebraRFIDXamarinDemo\WebInventory.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
