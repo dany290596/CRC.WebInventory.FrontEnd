@@ -11,11 +11,42 @@
 
      <StackLayout Orientation="Vertical" Spacing="25" 
             Padding="30,0" >
-         <StackLayout Spacing="5">
-
+        <StackLayout Spacing="5">
             <Label Text="Inicio" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-        </StackLayout>
 
+            <AbsoluteLayout x:Name="ViewControls1" AbsoluteLayout.LayoutBounds="1,1,1,.50" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#ffff" Margin="10,10,10,10">
+                <Frame CornerRadius="10" Margin="0,20,0,20" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1">
+                    <Grid Margin="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
+                        <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
+                        <Label Text="WebInventory permite inventariar activos usando tecnología (RFID - UHF)." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <!--
+                        <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Automatiza el proceso de inventarios en activos." FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                        -->
+                    </Grid>
+                </Frame>
+
+                <Image Source="webinventory.png" 
+        BackgroundColor="Transparent"
+        AbsoluteLayout.LayoutFlags="PositionProportional"  
+        AbsoluteLayout.LayoutBounds=".5,0,50,50" />
+            </AbsoluteLayout>
+            
+        </StackLayout>
+        
+        
 
    <!-- <Grid VerticalOptions="FillAndExpand">-->
         <!--
