@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" xmlns:tools="http://schemas.android.com/tools" android:versionName="1.0.1" package="com.crc.webinventory" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="33" />
-	<application tools:replace="android:icon, android:label, android:name" android:requestLegacyExternalStorage="true"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="10000" xmlns:tools="http://schemas.android.com/tools" android:versionName="1.0.1" package="com.crc.webinventory" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="34" />
+	<application tools:replace="android:icon, android:label, android:name" android:requestLegacyExternalStorage="true" android:label="WebInventory" android:icon="@mipmap/webinventory"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

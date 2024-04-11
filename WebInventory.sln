@@ -1,17 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInventory.Android", "ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo.Android\WebInventory.Android.csproj", "{CE6FDCED-FB3D-4902-8756-18E0473E78EA}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WebInventory", "ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo\WebInventory.shproj", "{6530D03E-137E-4BD1-937B-0717F52B66F3}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo.projitems*{6530d03e-137e-4bd1-937b-0717f52b66f3}*SharedItemsImports = 13
-		ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo.projitems*{ce6fdced-fb3d-4902-8756-18e0473e78ea}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -29,5 +25,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12C1B000-D9BA-4EF6-B84C-AEA1EB4C5EA2}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo\WebInventory.projitems*{6530d03e-137e-4bd1-937b-0717f52b66f3}*SharedItemsImports = 13
+		ZebraRFIDXamarinDemo\ZebraRFIDXamarinDemo\WebInventory.projitems*{ce6fdced-fb3d-4902-8756-18e0473e78ea}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
