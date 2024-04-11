@@ -11,7 +11,23 @@
                     <Label Text="Crear - Dispositivo" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                 </StackLayout>
 
-                <StackLayout  Orientation="Vertical" >
+                <StackLayout  Orientation="Vertical">
+                    <Frame  HasShadow="False" Padding="0" HorizontalOptions="FillAndExpand">
+                        <Grid>
+                            <Label Grid.Row="0" Text="1. BioLite N2"></Label>
+                            <Label Grid.Row="1" Text="Dispositivo 1:"></Label>
+                            <Label Grid.Row="2" Text="962CD5F7-CF54-4124-B0CF-60F9E90CCD76"></Label>
+                        </Grid>
+                    </Frame>
+                    <Frame  HasShadow="False" Padding="0" HorizontalOptions="FillAndExpand">
+                        <Grid>
+                            <Label Grid.Row="0" Text="2. Vertex 3"></Label>
+                            <Label Grid.Row="1" Text="Dispositivo 2:"></Label>
+                            <Label Grid.Row="2" Text="2A80F6AC-54F5-4662-A58D-645F2A98FD8D"></Label>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+                <StackLayout  Orientation="Vertical">
                     <Frame  HasShadow="True" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                         <StackLayout Orientation="Horizontal">
                             <Frame HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="100">

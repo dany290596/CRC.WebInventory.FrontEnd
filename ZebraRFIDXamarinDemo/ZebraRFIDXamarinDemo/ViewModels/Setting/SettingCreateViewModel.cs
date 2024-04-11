@@ -23,15 +23,21 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Setting
             var device = Device;
             if (device.Id != null)
             {
-                var list = await App.settingRepository.GetAllAsync();
-                if(list.Count() == 0)
-                {
-                    await App.settingRepository.AddAsync(device);
-                    await Shell.Current.GoToAsync("..");
+                if (device.Id == "962CD5F7-CF54-4124-B0CF-60F9E90CCD76" || device.Id == "2A80F6AC-54F5-4662-A58D-645F2A98FD8D") {
+                    var list = await App.settingRepository.GetAllAsync();
+                    if (list.Count() == 0)
+                    {
+                        await App.settingRepository.AddAsync(device);
+                        await Shell.Current.GoToAsync("..");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Mensaje", "Ya existe un identificador de un dispositivo, para agregar un identificador nuevo, borre el identificador del dispositivo existente", "Aceptar");
+                    }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Mensaje", "Ya existe un identificador de un dispositivo, para agregar un identificador nuevo, borre el identificador del dispositivo existente", "Aceptar");
+                    await Application.Current.MainPage.DisplayAlert("Mensaje", "Ingrese un identificador de dispositivo válido", "Aceptar");
                 }
             }
             else
