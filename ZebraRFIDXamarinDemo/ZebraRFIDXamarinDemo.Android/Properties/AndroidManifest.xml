@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="10005" xmlns:tools="http://schemas.android.com/tools" android:versionName="1.0.5" package="com.crc.webinventory" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="10006" xmlns:tools="http://schemas.android.com/tools" android:versionName="1.0.6" package="com.crc.webinventory" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="34" />
 	<application tools:replace="android:icon, android:label, android:name" android:requestLegacyExternalStorage="true" android:label="WebInventory" android:icon="@mipmap/webinventory"></application>
 </manifest>
