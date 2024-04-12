@@ -28,5 +28,10 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
         {
             await Shell.Current.GoToAsync($"//{nameof(LoginIndex)}");
         }
+
+        protected void GoGoogle(object sender, EventArgs e)
+        {
+            Device.OpenUri(new Uri("https://youtu.be/Ww_BThAdoVw"));
+        }
     }
 }
