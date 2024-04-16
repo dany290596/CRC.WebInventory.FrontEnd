@@ -6,9 +6,31 @@
     xmlns:model="clr-namespace:ZebraRFIDXamarinDemo.Models.Startup"
     x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryIndex">
     <ContentPage.Content>
+
+
+          <AbsoluteLayout VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+        <StackLayout BackgroundColor="White"
+                     Padding="30,0"
+                     Spacing="0">
+
+
+
          <StackLayout Orientation="Vertical" Spacing="25" 
-            Padding="30,0" >
+           >
+               
+
+
          <StackLayout Spacing="5">
+
+
+
+       
+
             <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
              <!--
              <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
@@ -17,8 +39,11 @@
          </StackLayout>
 
         <StackLayout Orientation="Horizontal">
-            <Button Text="Descargar" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+            <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+            <Button Text="Borrar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+            <!--
             <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+            -->
          </StackLayout>
 
 
@@ -32,7 +57,7 @@
                                     <SwipeView.RightItems>
                                         <SwipeItem IsDestructive="True" Text="Cerrar" BackgroundColor="DarkGray"></SwipeItem>
                                     </SwipeView.RightItems>
-                               <Grid Padding="3">
+                               <Grid>
                                     <Frame CornerRadius="10" HasShadow="True">
                                         <StackLayout Orientation="Horizontal">
                                             <StackLayout>
@@ -107,6 +132,30 @@
             </CollectionView>
             </RefreshView>
         </StackLayout>
+
+                       
+     
+       
             </StackLayout>
+
+
+
+                     </StackLayout>
+    </ScrollView>
+    <AbsoluteLayout BackgroundColor="#22000000"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    IsVisible="{Binding IsRunning}">
+        <ActivityIndicator Color="DarkOrange"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
+                           AbsoluteLayout.LayoutFlags="All"
+                           IsVisible="True"
+                           IsRunning="True"/>
+    </AbsoluteLayout>
+</AbsoluteLayout>
+
+
+
+
     </ContentPage.Content>
 </ContentPage>

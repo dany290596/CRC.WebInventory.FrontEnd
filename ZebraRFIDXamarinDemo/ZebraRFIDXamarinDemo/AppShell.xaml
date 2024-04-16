@@ -8,6 +8,7 @@
     xmlns:loading="clr-namespace:ZebraRFIDXamarinDemo.Views.Shared"
     xmlns:setting="clr-namespace:ZebraRFIDXamarinDemo.Views.Setting"
     xmlns:inventory="clr-namespace:ZebraRFIDXamarinDemo.Views.Inventory"
+    xmlns:api="clr-namespace:ZebraRFIDXamarinDemo.Views.Api"
     x:Class="ZebraRFIDXamarinDemo.AppShell"
     Title="WebInventory"
     BackgroundColor="DarkOrange">
@@ -49,6 +50,9 @@
     <ShellItem Route="LoginIndex" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled">
         <ShellContent ContentTemplate="{DataTemplate login:LoginIndex}"></ShellContent>
     </ShellItem>
+    <ShellItem Route="ApiIndex" FlyoutItemIsVisible="False" Shell.FlyoutBehavior="Disabled">
+        <ShellContent ContentTemplate="{DataTemplate api:ApiIndex}"></ShellContent>
+    </ShellItem>
     <!--
     <FlyoutItem Title="Login">
         <ShellContent Route="LoginIndex" ContentTemplate="{DataTemplate login:LoginIndex}"></ShellContent>
@@ -68,11 +72,11 @@
         <ShellContent Route="PersonIndex"  ContentTemplate="{DataTemplate person:PersonIndex}" />
     </FlyoutItem>
     -->
-
+    <!--
     <FlyoutItem Title="Configuración" Icon="configure.png">
         <ShellContent Route="SettingIndex" ContentTemplate="{DataTemplate setting:SettingIndex}"></ShellContent>
     </FlyoutItem>
-
+    -->
 
     <!--
     <ShellContent

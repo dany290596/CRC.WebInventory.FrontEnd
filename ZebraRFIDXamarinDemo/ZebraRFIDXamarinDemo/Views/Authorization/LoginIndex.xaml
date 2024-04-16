@@ -6,59 +6,98 @@
     xmlns:control="clr-namespace:ZebraRFIDXamarinDemo.Controls"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False">
-    <!--
-    <ContentPage.Content>
-        <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-            <Label Text="Email"></Label>
-            <Entry x:Name="txtEmail" Placeholder="Email"></Entry>
-            <Label x:Name="txtPassword" Text="Contraseña"></Label>
-            <Entry IsPassword="True" Placeholder="Contraseña"></Entry>
-            <Button Text="Ingresar" Clicked="OnLoginButton"></Button>
-        </StackLayout>
-    </ContentPage.Content>
-    -->
-      <StackLayout
-        Orientation="Vertical"
+
+    <AbsoluteLayout VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
+
+    <Grid>
+        <StackLayout
+            Orientation="Vertical"
             Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
+            Padding="30, 30">
 
-        <Image Source="webinventory.png" HeightRequest="100" WidthRequest="100" />
+            <Image Source="webinventory.png" HeightRequest="100" WidthRequest="100" />
 
-        <StackLayout Spacing="5">
-            <Label Text="¡Bienvenido!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center" />
-            <Label Text="WebInventory" FontSize="18" TextColor="Gray" HorizontalTextAlignment="Center" />
-        </StackLayout>
+            <StackLayout Spacing="5">
+                <Grid>
+                    <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HasShadow="False">
+                        <Label
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            FontAttributes="Bold"
+                            Text="¡Iniciar Sesión!"
+                            FontSize="Title"
+                            TextColor="Gray"
+                            HorizontalTextAlignment="Start" />
+                    </Frame>
 
+                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="WebInventory - es una herramienta que ayuda a las personas que van a inventariar." FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" />
 
-        <StackLayout Orientation="Horizontal">
-           
-            <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
-                <Image Source="person.png" HeightRequest="5" WidthRequest="5" />
-            </Frame>
+                    <!--
+                    <Frame Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
+                        <ImageButton
+                            Source="configurationuno.png" 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            BackgroundColor="AliceBlue"
+                            CornerRadius="20"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Command="{Binding StartSettingCommand}">
+                        </ImageButton>
+                    </Frame>
+                    -->
+                </Grid>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
+                    <Image Source="person.png" HeightRequest="5" WidthRequest="5" />
+                </Frame>
                    
-            <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
-                 <control:CustomEntry Text="{Binding Login.Email}" x:Name="txtEmail" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Email*" Keyboard="Email"></control:CustomEntry>
+                <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
+                    <control:CustomEntry Text="{Binding Login.Email}" x:Name="txtEmail" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Ingrese su email*" Keyboard="Email"></control:CustomEntry>
           <!--      <handlers:BorderlessEntry Text="{Binding Email}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="User Name" Keyboard="Email" />-->
-            </Frame>
-           
-        </StackLayout>
+                </Frame>
+            </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
-            <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
-                <Image Source="security.png" HeightRequest="5" WidthRequest="5" />
-            </Frame>
-            <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
-                <control:CustomEntry Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Contraseña*"></control:CustomEntry>
-                <!--<handlers:BorderlessEntry Text="{Binding Password}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Password" IsPassword="True" />-->
-            </Frame>
-        </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
+                    <Image Source="security.png" HeightRequest="5" WidthRequest="5" />
+                </Frame>
+                <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
+                    <control:CustomEntry Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Ingrese su contraseña*"></control:CustomEntry>
+                    <!--<handlers:BorderlessEntry Text="{Binding Password}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Password" IsPassword="True" />-->
+                </Frame>
+            </StackLayout>
 
-        <Button BackgroundColor="DarkOrange" TextColor="White" Text="Ingresar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding StartLoginCommand}" />
+            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Ingresar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding StartLoginCommand}" />
 
-        <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
-            <Label Text="¿Has olvidado tu contraseña?" TextColor="Gray" />
-            <!--<Label Text="Registrate aquí" TextColor="#50b3f2" />-->
+            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
+                <Label Text="¿Has olvidado tu contraseña?" TextColor="Gray" />
+                <!--<Label Text="Registrate aquí" TextColor="#50b3f2" />-->
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </Grid>
+
+
+         </ScrollView>
+    <AbsoluteLayout BackgroundColor="#22000000"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    IsVisible="{Binding IsRunning}">
+        <ActivityIndicator Color="DarkOrange"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
+                           AbsoluteLayout.LayoutFlags="All"
+                           IsVisible="True"
+                           IsRunning="True"/>
+    </AbsoluteLayout>
+</AbsoluteLayout>
+
+
 </ContentPage>

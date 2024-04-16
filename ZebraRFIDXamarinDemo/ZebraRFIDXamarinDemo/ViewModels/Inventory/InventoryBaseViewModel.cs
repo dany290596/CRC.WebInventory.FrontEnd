@@ -58,6 +58,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
         }
 
+        bool isRunning = false;
+        public bool IsRunning
+        {
+            get { return isRunning; }
+            set
+            {
+                SetProperty(ref isRunning, value);
+            }
+        }
+
         protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChaged = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))

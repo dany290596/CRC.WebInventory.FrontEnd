@@ -344,15 +344,36 @@
       <Generator>
       </Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\pngwing.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\configurationuno.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\refresh.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\api.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\apiuno.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\backward.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\drawable\Web.gif" />
   </ItemGroup>
   <Import Project="..\ZebraRFIDXamarinDemo\WebInventory.projitems" Label="Shared" Condition="Exists('..\ZebraRFIDXamarinDemo\WebInventory.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

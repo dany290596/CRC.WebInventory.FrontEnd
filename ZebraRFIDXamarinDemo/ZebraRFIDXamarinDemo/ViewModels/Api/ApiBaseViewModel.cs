@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
-using ZebraRFIDXamarinDemo.Models.Login;
+using ZebraRFIDXamarinDemo.Models.Api;
+using static AndroidX.ConstraintLayout.Core.Motion.Utils.HyperSpline;
 
-namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
+namespace ZebraRFIDXamarinDemo.ViewModels.Api
 {
-    public class LoginBaseViewModel : INotifyPropertyChanged
+    public class ApiBaseViewModel : INotifyPropertyChanged
     {
-        private Login _login;
+        private Url _url;
         public INavigation Navigation { get; set; }
-        public Login Login
+        public Url Url
         {
-            get { return _login; }
-            set { _login = value; OnPropertyChanged(); }
+            get { return _url; }
+            set { _url = value; OnPropertyChanged(); }
         }
         bool isBusy = false;
         public bool IsBusy
@@ -23,15 +24,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
             set
             {
                 SetProperty(ref isBusy, value);
-            }
-        }
-        bool isRunning = false;
-        public bool IsRunning
-        {
-            get { return isRunning; }
-            set
-            {
-                SetProperty(ref isRunning, value);
             }
         }
 

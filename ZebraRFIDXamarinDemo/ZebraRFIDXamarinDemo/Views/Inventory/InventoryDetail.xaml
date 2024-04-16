@@ -217,7 +217,9 @@
                                 
                                 <StackLayout Orientation="Horizontal">
                                     <Button Text="Ver detalle" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.SeeDetailInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                                    <!--
                                     <Button Text="Inventariar" Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.InventoryInventoryCommand}" CommandParameter="{Binding .}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                                    -->
                                 </StackLayout>
                              </StackLayout>
                                  

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.ViewModels.AppShell;
+using ZebraRFIDXamarinDemo.Views.Api;
 using ZebraRFIDXamarinDemo.Views.Inventory;
 using ZebraRFIDXamarinDemo.Views.Person;
 using ZebraRFIDXamarinDemo.Views.Setting;

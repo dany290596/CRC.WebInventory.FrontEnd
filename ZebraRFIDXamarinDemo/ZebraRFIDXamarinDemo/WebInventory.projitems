@@ -63,6 +63,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Api\ApiIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -181,6 +185,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryQuerySpecial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLocationAssetQuery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\InventoryLoadCount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Api\ApiIndex.xaml.cs">
+      <DependentUpon>ApiIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Api\Url.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Api\ApiBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Api\ApiIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
@@ -209,5 +219,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Views\Shared\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Shared\" />
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Api\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Api\" />
   </ItemGroup>
 </Project>

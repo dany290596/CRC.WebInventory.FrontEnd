@@ -38,10 +38,13 @@
                         <Label Text="Es una herramienta." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
                         -->
                         
-                        <Label Text="Permite inventariar activos usando tecnología (RFID - UHF)." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <Label Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+
+                        <!--
                         <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
+                        -->
 
                         <Label Text="Tutorial" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />

@@ -15,16 +15,19 @@ using Xamarin.Essentials;
 using System.Linq;
 using ZebraRFIDXamarinDemo.Models.Sesion;
 using ZebraRFIDXamarinDemo.Controls;
+using ZebraRFIDXamarinDemo.Views.Api;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
 {
     public class LoginIndexViewModel : LoginBaseViewModel
     {
         public Command StartLoginCommand { get; }
+        public Command StartSettingCommand { get; }
 
         public LoginIndexViewModel(INavigation _navigation)
         {
             StartLoginCommand = new Command(OnStartLoginCommand);
+            StartSettingCommand = new Command(OnStartSettingCommand);
             Login = new Login();
             Navigation = _navigation;
         }
@@ -38,16 +41,20 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
         {
             try
             {
+                IsRunning = true;
+
                 var login = Login;
 
                 if (login.Email == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Mensaje", "Ingrese un correo", "Aceptar");
+                    IsRunning = false;
                     return;
                 }
                 if (login.Contrasena == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Mensaje", "Ingrese una contraseña", "Aceptar");
+                    IsRunning = false;
                     return;
                 }
                 Api<string> token = new Api<string>(false, "", 200, "");
@@ -67,6 +74,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
                 var responseLogin = await httpClient.PostAsync(uri + "login", requestLogin);
                 if (responseLogin.IsSuccessStatusCode)
                 {
+                    IsRunning = false;
                     if (responseLogin.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string contentLogin = responseLogin.Content.ReadAsStringAsync().Result;
@@ -126,13 +134,20 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
                 }
                 else
                 {
+                    IsRunning = false;
                     await Application.Current.MainPage.DisplayAlert("Mensaje", "El email y la contraseña son incorrectos", "Aceptar");
                 }
             }
             catch (Exception ex)
             {
+                IsRunning = false;
                 throw ex;
             }
+        }
+
+        private async void OnStartSettingCommand()
+        {
+            await Shell.Current.GoToAsync($"//{nameof(ApiIndex)}");
         }
     }
 }
