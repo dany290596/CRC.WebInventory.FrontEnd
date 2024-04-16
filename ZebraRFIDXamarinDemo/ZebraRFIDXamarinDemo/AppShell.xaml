@@ -59,11 +59,9 @@
         <ShellContent Route="DashboardIndex" ContentTemplate="{DataTemplate dashboard:DashboardIndex}" />
     </FlyoutItem>
     
-    <!--
     <FlyoutItem Title="Inventarios" Icon="list.png">
         <ShellContent Route="InventoryIndex" ContentTemplate="{DataTemplate inventory:InventoryIndex}" />
     </FlyoutItem>
-    -->
 
     <!--
     <FlyoutItem Title="Personas" Icon="tab_about.png">
@@ -71,11 +69,9 @@
     </FlyoutItem>
     -->
 
-    <!--
     <FlyoutItem Title="Configuración" Icon="configure.png">
         <ShellContent Route="SettingIndex" ContentTemplate="{DataTemplate setting:SettingIndex}"></ShellContent>
     </FlyoutItem>
-    -->
 
 
     <!--

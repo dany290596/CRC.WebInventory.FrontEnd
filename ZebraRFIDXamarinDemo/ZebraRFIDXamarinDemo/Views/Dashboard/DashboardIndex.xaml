@@ -34,8 +34,10 @@
                         <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
                         <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
                         <Label Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Es una herramienta." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
                         <!--
+                        <Label Text="Es una herramienta." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                        -->
+                        
                         <Label Text="Permite inventariar activos usando tecnología (RFID - UHF)." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
@@ -45,7 +47,7 @@
                         <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
-                        -->
+                        
                         <!--
                         <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
                         <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
