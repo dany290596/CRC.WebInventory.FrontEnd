@@ -31,7 +31,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
 
         protected void GoGoogle(object sender, EventArgs e)
         {
-            Device.OpenUri(new Uri("https://youtu.be/Ww_BThAdoVw"));
+            Device.OpenUri(new Uri("https://youtu.be/NWFOgVw8dGU"));
         }
     }
 }

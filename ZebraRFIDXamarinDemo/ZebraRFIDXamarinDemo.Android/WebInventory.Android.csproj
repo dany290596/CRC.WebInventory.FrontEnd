@@ -111,8 +111,8 @@
     <Compile Include="Controls\CustomLabelRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Firma\WebInventory_Keys\WebInventory.keyInfo" />
-    <None Include="Firma\WebInventory_Keys\WebInventory.keystore" />
+    <None Include="Firma\WebInventory_Keys\WebInventory.Net.keyInfo" />
+    <None Include="Firma\WebInventory_Keys\WebInventory.Net.keystore" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -345,28 +345,40 @@
       </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\pngwing.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\configurationuno.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\refresh.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\api.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\apiuno.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\backward.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
