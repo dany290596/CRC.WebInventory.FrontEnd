@@ -93,8 +93,8 @@
             
              <StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Button FontSize="Default" BackgroundColor="DarkOrange" TextColor="White" Text="Finalizar ubicación" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
-                    <Button BackgroundColor="DarkOrange" TextColor="White" Text="Actualizar activos" WidthRequest="160" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding SaveAssetCommand}" />
+                    <Button FontSize="Default" Text="Finalizar ubicación" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
+                    <Button FontSize="Default" Text="Actualizar activos" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding SaveAssetCommand}" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Total de activos: " TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>

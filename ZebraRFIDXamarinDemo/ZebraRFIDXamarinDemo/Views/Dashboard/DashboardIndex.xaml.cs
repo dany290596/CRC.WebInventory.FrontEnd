@@ -6,6 +6,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Views.Authorization;
 using ZebraRFIDXamarinDemo.ViewModels.Inventory;
+using ZebraRFIDXamarinDemo.Views.Inventory;
 
 namespace ZebraRFIDXamarinDemo.Views.Dashboard
 {
@@ -32,6 +33,11 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
         protected void GoGoogle(object sender, EventArgs e)
         {
             Device.OpenUri(new Uri("https://youtu.be/NWFOgVw8dGU"));
+        }
+
+        protected async void GoInventory(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"//{nameof(InventoryIndex)}");
         }
     }
 }

@@ -4,158 +4,180 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Inventory"
     xmlns:model="clr-namespace:ZebraRFIDXamarinDemo.Models.Startup"
-    x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryIndex">
+    x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryIndex"
+    xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects">
     <ContentPage.Content>
-
-
-          <AbsoluteLayout VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand">
-    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+        <AbsoluteLayout
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <ScrollView
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand">
-        <StackLayout BackgroundColor="White"
-                     Padding="30,0"
-                     Spacing="0">
-
-
-
-         <StackLayout Orientation="Vertical" Spacing="25" 
-           >
-               
-
-
-         <StackLayout Spacing="5">
-
-
-
-       
-
-            <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-             <!--
-             <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
-             <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding UploadInventoryCommand}" />
-             -->
-         </StackLayout>
-
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
-            <Button Text="Borrar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
-            <!--
-            <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
-            -->
-         </StackLayout>
-
-
-        <StackLayout>
-            <RefreshView x:DataType="local:InventoryIndexViewModel" Command="{Binding LoadInventoryCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
-            <CollectionView ItemsSource="{Binding InventoryData}" SelectionMode="None">
-                   <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout x:DataType="model:InventoryLocationAssetQuery">
-                               <SwipeView>
-                                    <SwipeView.RightItems>
-                                        <SwipeItem IsDestructive="True" Text="Cerrar" BackgroundColor="DarkGray"></SwipeItem>
-                                    </SwipeView.RightItems>
-                               <Grid>
-                                    <Frame CornerRadius="10" HasShadow="True">
-                                        <StackLayout Orientation="Horizontal">
-                                            <StackLayout>
-                                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-                                                    
-
-                                                    <Label Grid.Column="0" Grid.Row="0" Text="No. Inventario: " FontSize="Medium" FontAttributes="Bold"/>
-
-                                                    <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
-
-                                                    <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>                                                   
-                                                    <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
-                                     
-                                                    <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="4" HasShadow="False">
-                                                        <Label Text="Estado: " FontAttributes="Bold"/>
-                                                    </Frame>
-
-                                                    
-                                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventarioNoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
-                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                             
-                                                    <Frame Padding="0, 0, 0, 0" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                                        <Label HeightRequest="20" Margin="0" Text="{Binding InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
-                                                    </Frame>
-                                                   
-
-                                                </Grid>
-                                            </StackLayout>
-
-                                            <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">
-                                                <Image Source="view.png" Grid.Column="3" WidthRequest="30" HeightRequest="30" VerticalOptions="End">
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}},
-                                                        Path=DetailInventoryCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
-                                                    </Image.GestureRecognizers>
-                                                </Image>
-                                            </StackLayout>
-
-                                            <!--
-                                             <Frame
-    Padding="0"
-    BackgroundColor="#2196F3"
-    CornerRadius="7"
-    HasShadow="False">
-    <Frame
-        Margin="2"
-        Padding="5"
-        BackgroundColor="White"
-        CornerRadius="5"
-        HasShadow="False">
-        <Label
-            BackgroundColor="Transparent"
-            HorizontalOptions="Center"
-            Text="Border with curved corners"
-            TextColor="Black" />
-    </Frame>
-</Frame>
-                                            -->
-                                    </StackLayout>
-
-
-                                </Frame>
-
-                               
-
-                            </Grid>
-                            </SwipeView>
+                <StackLayout
+                    BackgroundColor="White"
+                    Padding="30,0"
+                    Spacing="0">
+                    <StackLayout
+                        Orientation="Vertical"
+                        Spacing="25" >
+                        <StackLayout
+                            Spacing="5">
+                            <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <!--
+                            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
+                            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding UploadInventoryCommand}" />
+                            -->
                         </StackLayout>
-                    </DataTemplate>
-                    </CollectionView.ItemTemplate>
-            </CollectionView>
-            </RefreshView>
-        </StackLayout>
 
-                       
-     
-       
-            </StackLayout>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+                            <Button Text="Limpiar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+                            <!--
+                            <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                            -->
+                        </StackLayout>
 
+                        <StackLayout>
+                            <RefreshView
+                                x:DataType="local:InventoryIndexViewModel"
+                                Command="{Binding LoadInventoryCommand}"
+                                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                                <CollectionView
+                                    ItemsSource="{Binding InventoryData}"
+                                    SelectionMode="None">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout
+                                                x:DataType="model:InventoryLocationAssetQuery">
+                                                <SwipeView>
+                                                    <SwipeView.RightItems>
+                                                        <SwipeItem
+                                                            IsDestructive="True"
+                                                            Text="Cerrar"
+                                                            BackgroundColor="DarkGray">
+                                                        </SwipeItem>
+                                                    </SwipeView.RightItems>
 
+                                                    <Grid>
+                                                        <Frame
+                                                            CornerRadius="10"
+                                                            HasShadow="True">
+                                                            <StackLayout
+                                                                Orientation="Horizontal">
+                                                                <StackLayout>
+                                                                    <Grid
+                                                                        RowDefinitions="Auto,Auto,Auto"
+                                                                        ColumnDefinitions="Auto,*,Auto"
+                                                                        RowSpacing="0">
+                                                                        <Label
+                                                                            Grid.Column="0"
+                                                                            Grid.Row="0"
+                                                                            Text="No. Inventario: "
+                                                                            FontSize="Medium"
+                                                                            FontAttributes="Bold"/>
 
-                     </StackLayout>
-    </ScrollView>
-    <AbsoluteLayout BackgroundColor="#22000000"
-                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                                                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
+
+                                                                        <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>                                                   
+                                                                        <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
+                                     
+                                                                        <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="4" HasShadow="False">
+                                                                            <Label Text="Estado: " FontAttributes="Bold"/>
+                                                                        </Frame>
+                                                    
+                                                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventarioNoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+                                                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
+                                                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+                                             
+                                                                        <Frame Padding="0, 0, 0, 0" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+                                                                        </Frame>
+                                                                    </Grid>
+                                                                </StackLayout>
+            
+                                                                <StackLayout VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                                                                    <xe:BorderView
+                                                                        HeightRequest="40"
+                                                                        WidthRequest="40"
+                                                                        HorizontalOptions="Center"
+                                                                        VerticalOptions="Center"
+                                                                        BackgroundColor="Transparent"
+                                                                        CornerRadius="1"
+                                                                        BorderColor="Transparent"
+                                                                        BorderWidth="2"
+                                                                        xe:TouchEffect.Color="DarkOrange"
+                                                                        xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}}, Path=DetailInventoryCommand}"
+                                                                        xe:Commands.TapParameter="{Binding .}">
+
+                                                                        <ImageButton
+                                                                            Aspect="AspectFit"
+                                                                            Source="view.png"
+                                                                            Grid.Column="3"
+                                                                            WidthRequest="40"
+                                                                            HeightRequest="40"
+                                                                            VerticalOptions="End"
+                                                                            BackgroundColor="#00000000"
+                                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}}, Path=DetailInventoryCommand}" CommandParameter="{Binding .}">
+                                                                            <!--
+                                                                            <Image.GestureRecognizers>
+                                                                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryIndexViewModel}},
+                                                                            Path=DetailInventoryCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                                                            </Image.GestureRecognizers>
+                                                                            -->
+
+                                                                        </ImageButton>
+                                                                    </xe:BorderView>
+                                                                </StackLayout>
+                                                                    
+
+                                                                <!--
+                                                                <Frame
+                                                                Padding="0"
+                                                                BackgroundColor="#2196F3"
+                                                                CornerRadius="7"
+                                                                HasShadow="False">
+                                                                <Frame
+                                                                Margin="2"
+                                                                Padding="5"
+                                                                BackgroundColor="White"
+                                                                CornerRadius="5"
+                                                                HasShadow="False">
+                                                                <Label
+                                                                BackgroundColor="Transparent"
+                                                                HorizontalOptions="Center"
+                                                                Text="Border with curved corners"
+                                                                TextColor="Black" />
+                                                                </Frame>
+                                                                </Frame>
+                                                                -->
+                                                            </StackLayout>
+                                                        </Frame>
+                                                    </Grid>
+                                                </SwipeView>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </RefreshView>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <AbsoluteLayout
+                BackgroundColor="#22000000"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsRunning}">
+                <ActivityIndicator
+                    Color="DarkOrange"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
                     AbsoluteLayout.LayoutFlags="All"
-                    IsVisible="{Binding IsRunning}">
-        <ActivityIndicator Color="DarkOrange"
-                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
-                           AbsoluteLayout.LayoutFlags="All"
-                           IsVisible="True"
-                           IsRunning="True"/>
-    </AbsoluteLayout>
-</AbsoluteLayout>
-
-
-
-
+                    IsVisible="True"
+                    IsRunning="True"/>
+            </AbsoluteLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

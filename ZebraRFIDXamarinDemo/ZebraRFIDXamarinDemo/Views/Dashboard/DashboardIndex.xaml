@@ -11,66 +11,50 @@
 
 
 
-     <StackLayout Orientation="Vertical" Spacing="25" 
-            Padding="30,0" >
-        <StackLayout Spacing="5">
-            <Label Text="Inicio" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+     <StackLayout
+        Orientation="Vertical"
+        Spacing="25" 
+        Padding="30,0" >
+            <StackLayout Spacing="5">
+                <Label Text="Inicio" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
            
-            <AbsoluteLayout x:Name="ViewControls1" AbsoluteLayout.LayoutBounds="1,1,1,.50" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#ffff" Margin="10,10,10,10">
-                <Frame CornerRadius="10" Margin="0,20,0,20" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1">
-                    <Grid Margin="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
-                        <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
-                        <Label Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <!--
-                        <Label Text="Es una herramienta." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
-                        -->
+                <AbsoluteLayout x:Name="ViewControls1" AbsoluteLayout.LayoutBounds="1,1,1,.50" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#ffff" Margin="10,10,10,10">
+                    <Frame CornerRadius="10" Margin="0,20,0,20" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1">
+                        <Grid Margin="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
+                            <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
+                            <Label Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
                         
-                        <Label Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Label Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
 
-                        <!--
-                        <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" />
-                        -->
+                            <Label Text="Tutorial" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Label Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Button Text="Inventarios" Clicked="GoInventory" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" />
+                       
+                        </Grid>
+                    </Frame>
 
-                        <Label Text="Tutorial" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
-                        
-                        <!--
-                        <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Automatiza el proceso de inventarios en activos." FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" />
-                        -->
-                        <!--
-                        <Label Text="Se integra mediante una Api para poder cargar los inventarios que se van a realizar. El inventario permite filtrar por varios filtros como son: localización, departamento y área." FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Automatiza el proceso de inventarios en activos." FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        <Label Text="Es compatible con dispositivos ZEBRA y otros fabricantes" FontAttributes="Bold" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        -->
-                    </Grid>
-                </Frame>
-
-                <Image Source="webinventory.png" 
-        BackgroundColor="Transparent"
-        AbsoluteLayout.LayoutFlags="PositionProportional"  
-        AbsoluteLayout.LayoutBounds=".5,0,50,50" />
-            </AbsoluteLayout>
-            
-        </StackLayout>
+                    <Image Source="webinventory.png" 
+                        BackgroundColor="Transparent"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"  
+                        AbsoluteLayout.LayoutBounds=".5,0,50,50" />
+                </AbsoluteLayout>
+            </StackLayout>
         
         
 
