@@ -33,6 +33,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
                             <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
@@ -43,8 +44,9 @@
                             <Label Text="Tutorial" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
                             <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />
                             <Label Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Button Text="Inventarios" Clicked="GoInventory" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Label Text="{Binding Status}" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Button Text="Inventarios" Clicked="GoInventory" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" />
                        
                         </Grid>
                     </Frame>
