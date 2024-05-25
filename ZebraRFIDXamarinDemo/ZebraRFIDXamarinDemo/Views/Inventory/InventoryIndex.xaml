@@ -53,6 +53,7 @@
                                             <StackLayout
                                                 x:DataType="model:InventoryLocationAssetQuery">
                                                 <SwipeView>
+                                                    <!--
                                                     <SwipeView.RightItems>
                                                         <SwipeItem
                                                             IsDestructive="True"
@@ -60,7 +61,7 @@
                                                             BackgroundColor="DarkGray">
                                                         </SwipeItem>
                                                     </SwipeView.RightItems>
-
+                                                    -->
                                                     <Grid>
                                                         <Frame
                                                             CornerRadius="10"

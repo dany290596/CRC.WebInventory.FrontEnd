@@ -21,11 +21,13 @@
             Spacing="25" 
             Padding="30, 30">
 
-            <Image Source="webinventory.png" HeightRequest="100" WidthRequest="100" />
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" >
 
-            <StackLayout Spacing="5">
-                <Grid>
-                    <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HasShadow="False">
+            <Image Grid.Row="0" Source="webinventory.png" HeightRequest="80" WidthRequest="80" />
+
+             
+
+                    <Frame Grid.Row="1" HasShadow="False">
                         <Label
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="CenterAndExpand"
@@ -36,7 +38,7 @@
                             HorizontalTextAlignment="Start" />
                     </Frame>
 
-                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="WebInventory - es una herramienta que ayuda a las personas que van a inventariar." FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" />
+                    
 
                     <!--
                     <Frame Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
@@ -52,9 +54,10 @@
                         </ImageButton>
                     </Frame>
                     -->
-                </Grid>
-            </StackLayout>
+           
 
+                   
+            <!--
             <StackLayout Orientation="Horizontal">
                 <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
                     <Image Source="person.png" HeightRequest="5" WidthRequest="5" />
@@ -62,26 +65,52 @@
                    
                 <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
                     <control:CustomEntry Text="{Binding Login.Email}" x:Name="txtEmail" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Ingrese su email*" Keyboard="Email"></control:CustomEntry>
-          <!--      <handlers:BorderlessEntry Text="{Binding Email}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="User Name" Keyboard="Email" />-->
                 </Frame>
             </StackLayout>
+            -->
+                        <Label Grid.Row="2" Text="WebInventory - es una herramienta que ayuda a las personas que van a inventariar." FontSize="Small" TextColor="Gray" HorizontalTextAlignment="Center" />
 
+                    <Frame Grid.Row="3" CornerRadius="10" HasShadow="False" BackgroundColor="#F1FAFF" Padding="0">
+                        <Grid RowDefinitions="Auto, Auto" Padding="15, 15, 15, 10" RowSpacing="0" ColumnDefinitions="Auto, *">
+                            <Label Text="Email" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextColor="Black"></Label>
+                            <Image Grid.Column="0" Grid.Row="1" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start" VerticalOptions="Center"
+                                   Source="person.png"></Image>
+                            <control:CustomEntry Grid.Row="1" Grid.Column="1" Text="{Binding Login.Email}" x:Name="txtEmail" HorizontalOptions="FillAndExpand" Keyboard="Email" Placeholder="Ingrese su email"></control:CustomEntry>
+                        </Grid>
+
+                    </Frame>
+
+            <!--
             <StackLayout Orientation="Horizontal">
                 <Frame BackgroundColor="White" HasShadow="True" BorderColor="White" HeightRequest="16" WidthRequest="16" CornerRadius="28">
                     <Image Source="security.png" HeightRequest="5" WidthRequest="5" />
                 </Frame>
                 <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White"  HorizontalOptions="FillAndExpand">
                     <control:CustomEntry Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Ingrese su contraseña*"></control:CustomEntry>
-                    <!--<handlers:BorderlessEntry Text="{Binding Password}" Margin="20,0,0,0" VerticalOptions="Center" Placeholder="Password" IsPassword="True" />-->
                 </Frame>
             </StackLayout>
+            -->
+            <Frame Grid.Row="4" CornerRadius="10" HasShadow="False" BackgroundColor="#F1FAFF" Margin="0, 20, 0, 0" Padding="0">
+                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" Padding="15, 15, 15, 10">
+                            <Label Text="Contraseña" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextColor="Black"></Label>
+                            <Image Grid.Column="0" Grid.Row="1" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start" VerticalOptions="Center"
+                                   Source="security.png"></Image>
+                            <control:CustomEntry Grid.Row="1" Grid.Column="1" Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su contraseña"></control:CustomEntry>
+                        </Grid>
 
-            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Ingresar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding StartLoginCommand}" />
+                    </Frame>
 
-            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
-                <Label Text="¿Has olvidado tu contraseña?" TextColor="Gray" />
+                        
+
+
+            <Button Grid.Row="5" BackgroundColor="DarkOrange" TextColor="White" Text="Ingresar"  CornerRadius="10" Margin="0, 20, 0, 0" Command="{Binding StartLoginCommand}" />
+
+            <StackLayout Grid.Row="6" Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
+                <Label Text="¿Olvidaste tu contraseña?" TextColor="Gray" />
                 <!--<Label Text="Registrate aquí" TextColor="#50b3f2" />-->
             </StackLayout>
+
+                        </Grid>
         </StackLayout>
     </Grid>
 
