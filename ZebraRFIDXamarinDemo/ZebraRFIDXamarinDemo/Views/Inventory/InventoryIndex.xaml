@@ -15,36 +15,50 @@
                 AbsoluteLayout.LayoutFlags="All"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand">
-                <StackLayout
-                    BackgroundColor="White"
-                    Padding="30,0"
-                    Spacing="0">
+                <Grid RowDefinitions="Auto, Auto">
                     <StackLayout
-                        Orientation="Vertical"
-                        Spacing="25" >
-                        <StackLayout
-                            Spacing="5">
-                            <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <!--
-                            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
-                            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding UploadInventoryCommand}" />
-                            -->
-                        </StackLayout>
+                        Grid.Row="0"
+                        BackgroundColor="White"
+                        Padding="30,0"
+                        Spacing="0">
+                        <Grid RowDefinitions="Auto">
+                            <StackLayout
+                                Grid.Row="0"
+                                Orientation="Vertical"
+                                Spacing="25">
+                                <Grid RowDefinitions="Auto">
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Spacing="5">
+                                        <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                        <!--
+                                        <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
+                                        <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding UploadInventoryCommand}" />
+                                        -->
+                                    </StackLayout>
 
-                        <StackLayout
-                            Orientation="Horizontal">
-                            <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
-                            <Button Text="Limpiar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
-                            <!--
-                            <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
-                            -->
-                        </StackLayout>
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Orientation="Horizontal">
+                                        <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+                                        <Button Text="Limpiar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+                                        <!--
+                                        <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
+                                        -->
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
 
-                        <StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Padding="20,0,20,0">
                             <RefreshView
                                 x:DataType="local:InventoryIndexViewModel"
                                 Command="{Binding LoadInventoryCommand}"
-                                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                                Padding="0">
                                 <CollectionView
                                     ItemsSource="{Binding InventoryData}"
                                     SelectionMode="None">
@@ -65,7 +79,8 @@
                                                     <Grid>
                                                         <Frame
                                                             CornerRadius="10"
-                                                            HasShadow="True">
+                                                            HasShadow="True"
+                                                            Padding="10">
                                                             <StackLayout
                                                                 Orientation="Horizontal">
                                                                 <StackLayout>
@@ -85,7 +100,7 @@
                                                                         <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>                                                   
                                                                         <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
                                      
-                                                                        <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="4" HasShadow="False">
+                                                                        <Frame Padding="0" Grid.Column="0" Grid.Row="4" HasShadow="False">
                                                                             <Label Text="Estado: " FontAttributes="Bold"/>
                                                                         </Frame>
                                                     
@@ -93,7 +108,7 @@
                                                                         <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventarioDescripcion}" TextColor="Silver" FontAttributes="Bold"></Label>                                                   
                                                                         <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventarioFechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
                                              
-                                                                        <Frame Padding="0, 0, 0, 0" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+                                                                        <Frame Padding="0" HeightRequest="10" BackgroundColor="{Binding InventarioEstadoColor}" HorizontalOptions="Start" WidthRequest="80" CornerRadius="10" Grid.Column="1" Grid.Row="4" HasShadow="True">
                                                                             <Label HeightRequest="20" Margin="0" Text="{Binding InventarioEstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
                                                                         </Frame>
                                                                     </Grid>
@@ -163,9 +178,9 @@
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
                             </RefreshView>
-                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                    
+                </Grid>
             </ScrollView>
             <AbsoluteLayout
                 BackgroundColor="#22000000"

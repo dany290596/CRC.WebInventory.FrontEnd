@@ -18,85 +18,101 @@
     </ContentPage.Behaviors>
 
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Spacing="25" 
-            Padding="30,0" >
+        <ScrollView 
+        BackgroundColor="Transparent"
+        HeightRequest="200"
+        IsEnabled="True"
+        VerticalScrollBarVisibility="Always">
 
-        <StackLayout Spacing="5">
-            <Label Text="Lista - Activos" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-            <!--
-            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding SaveAssetCommand}" />
-            -->
-        </StackLayout>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="25" 
+            Padding="30,0">
 
+            <StackLayout Spacing="5">
+                <Grid
+                    RowDefinitions="Auto, Auto, Auto, Auto">
+
+                <Label
+                        Grid.Row="0"
+                        Text="Lista - Activos" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                 <!--
-            <StackLayout>
-               <StackLayout>
-                            <Label Text="Datos del inventario" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
-                        </StackLayout>      
- <Frame CornerRadius="20" HasShadow="True">
-                        <StackLayout>
-                       
-<StackLayout Orientation="Horizontal">
-                                   <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-
-                                        <Label Grid.Column="0" Grid.Row="0" Text="No. Inventario: " FontSize="Medium" FontAttributes="Bold"/>
-                                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
-                                        <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>
-                                        
-                                        <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
-                                        <Frame Padding="0" Margin="15" Grid.Column="0" Grid.Row="4" HasShadow="False">
-                                            <Label Text="Estado: " FontAttributes="Bold"/>
-                                        </Frame>
-
-
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventorySync.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
-                                        <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventorySync.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
-                                            <Label HeightRequest="20" Margin="0" Text="{Binding InventorySync.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
-                                        </Frame>
-
-                                    </Grid>
-                             <StackLayout>
-                                        </StackLayout>
-                                    </StackLayout>
-                            </StackLayout>
-                                </Frame>
-                         
-             </StackLayout>
-
+                <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding SaveAssetCommand}" />
                 -->
-
-                <!--
-             <StackLayout>
-                <StackLayout>
-                            <Label Text="Datos del colaborador" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
-                        </StackLayout>
-                              <Frame Margin="0, 0, 0, 0" HasShadow="True" CornerRadius="20" >
-                                 <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                   <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-
-                                        <Label Grid.Column="0" Grid.Row="0" Text="No. Empleado: " FontAttributes="Bold"/>
-                                        <Label Grid.Column="0" Grid.Row="1" Text="Nombre: " FontAttributes="Bold"/>
-                                        
-                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.ColaboradorResponsable.NumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
-                                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventorySync.ColaboradorResponsable.CollaboratorName}" TextColor="Silver" FontAttributes="Bold"/>
-
-                                   </Grid>
-                                   </StackLayout>
-                                 </StackLayout>
-                               </Frame>
-             </StackLayout>
-                -->
-
             
-             <StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Button FontSize="Default" Text="Finalizar ubicación" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding FinalizeLocationCommand}" />
-                    <Button FontSize="Default" Text="Actualizar activos" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding SaveAssetCommand}" />
+
+            <!--
+            <StackLayout>
+            <StackLayout>
+            <Label Text="Datos del inventario" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
+            </StackLayout>      
+            <Frame CornerRadius="20" HasShadow="True">
+            <StackLayout>
+                       
+            <StackLayout Orientation="Horizontal">
+            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
+
+            <Label Grid.Column="0" Grid.Row="0" Text="No. Inventario: " FontSize="Medium" FontAttributes="Bold"/>
+            <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" HorizontalOptions="Fill" />
+            <Label Grid.Column="0" Grid.Row="2" Text="Descripción: " FontAttributes="Bold"/>
+                                        
+            <Label Grid.Column="0" Grid.Row="3" Text="Fecha: " FontAttributes="Bold"/>
+            <Frame Padding="0" Margin="15" Grid.Column="0" Grid.Row="4" HasShadow="False">
+            <Label Text="Estado: " FontAttributes="Bold"/>
+            </Frame>
+
+
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.NoInventario}" FontSize="Medium" TextColor="Silver" FontAttributes="Bold"></Label>
+            <Label Grid.Column="1" Grid.Row="2" Text="{Binding InventorySync.Descripcion}" TextColor="Silver" FontAttributes="Bold"></Label>
+            <Label Grid.Column="1" Grid.Row="3" Text="{Binding InventorySync.FechaInventario, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="Silver" FontAttributes="Bold"></Label>
+            <Frame Padding="0" Margin="10" HeightRequest="10" BackgroundColor="{Binding InventorySync.EstadoColor}" CornerRadius="100" Grid.Column="1" Grid.Row="4" HasShadow="True">
+            <Label HeightRequest="20" Margin="0" Text="{Binding InventorySync.EstadoNombre}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="White" FontAttributes="Bold"></Label>
+            </Frame>
+
+            </Grid>
+            <StackLayout>
+            </StackLayout>
+            </StackLayout>
+            </StackLayout>
+            </Frame>
+                         
+            </StackLayout>
+
+            -->
+
+            <!--
+            <StackLayout>
+            <StackLayout>
+            <Label Text="Datos del colaborador" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold"></Label>
+            </StackLayout>
+            <Frame Margin="0, 0, 0, 0" HasShadow="True" CornerRadius="20" >
+            <StackLayout>
+            <StackLayout Orientation="Horizontal">
+            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
+
+            <Label Grid.Column="0" Grid.Row="0" Text="No. Empleado: " FontAttributes="Bold"/>
+            <Label Grid.Column="0" Grid.Row="1" Text="Nombre: " FontAttributes="Bold"/>
+                                        
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding InventorySync.ColaboradorResponsable.NumEmpleado}" TextColor="Silver" FontAttributes="Bold"/> 
+            <Label Grid.Column="1" Grid.Row="1" Text="{Binding InventorySync.ColaboradorResponsable.CollaboratorName}" TextColor="Silver" FontAttributes="Bold"/>
+
+            </Grid>
+            </StackLayout>
+            </StackLayout>
+            </Frame>
+            </StackLayout>
+            -->
+
+         
+                <StackLayout
+                        Grid.Row="1"
+                        Orientation="Horizontal">
+                    <Button WidthRequest="120" FontSize="Default" Text="Finalizar ubicación" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding FinalizeLocationCommand}" />
+                    <Button WidthRequest="120" FontSize="Default" Text="Actualizar activos" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding SaveAssetCommand}" />
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout
+                        Grid.Row="2"
+                        Orientation="Horizontal">
                     <Label Text="Total de activos: " TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                     <Label Text="{Binding ListAsset.Count}" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
@@ -123,7 +139,9 @@
                                                     -->
                                            
                                                 
-                                                    <ListView x:Name="listAsset" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
+                                                    <ListView
+                        Grid.Row="3"
+                        x:Name="listAsset" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
                                                         <ListView.ItemTemplate>
 
                                                             <DataTemplate>
@@ -146,26 +164,33 @@
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Total de activos: 1" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                                                                     -->
-                                                                    
-                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Descripción: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Código: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Marca: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Serie: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Estado fisico: " FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: " FontAttributes="Bold"/>
+
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Descripción: "/>
+                                                                    -->
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Código: "/>
+                                                                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Marca: "/>
+                                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Serie: "/>
+                                                                    <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Estado fisico: "/>
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: "/>
+                                                                    -->
                                                                 
-                                                                    <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Text="Estatus correcto: " FontAttributes="Bold"></Label>
+                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Estatus correcto: "></Label>
                                                                 
 
-                                                       
+                                                                    <!--
                                                                     <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Codigo}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Marca}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding Serie}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    -->
+                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Codigo}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Marca}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Serie}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <!--
                                                                     <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    -->
                                                                     
-                                                                    <Label Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                 
                                                                     
                                                                     
@@ -198,23 +223,24 @@
                                                                     </Grid>
                                                                     </StackLayout>
                                                                     <StackLayout Orientation="Horizontal">
-                                                                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="0">
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Label Text="¿Estatus correcto? " FontAttributes="Bold"></Label>
-                                                                            </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Label Text="¿Observaciones? " FontAttributes="Bold"></Label>
-                                                                            </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Label Text="¿Motivo? " FontAttributes="Bold"></Label>
-                                                                            </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" HasShadow="False">
-                                                                                <Label Text="¿Estado físico? " FontAttributes="Bold"></Label>
-                                                                            </Frame>
+                                                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+                                                                           
+                                                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="¿Estatus correcto? "></Label>
+                                                                          
+                                                                            
+                                                                                <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="¿Observaciones? "></Label>
+                                                                         
+                                                                            
+                                                                                <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="¿Motivo? "></Label>
+                                                                            
+                                                                           
+                                                                                <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="¿Estado físico? "></Label>
+                                                                         
                                                                             
 
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" HasShadow="False">
+                                                                       
                                                                                 <Switch
+                                                                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1"
                                                                                     OnColor="DarkOrange"
                                                                                     ThumbColor="DarkOrange"
                                                                                     HorizontalOptions="CenterAndExpand"
@@ -228,20 +254,22 @@
                                                                                         </behaviors:EventToCommandBehaviorView>
                                                                                     </Switch.Behaviors>
                                                                                 </Switch>
-                                                                            </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" HasShadow="False">
+                                                                          
+                                                                       
                                                                                 <Entry
+                                                                    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
                                                                                     Text="{Binding Observaciones}"
                                                                                     Placeholder=""
                                                                                     FontSize="Medium"
-                                                                                    WidthRequest="200"></Entry>
-                                                                            </Frame>
-                                                                            <Frame Padding="0, 0, 0, 0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" HasShadow="False" HorizontalOptions="CenterAndExpand">
+                                                                                    ></Entry>
+                                                                           
+                                                                       
                                                                                 <Picker
+                                                                Grid.Column="0"
+                                                                Grid.Row="4"
+                                                                Grid.ColumnSpan="2"
                                                                                     Margin="0,0,0,0"
-                                                                                    HorizontalOptions="CenterAndExpand"
-                                                                                    VerticalOptions="Center"
-                                                                                    WidthRequest="200"
+                                                                                    
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
@@ -256,17 +284,13 @@
                                                                                         </behaviors:EventToCommandBehavior>
                                                                                     </Picker.Behaviors>
                                                                                 </Picker>
-                                                                            </Frame>
-                                                                            <Frame
-                                                                                Padding="0, 0, 0, 0"
-                                                                                Grid.Column="1"
-                                                                                Grid.Row="3"
-                                                                                Grid.ColumnSpan="1"
-                                                                                HasShadow="False">
+                                                                           
+                                                                            
                                                                                 <Picker
-                                                                                    HorizontalOptions="CenterAndExpand"
-                                                                                    VerticalOptions="CenterAndExpand"
-                                                                                    WidthRequest="200"
+                                                                                    Grid.Column="0"
+                                                                                Grid.Row="6"
+                                                                                Grid.ColumnSpan="2"
+                                                                                    
 
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerItems}"
@@ -290,7 +314,7 @@
                                                                                 </Picker.Behaviors>
                                                                                 
                                                                                 </Picker>
-                                                                            </Frame>
+                                                                        
                                                                         </Grid>
                                                                     </StackLayout>
                                                                     <!--
@@ -313,8 +337,10 @@
                                                                 
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
-                                                    </ListView>        
+                                                    </ListView>
+                </Grid>
             </StackLayout>
-            </StackLayout>
+        </StackLayout>
+            </ScrollView>
     </ContentPage.Content>
 </ContentPage>

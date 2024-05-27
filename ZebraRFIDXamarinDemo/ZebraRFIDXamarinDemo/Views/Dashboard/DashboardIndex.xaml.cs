@@ -60,7 +60,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                                 {
                                     Console.Out.WriteLine("Lector conectado");
                                     Status = "Lector conectado";
-                                    //ConfigureReader();
+                                    ConfigureReader();
                                 }
                                 else
                                 {
@@ -89,22 +89,125 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
             });
         }
 
+        private void ConfigureReader()
+        {
+            if (Reader.IsConnected)
+            {
+                TriggerInfo triggerInfo = new TriggerInfo();
+                triggerInfo.StartTrigger.TriggerType = START_TRIGGER_TYPE.StartTriggerTypeImmediate;
+                triggerInfo.StopTrigger.TriggerType = STOP_TRIGGER_TYPE.StopTriggerTypeImmediate;
+                try
+                {
+                    // receive events from reader
+                    if (eventHandler == null)
+                    {
+                        eventHandler = new EventHandler(Reader);
+                    }
+
+                    Reader.Events.AddEventsListener(eventHandler);
+                    // HH event
+                    Reader.Events.SetHandheldEvent(true);
+                    // tag event with tag data
+                    Reader.Events.SetTagReadEvent(true);
+                    Reader.Events.SetAttachTagDataWithReadEvent(false);
+                    // set trigger mode as rfid so scanner beam will not come
+                    Reader.Config.SetTriggerMode(ENUM_TRIGGER_MODE.RfidMode, true);
+                    // set start and stop triggers
+                    Reader.Config.StartTrigger = triggerInfo.StartTrigger;
+                    Reader.Config.StopTrigger = triggerInfo.StopTrigger;
+                }
+                catch (InvalidUsageException e)
+                {
+                    e.PrintStackTrace();
+                }
+                catch (OperationFailureException e)
+                {
+                    e.PrintStackTrace();
+                }
+            }
+        }
+
+
+        // Read/Status Notify handler
+        // Implement the RfidEventsLister class to receive event notifications
         public class EventHandler : Java.Lang.Object, IRfidEventsListener
         {
             public EventHandler(RFIDReader Reader)
             {
+
             }
             // Read Event Notification
             public void EventReadNotify(RfidReadEvents e)
             {
                 TagData[] myTags = Reader.Actions.GetReadTags(100);
+                if (myTags != null)
+                {
+                    for (int index = 0; index < myTags.Length; index++)
+                    {
+                        Console.Out.WriteLine("Tag ID " + myTags[index].TagID);
+                        if (myTags[index].OpCode ==
+                                ACCESS_OPERATION_CODE.AccessOperationRead &&
+                                myTags[index].OpStatus ==
+                                        ACCESS_OPERATION_STATUS.AccessSuccess)
+                        {
+                            if (myTags[index].MemoryBankData.Length > 0)
+                            {
+                                Console.Out.WriteLine(" Mem Bank Data " + myTags[index].MemoryBankData);
+                            }
+                        }
+                    }
+                }
             }
 
             // Status Event Notification
             public void EventStatusNotify(RfidStatusEvents rfidStatusEvents)
             {
+                Console.Out.WriteLine("Status Notification: " + rfidStatusEvents.StatusEventData.StatusEventType);
+                if (rfidStatusEvents.StatusEventData.StatusEventType == STATUS_EVENT_TYPE.HandheldTriggerEvent)
+                {
+                    if (rfidStatusEvents.StatusEventData.HandheldTriggerEventData.HandheldEvent ==
+                            HANDHELD_TRIGGER_EVENT_TYPE.HandheldTriggerPressed)
+                    {
+                        ThreadPool.QueueUserWorkItem(o =>
+                        {
+                            try
+                            {
+                                Reader.Actions.Inventory.Perform();
+                            }
+                            catch (InvalidUsageException e)
+                            {
+                                e.PrintStackTrace();
+                            }
+                            catch (OperationFailureException e)
+                            {
+                                e.PrintStackTrace();
+                            }
+                        });
+
+                    }
+                    if (rfidStatusEvents.StatusEventData.HandheldTriggerEventData.HandheldEvent ==
+                            HANDHELD_TRIGGER_EVENT_TYPE.HandheldTriggerReleased)
+                    {
+                        ThreadPool.QueueUserWorkItem(o =>
+                        {
+                            try
+                            {
+                                Reader.Actions.Inventory.Stop();
+                            }
+                            catch (InvalidUsageException e)
+                            {
+                                e.PrintStackTrace();
+                            }
+                            catch (OperationFailureException e)
+                            {
+                                e.PrintStackTrace();
+                            }
+                        });
+                    }
+                }
             }
         }
+
 
         protected override async void OnAppearing()
         {
