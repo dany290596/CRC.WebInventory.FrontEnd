@@ -15,10 +15,10 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
 {
     public partial class DashboardIndex : ContentPage
     {
-        private static Readers readers;
-        private static IList availableRFIDReaderList;
-        private static ReaderDevice readerDevice;
-        private static RFIDReader Reader;
+        private Readers readers;
+        private IList<ReaderDevice> availableRFIDReaderList = new List<ReaderDevice>();
+        private ReaderDevice readerDevice;
+        private RFIDReader Reader;
         private EventHandler eventHandler;
         private string _status;
         public string Status { get => _status; set { _status = value; OnPropertyChanged(); } }
@@ -46,13 +46,13 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                     if (readers != null && readers.AvailableRFIDReaderList != null)
                     {
                         availableRFIDReaderList =
-                            (IList)readers.AvailableRFIDReaderList;
+                            readers.AvailableRFIDReaderList;
                         if (availableRFIDReaderList.Count > 0)
                         {
                             if (Reader == null)
                             {
                                 // get first reader from list
-                                readerDevice = (ReaderDevice)availableRFIDReaderList[0];
+                                readerDevice = availableRFIDReaderList[0];
                                 Reader = readerDevice.RFIDReader;
                                 // Establish connection to the RFID Reader
                                 Reader.Connect();
@@ -60,7 +60,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                                 {
                                     Console.Out.WriteLine("Lector conectado");
                                     Status = "Lector conectado";
-                                    ConfigureReader();
+                                    //ConfigureReader();
                                 }
                                 else
                                 {
@@ -89,6 +89,9 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
             });
         }
 
+
+
+        /*
         private void ConfigureReader()
         {
             if (Reader.IsConnected)
@@ -207,7 +210,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                 }
             }
         }
-
+        */
 
         protected override async void OnAppearing()
         {
