@@ -10,6 +10,7 @@ using ZebraRFIDXamarinDemo.Views.Inventory;
 using Com.Zebra.Rfid.Api3;
 using System.Collections;
 using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace ZebraRFIDXamarinDemo.Views.Dashboard
 {
@@ -18,10 +19,29 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
         private Readers readers;
         private IList<ReaderDevice> availableRFIDReaderList = new List<ReaderDevice>();
         private ReaderDevice readerDevice;
-        private RFIDReader Reader;
+        private static RFIDReader Reader;
         private EventHandler eventHandler;
         private string _status;
         public string Status { get => _status; set { _status = value; OnPropertyChanged(); } }
+        bool isRunning = false;
+        public bool IsRunning
+        {
+            get { return isRunning; }
+            set
+            {
+                SetProperty(ref isRunning, value);
+            }
+        }
+        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChaged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChaged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
 
         InventoryIndexViewModel inventoryIndexViewModel;
         public DashboardIndex()
@@ -39,10 +59,12 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
 
         private void GetAvailableReaders()
         {
+            IsRunning = true;
             ThreadPool.QueueUserWorkItem(o =>
             {
                 try
                 {
+                    IsRunning = false;
                     if (readers != null && readers.AvailableRFIDReaderList != null)
                     {
                         availableRFIDReaderList =
@@ -60,7 +82,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                                 {
                                     Console.Out.WriteLine("Lector conectado");
                                     Status = "Lector conectado";
-                                    //ConfigureReader();
+                                    ConfigureReader();
                                 }
                                 else
                                 {
@@ -78,10 +100,12 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                 }
                 catch (InvalidUsageException e)
                 {
+                    IsRunning = false;
                     e.PrintStackTrace();
                 }
                 catch (OperationFailureException e)
                 {
+                    IsRunning = false;
                     e.PrintStackTrace();
                     Console.Out.WriteLine("OperationFailureException " + e.VendorMessage);
                     Status = "OperationFailureException " + e.VendorMessage;
@@ -89,9 +113,6 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
             });
         }
 
-
-
-        /*
         private void ConfigureReader()
         {
             if (Reader.IsConnected)
@@ -130,7 +151,6 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
             }
         }
 
-
         // Read/Status Notify handler
         // Implement the RfidEventsLister class to receive event notifications
         public class EventHandler : Java.Lang.Object, IRfidEventsListener
@@ -139,6 +159,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
             {
 
             }
+
             // Read Event Notification
             public void EventReadNotify(RfidReadEvents e)
             {
@@ -210,7 +231,16 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                 }
             }
         }
-        */
+
+        protected async void GoConnect(object sender, EventArgs e)
+        {
+            // SDK
+            if (readers == null)
+            {
+                readers = new Readers(Android.App.Application.Context, ENUM_TRANSPORT.ServiceSerial);
+            }
+            GetAvailableReaders();
+        }
 
         protected override async void OnAppearing()
         {

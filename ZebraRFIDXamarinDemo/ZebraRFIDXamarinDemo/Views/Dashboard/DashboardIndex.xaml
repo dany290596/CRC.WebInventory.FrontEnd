@@ -9,20 +9,27 @@
     </ContentPage.ToolbarItems>
     -->
 
+    <AbsoluteLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
     <ScrollView 
-        BackgroundColor="Transparent"
-        HeightRequest="200"
-        IsEnabled="True"
-        VerticalScrollBarVisibility="Always">
+        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+            <Grid RowDefinitions="Auto">
         <StackLayout
+            Grid.Row="0"
             HeightRequest="600"
             VerticalOptions="Fill"
-            Spacing="25" 
-            Padding="30,0">
-            <StackLayout Spacing="5">
-                <Label Text="Inicio" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                <AbsoluteLayout x:Name="ViewControls1" AbsoluteLayout.LayoutBounds="1,1,1,.50" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#ffff" Margin="10,10,10,10">
-                    <Frame CornerRadius="10" Margin="0,20,0,20" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1">
+            Spacing="0" 
+            Padding="20, 0">
+                <Grid RowDefinitions="Auto, Auto">
+
+                <Label Grid.Row="0" Text="Inicio" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                <AbsoluteLayout Grid.Row="1" x:Name="ViewControls1" AbsoluteLayout.LayoutBounds="1,1,1,.50" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#ffff" Margin="10,10,10,10">
+                    <Frame CornerRadius="10" Margin="0, 20, 0, 20" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1">
                         <Grid Margin="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -38,18 +45,16 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="0" />
-                            <Label Text="" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Column="2" />
-                            <Label Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                        
-                            <Label Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
 
-                            <Label Text="Tutorial" FontSize="Medium" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Label Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Label Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Label Text="{Binding Status}" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Button Text="Acceder al tutorial" Clicked="GoGoogle" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <Button Text="Inventarios" Clicked="GoInventory" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="Tutorial" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Status}" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
+                            <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="Acceder al tutorial" Clicked="GoGoogle" />
+                            <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Text="Inventarios" Clicked="GoInventory" />
+                            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="Conectar" Clicked="GoConnect" />
                        
                         </Grid>
                     </Frame>
@@ -59,7 +64,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional"  
                         AbsoluteLayout.LayoutBounds=".5,0,50,50" />
                 </AbsoluteLayout>
-            </StackLayout>
+                        </Grid>
+          
         <!-- <Grid VerticalOptions="FillAndExpand">-->
         <!--
         <Grid.RowDefinitions>
@@ -154,5 +160,18 @@
         -->
         <!-- </Grid> -->
         </StackLayout>
+                </Grid>
     </ScrollView>
+
+        <AbsoluteLayout BackgroundColor="#22000000"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    IsVisible="{Binding IsRunning}">
+        <ActivityIndicator Color="DarkOrange"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
+                           AbsoluteLayout.LayoutFlags="All"
+                           IsVisible="True"
+                           IsRunning="True"/>
+    </AbsoluteLayout>
+</AbsoluteLayout>
 </ContentPage>
