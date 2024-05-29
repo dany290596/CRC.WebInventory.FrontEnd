@@ -23,6 +23,9 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
         private EventHandler eventHandler;
         private string _status;
         public string Status { get => _status; set { _status = value; OnPropertyChanged(); } }
+        public string _tag;
+        public string Tag { get => _tag; set { _tag = value; OnPropertyChanged(); } }
+
         bool isRunning = false;
         public bool IsRunning
         {
@@ -60,7 +63,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
         private void GetAvailableReaders()
         {
             IsRunning = true;
-            ThreadPool.QueueUserWorkItem(o =>
+            ThreadPool.QueueUserWorkItem(async o =>
             {
                 try
                 {
@@ -82,12 +85,14 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                                 {
                                     Console.Out.WriteLine("Lector conectado");
                                     Status = "Lector conectado";
+                                    // await Application.Current.MainPage.DisplayAlert("Status: ", Status, "Aceptar");
                                     ConfigureReader();
                                 }
                                 else
                                 {
                                     Console.Out.WriteLine("Lector desconectado");
                                     Status = "Lector desconectado";
+                                    // await Application.Current.MainPage.DisplayAlert("Status: ", Status, "Aceptar");
                                 }
                             }
                         }
@@ -95,6 +100,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                         {
                             Console.Out.WriteLine("Lector fuera de línea");
                             Status = "Lector fuera de línea";
+                            // await Application.Current.MainPage.DisplayAlert("Status: ", Status, "Aceptar");
                         }
                     }
                 }
@@ -109,6 +115,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                     e.PrintStackTrace();
                     Console.Out.WriteLine("OperationFailureException " + e.VendorMessage);
                     Status = "OperationFailureException " + e.VendorMessage;
+                    // await Application.Current.MainPage.DisplayAlert("Status: ", Status, "Aceptar");
                 }
             });
         }
@@ -169,6 +176,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                     for (int index = 0; index < myTags.Length; index++)
                     {
                         Console.Out.WriteLine("Tag ID " + myTags[index].TagID);
+                        
                         if (myTags[index].OpCode ==
                                 ACCESS_OPERATION_CODE.AccessOperationRead &&
                                 myTags[index].OpStatus ==
