@@ -71,7 +71,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
 
                 var jsonLogin = JsonConvert.SerializeObject(login);
                 var requestLogin = new StringContent(jsonLogin, Encoding.UTF8, "application/json");
-                var responseLogin = await httpClient.PostAsync(uri + "login", requestLogin);
+                var responseLogin = await httpClient.PostAsync(uri + "Login", requestLogin);
                 if (responseLogin.IsSuccessStatusCode)
                 {
                     IsRunning = false;

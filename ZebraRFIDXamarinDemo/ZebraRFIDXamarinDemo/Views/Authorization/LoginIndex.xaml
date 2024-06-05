@@ -95,7 +95,7 @@
                             <Label Text="Contraseña" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextColor="Black"></Label>
                             <Image Grid.Column="0" Grid.Row="1" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start" VerticalOptions="Center"
                                    Source="security.png"></Image>
-                            <control:CustomEntry Grid.Row="1" Grid.Column="1" Text="{Binding Login.Contrasena}" x:Name="txtPassword" IsPassword="True" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su contraseña"></control:CustomEntry>
+                            <control:CustomEntry Grid.Row="1" Grid.Column="1" Text="{Binding Login.Contrasena}" x:Name="txtPassword" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su contraseña"></control:CustomEntry>
                         </Grid>
 
                     </Frame>
