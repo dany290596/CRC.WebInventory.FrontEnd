@@ -38,5 +38,36 @@ namespace ZebraRFIDXamarinDemo.Droid
             Xamarin.Essentials.Platform.Init(this, bundle);
             LoadApplication(new App());
         }
+
+        internal void CheckBTPermission(Action<bool> onRequestPermissionsResult)
+        {
+            _onRequestPermissionsResult = onRequestPermissionsResult;
+
+            if (Build.VERSION.SdkInt <= BuildVersionCodes.R)
+            {
+                if (_onRequestPermissionsResult != null)
+                {
+                    _onRequestPermissionsResult(true);
+                    _onRequestPermissionsResult = null;
+                }
+            }
+            else
+            {
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.BluetoothConnect) == (int)Permission.Granted)
+                {
+                    if (_onRequestPermissionsResult != null)
+                    {
+                        _onRequestPermissionsResult(true);
+                        _onRequestPermissionsResult = null;
+                    }
+                }
+                else
+                {
+                    var permissions = new string[] { Manifest.Permission.BluetoothConnect, Manifest.Permission.BluetoothScan };
+                    RequestPermissions(permissions, BLUETOOTH_PERMISSION_REQUEST_CODE);
+                }
+            }
+        }
+
     }
 }

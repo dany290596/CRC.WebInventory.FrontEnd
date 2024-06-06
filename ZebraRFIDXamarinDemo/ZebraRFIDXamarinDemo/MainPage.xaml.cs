@@ -12,13 +12,17 @@ namespace ZebraRFIDXamarinDemo
 	public partial class MainPage : ContentPage
 	{
 		public ObservableCollection<string> Items { get; set; }
+        private Models.Reader.Reader rfidModel;
+
 		public MainPage()
 		{
 			InitializeComponent();
-		}
+            rfidModel = Models.Reader.Reader.readerModel;
+        }
 
 		internal void OnResume()
 		{
+			rfidModel?.SetTriggerMode();
             Console.WriteLine("OnResume");
 		}
 

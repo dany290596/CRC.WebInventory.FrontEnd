@@ -67,6 +67,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Tag\TagIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -191,6 +195,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Api\Url.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Api\ApiBaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Api\ApiIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Tag\TagIndex.xaml.cs">
+      <DependentUpon>TagIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Tag\TagIndexViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Tag\TagBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tag\Tag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\Reader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\AppConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\Scanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\BarcodeTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
@@ -221,5 +235,9 @@
     <Folder Include="$(MSBuildThisFileDirectory)Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\Api\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Api\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\Tag\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Tag\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Tag\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Reader\" />
   </ItemGroup>
 </Project>

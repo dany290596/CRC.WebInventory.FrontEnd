@@ -8,6 +8,7 @@
     xmlns:loading="clr-namespace:ZebraRFIDXamarinDemo.Views.Shared"
     xmlns:setting="clr-namespace:ZebraRFIDXamarinDemo.Views.Setting"
     xmlns:inventory="clr-namespace:ZebraRFIDXamarinDemo.Views.Inventory"
+    xmlns:tag="clr-namespace:ZebraRFIDXamarinDemo.Views.Tag"
     xmlns:api="clr-namespace:ZebraRFIDXamarinDemo.Views.Api"
     x:Class="ZebraRFIDXamarinDemo.AppShell"
     Title="WebInventory"
@@ -65,6 +66,10 @@
     
     <FlyoutItem Title="Inventarios" Icon="list.png">
         <ShellContent Route="InventoryIndex" ContentTemplate="{DataTemplate inventory:InventoryIndex}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Tags" Icon="tag.png">
+        <ShellContent Route="TagIndex" ContentTemplate="{DataTemplate tag:TagIndex}" />
     </FlyoutItem>
 
     <!--
