@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="ZebraRFIDXamarinDemo.Views.Tag.TagIndex">
+    <ContentPage.Content>
+        <AbsoluteLayout
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <ScrollView
+
+
+
+
+
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <Grid RowDefinitions="Auto, Auto">
+                    <StackLayout
+                        Grid.Row="0"
+                        BackgroundColor="White"
+                        Padding="30,0"
+                        Spacing="0">
+                        <Grid RowDefinitions="Auto">
+                            <StackLayout
+                                Grid.Row="0"
+                                Orientation="Vertical"
+                                Spacing="25">
+                                <Grid RowDefinitions="Auto">
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Spacing="5">
+                                        <Label Text="Lista - Tags" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+
+
+
+
+                    <StackLayout Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="0" CompressedLayout.IsHeadless="true">
+        <StackLayout Orientation="Horizontal" BackgroundColor="#cccccc" Padding="5,5,5,0" Margin="0">
+            <Label Text="UNIQUE" FontSize="Micro"/>
+            <Label Text="TOTAL" FontSize="Micro" HorizontalOptions="CenterAndExpand" Margin="0,0,70,0"/>
+            <Label Text="TIME" FontSize="Micro" HorizontalOptions="End"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" BackgroundColor="#cccccc" Padding="5" Margin="0">
+            <Label Text="{Binding UniqueTags}" FontSize="Medium" TextColor="Accent"/>
+            <Label Text="{Binding TotalTags}" FontSize="Medium" TextColor="Accent" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding TotalTime}" FontSize="Medium" TextColor="Accent" HorizontalOptions="End"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" BackgroundColor="#cccccc" Spacing="10" Padding="5">
+            <Label Text="ID"/>
+            <Label Text="RSSI" HorizontalOptions="EndAndExpand"/>
+            <Label Text="COUNT" HorizontalOptions="End"/>
+        </StackLayout>
+        <ListView VerticalOptions="FillAndExpand" HasUnevenRows="True" ItemsSource="{Binding AllItems}" SelectedItem="{Binding MySelectedItem, Mode=TwoWay}" 
+                  BackgroundColor="Transparent" IsVisible="{Binding listAvailable}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="230" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding InvID}" Grid.Row="0" Grid.Column="0"/>
+                            <Label Text="{Binding RSSI}" Grid.Row="0" Grid.Column="1" />
+                            <Label Text="{Binding TagCount}" Grid.Row="0" Grid.Column="2" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Orientation="Vertical" Spacing="10" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsVisible="{Binding hintAvailable}">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Reader: "/>
+                <Label Text="{Binding readerConnection}" TextColor="Accent"/>
+            </StackLayout>
+            <Label Text="{Binding readerStatus}" IsVisible="{Binding isConnected}"/>
+        </StackLayout>
+
+    </StackLayout>
+
+
+                    
+                </Grid>
+            </ScrollView>
+            <AbsoluteLayout
+                BackgroundColor="#22000000"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsRunning}">
+                <ActivityIndicator
+                    Color="DarkOrange"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    IsVisible="True"
+                    IsRunning="True"/>
+            </AbsoluteLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
