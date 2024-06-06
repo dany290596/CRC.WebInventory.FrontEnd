@@ -35,11 +35,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
             Navigation = _navigation;
         }
 
-        public async void OnAppearing()
-        {
-            IsBusy = true;
-        }
-
         public ObservableCollection<Models.Tag.Tag> AllItems { get => _allItems; set => _allItems = value; }
 
         public Models.Tag.Tag MySelectedItem { get => _mySelectedItem; set => _mySelectedItem = value; }

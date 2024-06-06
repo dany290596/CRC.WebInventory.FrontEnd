@@ -62,7 +62,7 @@
                             <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Text="Acceder al tutorial" Clicked="GoGoogle" />
                             <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="Inventarios" Clicked="GoInventory" />
                             <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Text="Conectar" Clicked="GoConnect" />
-                            <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Text="Leer" Clicked="GoConnect" />
+                            <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Text="Leer" Clicked="GoRead" />
                             <Button Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" Text="Escribir" Clicked="GoConnect" />
                         </Grid>
                     </Frame>

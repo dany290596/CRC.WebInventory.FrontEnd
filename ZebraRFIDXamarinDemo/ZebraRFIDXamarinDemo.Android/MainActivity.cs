@@ -37,6 +37,84 @@ namespace ZebraRFIDXamarinDemo.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
             LoadApplication(new App());
+            CreateDirectory();
+        }
+
+        /// <summary>
+        /// Create directory for store the firmware plugin(Plugin should be ".SCNPLG")
+        /// </summary>
+        private void CreateDirectory()
+        {
+            CheckFileReadWritePermissions();
+        }
+
+        /// <summary>
+        /// Check application permissions
+        /// </summary>
+        private void CheckFileReadWritePermissions()
+        {
+            if ((int)Build.VERSION.SdkInt < 23)
+            {
+                return;
+            }
+            else
+            {
+                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted)
+                {
+                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage };
+                    RequestPermissions(permissions, 2226);
+
+                }
+            }
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            // Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == 2226)
+            {
+                try
+                {
+
+                    var firmwareDirectory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads) + FIRMWARE_FOLDER;
+                    var outputDirectory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads) + OUTPUT_FOLDER;
+                    Directory.CreateDirectory(firmwareDirectory);
+                    Directory.CreateDirectory(outputDirectory);
+
+                    if (Directory.Exists(firmwareDirectory))
+                    {
+                        Console.WriteLine("That path firmwareDirectory  exists already.");
+
+                    }
+
+                }
+                catch (Java.Lang.Exception e)
+                {
+                    Console.WriteLine("Sample app Exception " + e.Message);
+                }
+            }
+            if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE)
+            {
+                if (grantResults.Length > 0 && grantResults[0] == Permission.Granted)
+                {
+                    if (_onRequestPermissionsResult != null)
+                    {
+                        _onRequestPermissionsResult(true);
+                        _onRequestPermissionsResult = null;
+                    }
+                }
+                else
+                {
+                    if (_onRequestPermissionsResult != null)
+                    {
+                        _onRequestPermissionsResult(false);
+                        _onRequestPermissionsResult = null;
+                    }
+                }
+            }
         }
 
         internal void CheckBTPermission(Action<bool> onRequestPermissionsResult)
@@ -69,5 +147,35 @@ namespace ZebraRFIDXamarinDemo.Droid
             }
         }
 
+        internal void CheckBTEnable(Action<bool> onRequestBTEnable)
+        {
+            _onRequestBTEnable = onRequestBTEnable;
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ActionRequestEnable);
+            StartActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST_CODE);
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (requestCode == BLUETOOTH_ENABLE_REQUEST_CODE)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    if (_onRequestBTEnable != null)
+                    {
+                        _onRequestBTEnable(true);
+                        _onRequestBTEnable = null;
+                    }
+                }
+                else
+                {
+                    if (_onRequestBTEnable != null)
+                    {
+                        _onRequestBTEnable(false);
+                        _onRequestBTEnable = null;
+                    }
+                }
+            }
+        }
     }
 }

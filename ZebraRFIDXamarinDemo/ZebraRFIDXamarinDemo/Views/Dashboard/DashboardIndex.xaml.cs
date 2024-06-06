@@ -86,7 +86,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                                     Console.Out.WriteLine("Lector conectado");
                                     Status = "Lector conectado";
                                     // await Application.Current.MainPage.DisplayAlert("Status: ", Status, "Aceptar");
-                                    ConfigureReader();
+                                    // ConfigureReader();
                                 }
                                 else
                                 {
@@ -185,6 +185,7 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                             if (myTags[index].MemoryBankData.Length > 0)
                             {
                                 Console.Out.WriteLine(" Mem Bank Data " + myTags[index].MemoryBankData);
+                                Application.Current.MainPage.DisplayAlert("Alert", "Hello", "Cancel", "ok");
                             }
                         }
                     }
@@ -248,6 +249,14 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
                 readers = new Readers(Android.App.Application.Context, ENUM_TRANSPORT.ServiceSerial);
             }
             GetAvailableReaders();
+        }
+
+        protected async void GoRead(object sender, EventArgs e)
+        {
+            if (Reader.IsConnected)
+            {
+                ConfigureReader();
+            }
         }
 
         protected override async void OnAppearing()

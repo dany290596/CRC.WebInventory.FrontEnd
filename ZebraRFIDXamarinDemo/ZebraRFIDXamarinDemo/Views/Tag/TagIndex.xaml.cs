@@ -19,7 +19,13 @@ namespace ZebraRFIDXamarinDemo.Views.Tag
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            tagIndexViewModel.OnAppearing();
+            tagIndexViewModel.UpdateIn();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            tagIndexViewModel.UpdateOut();
         }
     }
 }
