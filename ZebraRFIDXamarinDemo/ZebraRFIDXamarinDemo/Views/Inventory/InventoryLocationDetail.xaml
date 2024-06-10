@@ -171,13 +171,16 @@
                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Código: "/>
                                                                     <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Marca: "/>
                                                                     <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Serie: "/>
+
                                                                     <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Estado fisico: "/>
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: "/>
                                                                     -->
-                                                                
-                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Estatus correcto: "></Label>
-                                                                
+
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Inventariado: "></Label>
+                                                                    -->
+                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Tag: "></Label>
 
                                                                     <!--
                                                                     <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
@@ -189,9 +192,11 @@
                                                                     <!--
                                                                     <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     -->
-                                                                    
+
+                                                                    <!--
                                                                     <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                
+                                                                    -->
+                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Tag.Numero}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     
                                                                     
                                                                     <!--
@@ -225,7 +230,7 @@
                                                                     <StackLayout Orientation="Horizontal">
                                                                         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
                                                                            
-                                                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="¿Estatus correcto? "></Label>
+                                                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="¿Inventariado? "></Label>
                                                                           
                                                                             
                                                                                 <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="¿Observaciones? "></Label>
