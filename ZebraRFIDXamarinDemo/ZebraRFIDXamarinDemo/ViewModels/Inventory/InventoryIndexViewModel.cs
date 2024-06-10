@@ -7,6 +7,7 @@ using Location = ZebraRFIDXamarinDemo.Models.Startup.Location;
 using InventoryDetail = ZebraRFIDXamarinDemo.Models.Startup.InventoryDetail;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.Views.Authorization;
+using ZebraRFIDXamarinDemo.Repositories.Implements;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -39,6 +40,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             IsBusy = true;
             try
             {
+                
                 InventoryData.Clear();
                 var inventoryAllSQLITE = await App.inventoryRepository.GetAllByInventoryLocationAssetAsync();
                 if (inventoryAllSQLITE.Count() > 0)
@@ -48,6 +50,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                         InventoryData.Add(item);
                     }
                 }
+                
             }
             catch (Exception ex)
             {
@@ -276,6 +279,41 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                     {
                                                         throw ex;
                                                     }
+
+                                                    try
+                                                    {
+                                                        if (dataAsset.TagId != null && dataAsset.TagId != Guid.Empty)
+                                                        {
+                                                            if (itemdetalleinventario.Activo.Tag != null)
+                                                            {
+                                                                var tagById = await App.tagRepository.GetByIdAsync((Guid)itemdetalleinventario.Activo.TagId);
+                                                                if (tagById == null)
+                                                                {
+                                                                    Models.Startup.Tag dataTag = new Models.Startup.Tag();
+                                                                    dataTag.UsuarioCreadorId = itemdetalleinventario.Activo.Tag.UsuarioCreadorId;
+                                                                    dataTag.UsuarioModificadorId = itemdetalleinventario.Activo.Tag.UsuarioModificadorId;
+                                                                    dataTag.UsuarioBajaId = itemdetalleinventario.Activo.Tag.UsuarioBajaId;
+                                                                    dataTag.UsuarioReactivadorId = itemdetalleinventario.Activo.Tag.UsuarioReactivadorId;
+                                                                    dataTag.FechaCreacion = itemdetalleinventario.Activo.Tag.FechaCreacion;
+                                                                    dataTag.FechaModificacion = itemdetalleinventario.Activo.Tag.FechaModificacion;
+                                                                    dataTag.FechaBaja = itemdetalleinventario.Activo.Tag.FechaBaja;
+                                                                    dataTag.FechaReactivacion = itemdetalleinventario.Activo.Tag.FechaReactivacion;
+                                                                    dataTag.Estado = itemdetalleinventario.Activo.Tag.Estado;
+                                                                    dataTag.EmpresaId = itemdetalleinventario.Activo.Tag.EmpresaId;
+                                                                    dataTag.Id = itemdetalleinventario.Activo.Tag.Id;
+                                                                    dataTag.TipoTagId = itemdetalleinventario.Activo.Tag.TipoTagId;
+                                                                    dataTag.Numero = itemdetalleinventario.Activo.Tag.Numero;
+                                                                    dataTag.Fc = itemdetalleinventario.Activo.Tag.Fc;
+                                                                    dataTag.Vence = itemdetalleinventario.Activo.Tag.Vence;
+                                                                    await App.tagRepository.AddAsync(dataTag);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        throw ex;
+                                                    }
                                                 }
                                             }
 
@@ -355,11 +393,11 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                                 }
                                             }
 
-                                            if (itemdetalleinventario.Ubicacion != null && itemdetalleinventario.Inventario != null)
+                                            if (itemdetalleinventario.Ubicacion != null && iteminventory.Inventario.Id != null)
                                             {
                                                 InventoryLocation dataInventoryLocation = new InventoryLocation();
                                                 dataInventoryLocation.Id = Guid.NewGuid();
-                                                dataInventoryLocation.InventarioId = itemdetalleinventario.Inventario.Id;
+                                                dataInventoryLocation.InventarioId = iteminventory.Inventario.Id;
                                                 dataInventoryLocation.UbicacionId = itemdetalleinventario.Ubicacion.Id;
                                                 dataInventoryLocation.Status = 1;
 
@@ -537,8 +575,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             await App.inventoryDetailRepository.DeleteAllAsync();
             await App.assetRepository.DeleteAllAsync();
             await App.paramsRepositoty.DeleteAllAsync();
+
+            await App.physicalStateRepository.DeleteAllAsync();
+
             await App.inventoryLocationRepository.DeleteAllAsync();
             await App.inventoryLocationAssetRepository.DeleteAllAsync();
+            await App.tagRepository.DeleteAllAsync();
 
             await ExecuteLoadPersonCommand();
         }

@@ -1329,6 +1329,8 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
             var physicalStatedi = await App.physicalStateRepository.GetAllAsync();
 
+            var tagi = await App.tagRepository.GetAllAsync();
+
             var queryila = (from ila in inventorylocationassetdi
 
                             join il in inventorylocationdi on ila.InventarioUbicacionId equals il.Id
@@ -1357,6 +1359,11 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                             join ps in physicalStatedi on aila.EstadoFisicoId equals ps.Id
                             into PhysicalState_Asset
                             from psa in PhysicalState_Asset.DefaultIfEmpty()
+
+                            join t in tagi on aila.TagId equals t.Id
+                            into Tag_Asset
+                            from ta in Tag_Asset.DefaultIfEmpty()
+                       
 
                                 /*
                                 join p in paramsdi on aila.MotivoId equals p.Id
@@ -1481,6 +1488,25 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                         Nombre = psa.Nombre,
                                         Descripcion = psa.Descripcion
                                     },
+                                    Tag = new Tag()
+                                    {
+                                        UsuarioCreadorId = ta.UsuarioCreadorId,
+                                        UsuarioModificadorId = ta.UsuarioModificadorId,
+                                        UsuarioBajaId = ta.UsuarioBajaId,
+                                        UsuarioReactivadorId = ta.UsuarioReactivadorId,
+                                        FechaCreacion = ta.FechaCreacion,
+                                        FechaModificacion = ta.FechaModificacion,
+                                        FechaBaja = ta.FechaBaja,
+                                        FechaReactivacion = ta.FechaReactivacion,
+                                        Estado = ta.Estado,
+                                        EmpresaId = ta.EmpresaId,
+                                        Id = ta.Id,
+                                        TipoTagId = ta.TipoTagId,
+                                        Numero = ta.Numero,
+                                        Fc = ta.Fc,
+                                        Vence = ta.Vence
+                                    }
+
                                     /*
                                     Motivo = new Models.Setting.Params()
                                     {
@@ -1593,6 +1619,24 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                      CampoLibre4 = t.Key.Activo.CampoLibre4,
                                      CampoLibre5 = t.Key.Activo.CampoLibre5,
                                      AreaId = t.Key.Activo.AreaId,
+                                     Tag = new Tag()
+                                     {
+                                         UsuarioCreadorId = t.Key.Activo.Tag.UsuarioCreadorId,
+                                         UsuarioModificadorId = t.Key.Activo.Tag.UsuarioModificadorId,
+                                         UsuarioBajaId = t.Key.Activo.Tag.UsuarioBajaId,
+                                         UsuarioReactivadorId = t.Key.Activo.Tag.UsuarioReactivadorId,
+                                         FechaCreacion = t.Key.Activo.Tag.FechaCreacion,
+                                         FechaModificacion = t.Key.Activo.Tag.FechaModificacion,
+                                         FechaBaja = t.Key.Activo.Tag.FechaBaja,
+                                         FechaReactivacion = t.Key.Activo.Tag.FechaReactivacion,
+                                         Estado = t.Key.Activo.Tag.Estado,
+                                         EmpresaId = t.Key.Activo.Tag.EmpresaId,
+                                         Id = t.Key.Activo.Tag.Id,
+                                         TipoTagId = t.Key.Activo.Tag.TipoTagId,
+                                         Numero = t.Key.Activo.Tag.Numero,
+                                         Fc = t.Key.Activo.Tag.Fc,
+                                         Vence = t.Key.Activo.Tag.Vence
+                                     }
                                  }).ToList()
                              }).ToList()
                          }).ToList();

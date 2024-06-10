@@ -38,17 +38,23 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <!--
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                -->
+                                <RowDefinition Height="Auto" />
+                                <!--
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                -->
                             </Grid.RowDefinitions>
 
+                            <!--
                             <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1" Text="Status: " FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Start" />
                             <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="1" Text="Tag: " FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Start" />
+                            -->
 
                             <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="WebInventory" FontSize="Large" BackgroundColor="White" HorizontalTextAlignment="Center" />
                             <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="Es una herramienta que ayuda a las personas que van a inventariar ya que les muestra los activos (computadoras, impresoras, escritorios) que debe inventariar en una zona especifica y con unos pocos clips puede hacer una búsqueda (por radio frecuencia) de dichos activos. También permite agregar observaciones a los activos no encontrados o cambiar estatus de estos mismos ya que su estado físico puede ser diferente al que se tiene registrado." FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
@@ -56,14 +62,18 @@
                             <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="¿Necesitas ayuda para comenzar?" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
                             <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Text="Tutorial disponible en el siguiente enlace:" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Center" />
 
+                            <!--
                             <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Status}" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Start" />
                             <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Tag}" FontSize="Micro" BackgroundColor="White" HorizontalTextAlignment="Start" />
+                            -->
 
-                            <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Text="Acceder al tutorial" Clicked="GoGoogle" />
+                            <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Acceder al tutorial" Clicked="GoGoogle" />
+                            <!--
                             <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="Inventarios" Clicked="GoInventory" />
                             <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Text="Conectar" Clicked="GoConnect" />
                             <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Text="Leer" Clicked="GoRead" />
                             <Button Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" Text="Escribir" Clicked="GoConnect" />
+                            -->
                         </Grid>
                     </Frame>
 

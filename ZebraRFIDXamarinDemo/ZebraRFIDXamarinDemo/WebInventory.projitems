@@ -205,6 +205,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\AppConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\Scanner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reader\BarcodeTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Tag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\TagRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITagRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />

@@ -24,7 +24,9 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         [ForeignKey(typeof(PhysicalState))]
         public Guid? EstadoFisicoId { get; set; } // Este campo se va a modificar
 
+        [ForeignKey(typeof(Tag))]
         public Guid? TagId { get; set; }
+
         public Guid? ColaboradorHabitualId { get; set; }
         public Guid? ColaboradorResponsableId { get; set; }
         public double? ValorCompra { get; set; }
@@ -54,6 +56,9 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
 
         [ManyToOne]
         public Params Motivo { get; set; }
+
+        [ManyToOne]
+        public Tag? Tag { get; set; }
 
         public string OnStatusNombre(bool status)
         {
