@@ -368,7 +368,7 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
                     var singulation = rfidReader.Config.Antennas.GetSingulationControl(1);
                     singulation.Session = SESSION.SessionS0;
                     singulation.Action.InventoryState = INVENTORY_STATE.InventoryStateA;
-                    singulation.Action.SetPerformStateAwareSingulationAction(false);
+                    singulation.Action.SetPerformStateAwareSingulationAction(true);
                     rfidReader.Config.Antennas.SetSingulationControl(1, singulation);
 
                     /*
@@ -1016,11 +1016,14 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
 
         public void ReaderTags()
         {
+            SetTriggerMode();
             Toast.MakeText(Android.App.Application.Context, "LECTURA DE TAGS", ToastLength.Short).Show();
             if (rfidReader != null)
             {
+                Toast.MakeText(Android.App.Application.Context, "READER ES DISTINTO DE NULL", ToastLength.Short).Show();
                 if (rfidReader.IsConnected)
                 {
+                    Toast.MakeText(Android.App.Application.Context, "READER ESTA CONECTADA", ToastLength.Short).Show();
                     TagData[] myTags = rfidReader.Actions.GetReadTags(100);
                     if (myTags != null)
                     {
@@ -1028,6 +1031,14 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
                         var tagString = Newtonsoft.Json.JsonConvert.SerializeObject(tag);
                         Toast.MakeText(Android.App.Application.Context, tagString, ToastLength.Short).Show();
                     }
+                    else
+                    {
+                        Toast.MakeText(Android.App.Application.Context, "NO HAY TAGS", ToastLength.Short).Show();
+                    }
+                }
+                else
+                {
+                    Toast.MakeText(Android.App.Application.Context, "READER NO ESTA CONECTADA", ToastLength.Short).Show();
                 }
             }
         }
