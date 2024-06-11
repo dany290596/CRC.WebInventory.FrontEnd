@@ -9,6 +9,9 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Timers;
 using ZebraRFIDXamarinDemo.Models.Tag;
 using System.Linq;
+using XamarinZebraRFIDSample.ZebraReader;
+using Android.Util;
+using Android.Widget;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Tag
 {
@@ -24,6 +27,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
         private System.Timers.Timer aTimer;
         private bool _listAvailable;
         public Command ReadTagsCommand { get; }
+        ZebraReaderInterface readerInterface = null;
 
         public TagIndexViewModel(INavigation _navigation)
         {
@@ -34,11 +38,63 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
             updateHints();
             Navigation = _navigation;
             ReadTagsCommand = new Command(OnReadTagsCommand);
+            // Init reader interface
+            readerInterface = new ZebraReaderInterface();
+            readerInterface.ReaderOutputNotification = ReaderOutputMessage;
+            readerInterface.ReaderTagDataEventOutput = OnTagRead;
         }
 
-        private async void OnReadTagsCommand()
+        private void OnReadTagsCommand()
         {
-            rfidModel.ReaderTags();
+
+            Toast.MakeText(Android.App.Application.Context, "LECTURA DE TAGS", ToastLength.Short).Show();
+            var buttonText = readerInterface.IsConnected ? "Disconnecting..." : "Connecting...";
+
+            bool enableCheckbox = false;
+            if (!readerInterface.IsConnected)
+            {
+                Toast.MakeText(Android.App.Application.Context, "1", ToastLength.Short).Show();
+                var connected = readerInterface.ConnectReader();
+                buttonText = connected ? "Disconnect Reader" : "Connect Reader";
+                enableCheckbox = !connected;
+                Toast.MakeText(Android.App.Application.Context, "buttonText: " + buttonText, ToastLength.Short).Show();
+                Toast.MakeText(Android.App.Application.Context, "enableCheckbox: " + enableCheckbox, ToastLength.Short).Show();
+            }
+            else
+            {
+                Toast.MakeText(Android.App.Application.Context, "2", ToastLength.Short).Show();
+                var disconnected = readerInterface.DisconnectReader();
+                buttonText = disconnected ? "Connect Reader" : "Disconnect Reader";
+                enableCheckbox = disconnected;
+            }
+        }
+
+        private void OnTagRead(object sender, TagReadData tagReadData)
+        {
+            if (string.IsNullOrEmpty(tagReadData.EPC) &&
+                string.IsNullOrEmpty(tagReadData.TID) &&
+                string.IsNullOrEmpty(tagReadData.UMB))
+                return;
+
+            /*
+            this.RunOnUiThread(() =>
+            {
+                tagReadList.Insert(0, tagReadData);
+                tagReadListAdapter.Insert(tagReadData, 0);
+            });
+            */
+        }
+
+        private void ReaderOutputMessage(object sender, string message)
+        {
+            Log.Debug("Reader Output", message);
+            Toast.MakeText(Android.App.Application.Context, "message: " + message, ToastLength.Short).Show();
+            /*
+            this.RunOnUiThread(() =>
+            {
+                Toast.MakeText(this, message, ToastLength.Short).Show();
+            });
+            */
         }
 
         public ObservableCollection<Models.Tag.Tag> AllItems { get => _allItems; set => _allItems = value; }

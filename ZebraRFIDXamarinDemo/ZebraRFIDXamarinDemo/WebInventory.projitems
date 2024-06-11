@@ -208,6 +208,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\Tag.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implements\TagRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITagRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tag\TagReadData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ZebraReader\ReaderEventsHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ZebraReader\ZebraReaderInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
@@ -242,5 +245,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Tag\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\Tag\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\Reader\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\ZebraReader\" />
   </ItemGroup>
 </Project>
