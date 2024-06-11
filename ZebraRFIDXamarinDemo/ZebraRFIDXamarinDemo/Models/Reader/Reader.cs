@@ -8,6 +8,7 @@ using Android.Widget;
 using Com.Zebra.Rfid.Api3;
 using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Droid;
+using System.Linq;
 
 namespace ZebraRFIDXamarinDemo.Models.Reader
 {
@@ -332,7 +333,13 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
 
                     // tag event with tag data
                     rfidReader.Events.SetTagReadEvent(true);
-                    rfidReader.Events.SetAttachTagDataWithReadEvent(false);
+
+
+
+                    rfidReader.Events.SetAttachTagDataWithReadEvent(true);
+
+
+
                     //
                     rfidReader.Events.SetInventoryStartEvent(true);
                     rfidReader.Events.SetInventoryStopEvent(true);
@@ -1005,6 +1012,24 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
         {
             Scanner scannerModel = Scanner.scannerModel;
             scannerModel.DisconnectScanner(rfidReader?.HostName);
+        }
+
+        public void ReaderTags()
+        {
+            Toast.MakeText(Android.App.Application.Context, "LECTURA DE TAGS", ToastLength.Short).Show();
+            if (rfidReader != null)
+            {
+                if (rfidReader.IsConnected)
+                {
+                    TagData[] myTags = rfidReader.Actions.GetReadTags(100);
+                    if (myTags != null)
+                    {
+                        var tag = myTags.Select(s => s.TagID).ToList();
+                        var tagString = Newtonsoft.Json.JsonConvert.SerializeObject(tag);
+                        Toast.MakeText(Android.App.Application.Context, tagString, ToastLength.Short).Show();
+                    }
+                }
+            }
         }
     }
 }

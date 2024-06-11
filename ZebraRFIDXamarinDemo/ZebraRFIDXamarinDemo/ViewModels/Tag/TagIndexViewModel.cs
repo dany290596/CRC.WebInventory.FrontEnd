@@ -23,7 +23,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
         private string _connectionStatus, _readerStatus;
         private System.Timers.Timer aTimer;
         private bool _listAvailable;
-
+        public Command ReadTagsCommand { get; }
 
         public TagIndexViewModel(INavigation _navigation)
         {
@@ -33,6 +33,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
             // UI for hint
             updateHints();
             Navigation = _navigation;
+            ReadTagsCommand = new Command(OnReadTagsCommand);
+        }
+
+        private async void OnReadTagsCommand()
+        {
+            rfidModel.ReaderTags();
         }
 
         public ObservableCollection<Models.Tag.Tag> AllItems { get => _allItems; set => _allItems = value; }
