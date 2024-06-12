@@ -10,7 +10,6 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.Views.Inventory;
-using Android.Widget;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -71,17 +70,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void OnInventoryInventory(InventoryLocationAQ inventoryLocationSync)
         {
-            UpdateIn();
             try
             {
-                if (_allItems.Count == 0)
-                {
-                    _listAvailable = false;
-                    readerConnection = isConnected ? "Conectado" : "Desconectado";
-                    if (isConnected)
-                    {
-                        readerStatus = rfidModel.isBatchMode ? "El inventario se está ejecutando en modo de lectura" : "Mantenga presionado el gatillo para leer los Tags";
-                    }
+                //if (_allItems.Count == 0)
+                //{
+                //    _listAvailable = false;
+                //    readerConnection = isConnected ? "Conectado" : "Desconectado";
+                //    if (isConnected)
+                //    {
+                //        readerStatus = rfidModel.isBatchMode ? "El inventario se está ejecutando en modo de lectura" : "Mantenga presionado el gatillo para leer los Tags";
+                //    }
 
                     IsRunning = true;
                     Preferences.Remove("Activo_Tag");
@@ -138,9 +136,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                         IsRunning = false;
                     }
 
-                }
-                else
-                    _listAvailable = true;
+                //}
+                //else
+                //    _listAvailable = true;
             }
             catch (Exception ex)
             {
@@ -176,16 +174,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         [MethodImpl(MethodImplOptions.Synchronized)]
         public override void TagReadEvent(TagData[] aryTags)
         {
-            Toast.MakeText(Android.App.Application.Context, "TEG READ EVENT", ToastLength.Short).Show();
-            if (aryTags != null)
-            {
-                if (aryTags.Count() > 0)
-                {
-                    var tag = aryTags.Select(s => s.TagID).ToList();
-                    var tagString = Newtonsoft.Json.JsonConvert.SerializeObject(tag);
-                    Toast.MakeText(Android.App.Application.Context, tagString, ToastLength.Short).Show();
-                }
-            }
+            //Toast.MakeText(Android.App.Application.Context, "TEG READ EVENT", ToastLength.Short).Show();
+            //if (aryTags != null)
+            //{
+            //    if (aryTags.Count() > 0)
+            //    {
+            //        var tag = aryTags.Select(s => s.TagID).ToList();
+            //        var tagString = Newtonsoft.Json.JsonConvert.SerializeObject(tag);
+            //        Toast.MakeText(Android.App.Application.Context, tagString, ToastLength.Short).Show();
+            //    }
+            //}
 
 
             lock (tagreadlock)
@@ -193,7 +191,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 for (int index = 0; index < aryTags.Length; index++)
                 {
                     Console.WriteLine("Tag ID " + aryTags[index].TagID);
-
+                    // Toast.MakeText(Android.App.Application.Context, aryTags[index].TagID, ToastLength.Short).Show();
                     String tagID = aryTags[index].TagID;
                     if (tagID != null)
                     {
@@ -224,6 +222,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private void UpdateList(String tag, int count, short rssi)
         {
+            // Toast.MakeText(Android.App.Application.Context, count, ToastLength.Short).Show();
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
                 _allItems.Add(new Models.Tag.Tag { InvID = tag, TagCount = count, RSSI = rssi });

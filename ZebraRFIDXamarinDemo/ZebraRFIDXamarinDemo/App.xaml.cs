@@ -25,7 +25,7 @@ namespace ZebraRFIDXamarinDemo
         static ParamsRepositoty _paramsRepositoty;
         static InventoryLocationRepository _inventoryLocationRepository;
         static InventoryLocationAssetRepository _inventoryLocationAssetRepository;
-        static TagRepository _tagRepository;
+        static Repositories.Implements.TagRepository _tagRepository;
 
         public static PersonRepository personRepository
         {

@@ -28,6 +28,7 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            inventoryDetailViewModel.UpdateIn();
             inventoryDetailViewModel.OnAppearing();
         }
 

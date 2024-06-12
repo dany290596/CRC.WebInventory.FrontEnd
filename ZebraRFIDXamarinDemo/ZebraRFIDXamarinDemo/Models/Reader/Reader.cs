@@ -336,7 +336,7 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
 
 
 
-                    rfidReader.Events.SetAttachTagDataWithReadEvent(true);
+                    rfidReader.Events.SetAttachTagDataWithReadEvent(false);
 
 
 
@@ -368,7 +368,7 @@ namespace ZebraRFIDXamarinDemo.Models.Reader
                     var singulation = rfidReader.Config.Antennas.GetSingulationControl(1);
                     singulation.Session = SESSION.SessionS0;
                     singulation.Action.InventoryState = INVENTORY_STATE.InventoryStateA;
-                    singulation.Action.SetPerformStateAwareSingulationAction(true);
+                    singulation.Action.SetPerformStateAwareSingulationAction(false);
                     rfidReader.Config.Antennas.SetSingulationControl(1, singulation);
 
                     /*
