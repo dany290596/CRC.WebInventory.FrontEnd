@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.ViewModels.Inventory;
+using ZebraRFIDXamarinDemo.ViewModels.Tag;
 
 namespace ZebraRFIDXamarinDemo.Views.Inventory
 {
@@ -13,7 +14,6 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
             InitializeComponent();
             BindingContext = inventoryDetailViewModel = new InventoryDetailViewModel();
         }
-
 
         public InventoryDetail(InventoryLocationAssetQuery inventoryLocationAsset)
         {
@@ -29,6 +29,12 @@ namespace ZebraRFIDXamarinDemo.Views.Inventory
         {
             base.OnAppearing();
             inventoryDetailViewModel.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            inventoryDetailViewModel.UpdateOut();
         }
     }
 }

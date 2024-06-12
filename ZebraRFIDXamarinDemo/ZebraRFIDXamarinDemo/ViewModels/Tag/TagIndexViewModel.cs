@@ -26,7 +26,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
         private System.Timers.Timer aTimer;
         private bool _listAvailable;
         public Command ReadTagsCommand { get; }
-        ZebraReaderInterface readerInterface = null;
 
         public TagIndexViewModel(INavigation _navigation)
         {

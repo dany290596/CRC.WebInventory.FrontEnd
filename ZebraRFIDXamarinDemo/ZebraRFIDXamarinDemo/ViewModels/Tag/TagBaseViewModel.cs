@@ -72,7 +72,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Tag
 
 		}
 
-
 		internal void UpdateIn()
 		{
 			rfidModel.TagRead += TagReadEvent;

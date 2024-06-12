@@ -34,10 +34,6 @@
                                         Spacing="5">
                                         <Label Text="Lista - Tags" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                     </StackLayout>
-
-                                    <StackLayout Grid.Row="1" Padding="20">
-            <Button BackgroundColor="DarkOrange" TextColor="White" Text="Leer Tags" Command="{Binding ReadTagsCommand}" />
-        </StackLayout>
                                 </Grid>
                             </StackLayout>
                         </Grid>

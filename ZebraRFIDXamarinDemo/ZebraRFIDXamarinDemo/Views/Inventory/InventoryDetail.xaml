@@ -12,11 +12,16 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <ScrollView
-            BackgroundColor="Transparent"
-            HeightRequest="200"
-            IsEnabled="True"
-            VerticalScrollBarVisibility="Always">
+        <AbsoluteLayout VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
+
+
+   <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
             <StackLayout
                 HeightRequest="600"
                 VerticalOptions="Fill"
@@ -224,5 +229,18 @@
             </Grid>
             </StackLayout>
         </ScrollView>
+
+
+                    <AbsoluteLayout BackgroundColor="#22000000"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    IsVisible="{Binding IsRunning}">
+        <ActivityIndicator Color="DarkOrange"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.1,0.1"
+                           AbsoluteLayout.LayoutFlags="All"
+                           IsVisible="True"
+                           IsRunning="True"/>
+    </AbsoluteLayout>
+</AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
