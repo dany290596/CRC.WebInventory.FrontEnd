@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.Views.Inventory;
 using Android.Widget;
+using static Android.Content.ClipData;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
@@ -73,7 +74,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             try
             {
-                
                 IsRunning = true;
                
                 Preferences.Remove("Activo_Tag");
@@ -284,9 +284,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     if (tagListDict.Count() > 0)
                     {
                         var jsonGet = Preferences.Get("Activo_Tag", "");
-                        var jsonData = JsonConvert.DeserializeObject<List<AssetQuery>>(jsonGet);
-                        var jsonDataQuery = jsonData.Select(s => s.Nombre).ToList();
-                        if (jsonData.Count() > 0)
+                        var jsonAsset = JsonConvert.DeserializeObject<List<AssetQuery>>(jsonGet);
+                        var jsonDataQuery = jsonAsset.Select(s => s.Nombre).ToList();
+                        if (jsonAsset.Count() > 0)
                         {
                             Preferences.Remove("Activo_Tag");
                             UniqueTags = tagListDict.Count.ToString();
@@ -296,7 +296,61 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
                             var tags = Newtonsoft.Json.JsonConvert.SerializeObject(tagListDict);
                             // Toast.MakeText(Android.App.Application.Context, "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "TAGS IDS  \n\n" + data, ToastLength.Short).Show();
-                            await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "LISTA DE TAGS \n\n" + string.Join("\n", tagListDict.Keys) + "\n\nLISTA DE ACTIVOS A INVENTARIAR  \n\n" + string.Join("\n", jsonDataQuery), "Continuar");
+
+                            int activosMarcados = 0;
+                            int tagProsesados = 0;
+                            foreach (var tag in tagListDict)
+                            {
+                                var tagNumber = DecodificarEpc(tag.Key);
+                                // itemTag += "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n";
+
+                                // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n", "Continuar");
+                                foreach (var asset in jsonAsset)
+                                {
+                                    if (asset.Tag.Numero != null)
+                                    {
+                                        if (asset.Tag.Numero == tagNumber.Item2.ToString())
+                                        {
+                                            var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(asset.Id);
+                                            if (dataAssetSQLITE != null)
+                                            {
+                                                dataAssetSQLITE.Status = true;
+                                                var dataAssetUpdateSQLITE = await App.assetRepository.UpdateAsync(dataAssetSQLITE);
+                                                if (dataAssetUpdateSQLITE)
+                                                {
+                                                    activosMarcados += 1;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                tagProsesados += 1;
+                            }
+
+                            
+                            await Application.Current.MainPage.DisplayAlert("¡Información!", "Tags por leer: " + tagListDict.Count().ToString() + "\n" + "Número de tags procesados: " + tagProsesados + "\n" + "Número de activos: " + jsonAsset.Count().ToString() + "\n" + "Número de activos marcados: " + activosMarcados.ToString() + "\n", "Aceptar");
+
+                            //IsRunning = true;
+                            //var tagNumber = SearchTagNumber(tagListDict);
+                            //if (tagNumber.Count() > 0)
+                            //{
+                            //    IsRunning = false;
+                            //    string itemTag = "";
+                            //    foreach (var item in tagNumber)
+                            //    {
+                            //        itemTag += "FC: " + item.Fc + " :: " + "NÚMERO: " + item.Numero + "\n";
+                            //    }
+                            //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + itemTag, "Continuar");
+                            //}
+                            //else
+                            //{
+                            //    IsRunning = false;
+                            //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE NUMEROS DE TAGS \n\n" + "No hay", "Continuar");
+                            //}
+
+
+
+                            // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "LISTA DE TAGS \n\n" + string.Join("\n", tagListDict.Keys) + "\n\nLISTA DE ACTIVOS A INVENTARIAR  \n\n" + string.Join("\n", jsonDataQuery), "Continuar");
                             // IsRunning = true;
 
                             // var iteracion = 
@@ -319,6 +373,60 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     }
                 }
             });
+        }
+
+        public List<Models.Startup.TagSearch> SearchTagNumber(Dictionary<string, int> tagListDict)
+        {
+            List<Models.Startup.TagSearch> tags = new List<Models.Startup.TagSearch>();
+
+            foreach (var tag in tagListDict)
+            {
+                var tagNumber = DecodificarEpc(tag.Key);
+                tags.Add(new Models.Startup.TagSearch {
+                    Fc = tagNumber.Item1,
+                    Numero = tagNumber.Item2
+                });
+            }
+
+            return tags;
+        }
+
+        public static Tuple<int, int> DecodificarEpc(string epc)
+        {
+            // Verificar que el epc sea una cadena hexadecimal de 24 caracteres
+            if (epc == null || epc.Length != 24 || !IsHex(epc))
+            {
+                return Tuple.Create(-1, -1); // EPC invÃ¡lido
+            }
+            // Extraer el nÃºmero de identificaciÃ³n en hexadecimal
+            string idHex = epc.Substring(6, 8);
+            // Convertir el nÃºmero de identificaciÃ³n a binario
+            string idBin = Convert.ToString(Convert.ToInt32(idHex, 16), 2).PadLeft(32, '0');
+            // Quitar los dos Ãºltimos bits para obtener una longitud de 26 bits
+            idBin = idBin.Substring(0, 26);
+            // Eliminar el primer y el Ãºltimo bit de paridad
+            idBin = idBin.Substring(1, 24);
+            // Separar los primeros 8 bits del cÃ³digo de instalaciÃ³n y los Ãºltimos 16 bits del nÃºmero de identificaciÃ³n
+            string fcBin = idBin.Substring(0, 8);
+            idBin = idBin.Substring(8, 16);
+            // Convertir los bits a decimal
+            int fcDec = Convert.ToInt32(fcBin, 2);
+            int idDec = Convert.ToInt32(idBin, 2);
+            // Devolver el resultado como una tupla
+            return Tuple.Create(fcDec, idDec);
+        }
+
+        public static bool IsHex(string s)
+        {
+            // Verificar si una cadena es hexadecimal
+            foreach (char c in s)
+            {
+                if (!"0123456789ABCDEF".Contains(c.ToString()))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void SetTimer()

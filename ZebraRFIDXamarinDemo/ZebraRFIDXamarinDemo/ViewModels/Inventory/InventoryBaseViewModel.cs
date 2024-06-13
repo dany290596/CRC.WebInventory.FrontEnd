@@ -91,7 +91,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         public virtual void TagReadEvent(TagData[] tags)
         {
-
+   
         }
 
         public virtual void StatusEvent(Events.StatusEventData statusEvent)
