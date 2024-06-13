@@ -243,20 +243,58 @@ namespace ZebraRFIDXamarinDemo.Views.Dashboard
 
         protected async void GoConnect(object sender, EventArgs e)
         {
-            // SDK
-            if (readers == null)
-            {
-                readers = new Readers(Android.App.Application.Context, ENUM_TRANSPORT.ServiceSerial);
-            }
-            GetAvailableReaders();
+            
         }
 
         protected async void GoRead(object sender, EventArgs e)
         {
-            if (Reader.IsConnected)
+            List<string> tags = new List<string>();
+            tags.Add("4E20198C9E01000000000001");
+            tags.Add("4E20190353BB800000000000");
+            tags.Add("4E2019845286800000000000");
+
+            foreach (var item in tags)
             {
-                ConfigureReader();
+                var data = DecodificarEpc(item);
             }
+        }
+
+        public static Tuple<int, int> DecodificarEpc(string epc)
+        {
+            // Verificar que el epc sea una cadena hexadecimal de 24 caracteres
+            if (epc == null || epc.Length != 24 || !IsHex(epc))
+            {
+                return Tuple.Create(-1, -1); // EPC invÃ¡lido
+            }
+            // Extraer el nÃºmero de identificaciÃ³n en hexadecimal
+            string idHex = epc.Substring(6, 8);
+            // Convertir el nÃºmero de identificaciÃ³n a binario
+            string idBin = Convert.ToString(Convert.ToInt32(idHex, 16), 2).PadLeft(32, '0');
+            // Quitar los dos Ãºltimos bits para obtener una longitud de 26 bits
+            idBin = idBin.Substring(0, 26);
+            // Eliminar el primer y el Ãºltimo bit de paridad
+            idBin = idBin.Substring(1, 24);
+            // Separar los primeros 8 bits del cÃ³digo de instalaciÃ³n y los Ãºltimos 16 bits del nÃºmero de identificaciÃ³n
+            string fcBin = idBin.Substring(0, 8);
+            idBin = idBin.Substring(8, 16);
+            // Convertir los bits a decimal
+            int fcDec = Convert.ToInt32(fcBin, 2);
+            int idDec = Convert.ToInt32(idBin, 2);
+            // Devolver el resultado como una tupla
+            return Tuple.Create(fcDec, idDec);
+        }
+
+        public static bool IsHex(string s)
+        {
+            // Verificar si una cadena es hexadecimal
+            foreach (char c in s)
+            {
+                if (!"0123456789ABCDEF".Contains(c.ToString()))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         protected override async void OnAppearing()
