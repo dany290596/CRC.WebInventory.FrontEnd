@@ -195,6 +195,11 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             */
             ListAsset.Clear();
             //LocationSync.DetalleInventario = inventoryDetailAllById;
+            //if (InventoryLocationSync.UbicacionId != null && InventoryLocationSync.InventarioId != null)
+            //{
+            //    //var dataSQLITE = await App.inventoryRepository.GetByLocationIdAsync(InventoryLocationSync.UbicacionId);
+
+            //}
             for (int i = 0; i < InventoryLocationSync.Activo.Count(); i++)
             {
                 ListAsset.Add(InventoryLocationSync.Activo[i]);

@@ -2082,5 +2082,65 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
             return await Task.FromResult(query.FirstOrDefault(l => l.InventarioId == inventoryId));
         }
+
+        public async Task<List<Asset>> GetByLocationIdAsync(Guid locationId, Guid inventoryId)
+        {
+            var asset = await App.assetRepository.GetAllAsync();
+            //var inventorylocationasset = await App.inventoryLocationAssetRepository.GetAllAsync();
+
+            //var query = (from ila in inventorylocationasset
+            //             select new InventoryLocationAsset()
+            //             {
+
+            //             }).Where(ila => ila.InventarioUbicacionId == locationId).ToList();
+            var query = (from a in asset
+
+                         select new Asset()
+                         {
+                             UsuarioCreadorId = a.UsuarioCreadorId,
+                             UsuarioModificadorId = a.UsuarioModificadorId,
+                             UsuarioBajaId = a.UsuarioBajaId,
+                             UsuarioReactivadorId = a.UsuarioReactivadorId,
+                             FechaCreacion = a.FechaCreacion,
+                             FechaModificacion = a.FechaModificacion,
+                             FechaBaja = a.FechaBaja,
+                             FechaReactivacion = a.FechaReactivacion,
+                             Estado = a.Estado,
+                             EmpresaId = a.EmpresaId,
+                             Id = a.Id,
+                             UbicacionId = a.UbicacionId,
+                             GrupoActivoId = a.GrupoActivoId,
+                             TipoActivoId = a.TipoActivoId,
+                             Codigo = a.Codigo,
+                             Serie = a.Serie,
+                             Marca = a.Marca,
+                             Modelo = a.Modelo,
+                             Descripcion = a.Descripcion,
+                             Nombre = a.Nombre,
+                             Observaciones = a.Observaciones,
+                             EstadoFisicoId = a.EstadoFisicoId,
+                             TagId = a.TagId,
+                             ColaboradorHabitualId = a.ColaboradorHabitualId,
+                             ColaboradorResponsableId = a.ColaboradorResponsableId,
+                             ValorCompra = a.ValorCompra,
+                             FechaCompra = a.FechaCompra,
+                             Proveedor = a.Proveedor,
+                             FechaFinGarantia = a.FechaFinGarantia,
+                             TieneFoto = a.TieneFoto,
+                             TieneArchivo = a.TieneArchivo,
+                             FechaCapitalizacion = a.FechaCapitalizacion,
+                             FichaResguardo = a.FichaResguardo,
+                             CampoLibre1 = a.CampoLibre1,
+                             CampoLibre2 = a.CampoLibre2,
+                             CampoLibre3 = a.CampoLibre3,
+                             CampoLibre4 = a.CampoLibre4,
+                             CampoLibre5 = a.CampoLibre5,
+                             AreaId = a.AreaId,
+                             Status = a.Status,
+                             MotivoId = a.MotivoId,
+                         }).Where(w => w.UbicacionId == locationId).ToList();
+
+            return await Task.FromResult(query.ToList());
+        }
     }
 }
