@@ -2006,6 +2006,77 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                                  UbicacionNombre = l.Key.Nombre,
                                  InventarioUbicacionStatus = l.Key.Status,
                                  InventarioId = l.Key.InventarioId,
+                                 AssetTotal = l.GroupBy(w => new
+                                 {
+                                     w.Activo
+                                 }).Select(t => new Asset()
+                                 {
+                                     UsuarioCreadorId = t.Key.Activo.UsuarioCreadorId,
+                                     UsuarioModificadorId = t.Key.Activo.UsuarioModificadorId,
+                                     UsuarioBajaId = t.Key.Activo.UsuarioBajaId,
+                                     UsuarioReactivadorId = t.Key.Activo.UsuarioReactivadorId,
+                                     FechaCreacion = t.Key.Activo.FechaCreacion,
+                                     FechaModificacion = t.Key.Activo.FechaModificacion,
+                                     FechaBaja = t.Key.Activo.FechaBaja,
+                                     FechaReactivacion = t.Key.Activo.FechaReactivacion,
+                                     Estado = t.Key.Activo.Estado,
+                                     EmpresaId = t.Key.Activo.EmpresaId,
+                                     Id = t.Key.Activo.Id,
+                                     UbicacionId = t.Key.Activo.UbicacionId,
+                                     GrupoActivoId = t.Key.Activo.GrupoActivoId,
+                                     TipoActivoId = t.Key.Activo.TipoActivoId,
+                                     Codigo = t.Key.Activo.Codigo,
+                                     Serie = t.Key.Activo.Serie,
+                                     Marca = t.Key.Activo.Marca,
+                                     Modelo = t.Key.Activo.Modelo,
+                                     Descripcion = t.Key.Activo.Descripcion,
+                                     Nombre = t.Key.Activo.Nombre,
+                                     Observaciones = t.Key.Activo.Observaciones,
+                                     EstadoFisicoId = t.Key.Activo.EstadoFisicoId,
+                                     TagId = t.Key.Activo.TagId,
+                                     ColaboradorHabitualId = t.Key.Activo.ColaboradorHabitualId,
+                                     ColaboradorResponsableId = t.Key.Activo.ColaboradorResponsableId,
+                                     ValorCompra = t.Key.Activo.ValorCompra,
+                                     FechaCompra = t.Key.Activo.FechaCompra,
+                                     Proveedor = t.Key.Activo.Proveedor,
+                                     FechaFinGarantia = t.Key.Activo.FechaFinGarantia,
+                                     TieneFoto = t.Key.Activo.TieneFoto,
+                                     TieneArchivo = t.Key.Activo.TieneArchivo,
+                                     FechaCapitalizacion = t.Key.Activo.FechaCapitalizacion,
+                                     FichaResguardo = t.Key.Activo.FichaResguardo,
+                                     CampoLibre1 = t.Key.Activo.CampoLibre1,
+                                     CampoLibre2 = t.Key.Activo.CampoLibre2,
+                                     CampoLibre3 = t.Key.Activo.CampoLibre3,
+                                     CampoLibre4 = t.Key.Activo.CampoLibre4,
+                                     CampoLibre5 = t.Key.Activo.CampoLibre5,
+                                     AreaId = t.Key.Activo.AreaId,
+                                     Status = t.Key.Activo.Status,
+                                     MotivoId = t.Key.Activo.MotivoId,
+                                     EstadoFisico = new PhysicalState()
+                                     {
+                                         Id = t.Key.Activo.EstadoFisico.Id,
+                                         Nombre = t.Key.Activo.EstadoFisico.Nombre,
+                                         Descripcion = t.Key.Activo.EstadoFisico.Descripcion
+                                     },
+                                     Tag = new Tag()
+                                     {
+                                         UsuarioCreadorId = t.Key.Activo.Tag.UsuarioCreadorId,
+                                         UsuarioModificadorId = t.Key.Activo.Tag.UsuarioModificadorId,
+                                         UsuarioBajaId = t.Key.Activo.Tag.UsuarioBajaId,
+                                         UsuarioReactivadorId = t.Key.Activo.Tag.UsuarioReactivadorId,
+                                         FechaCreacion = t.Key.Activo.Tag.FechaCreacion,
+                                         FechaModificacion = t.Key.Activo.Tag.FechaModificacion,
+                                         FechaBaja = t.Key.Activo.Tag.FechaBaja,
+                                         FechaReactivacion = t.Key.Activo.Tag.FechaReactivacion,
+                                         Estado = t.Key.Activo.Tag.Estado,
+                                         EmpresaId = t.Key.Activo.Tag.EmpresaId,
+                                         Id = t.Key.Activo.Tag.Id,
+                                         TipoTagId = t.Key.Activo.Tag.TipoTagId,
+                                         Numero = t.Key.Activo.Tag.Numero,
+                                         Fc = t.Key.Activo.Tag.Fc,
+                                         Vence = t.Key.Activo.Tag.Vence
+                                     }
+                                 }).ToList().Count(),
                                  Activo = l.GroupBy(w => new
                                  {
                                      w.Activo

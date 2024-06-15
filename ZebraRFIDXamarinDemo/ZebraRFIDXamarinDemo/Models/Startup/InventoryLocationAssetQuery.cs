@@ -65,6 +65,9 @@ namespace ZebraRFIDXamarinDemo.Models.Startup
         public string UbicacionNombre { get; set; }
         public byte InventarioUbicacionStatus { get; set; }
         public Guid InventarioId { get; set; }
+
+        public int AssetTotal { get; set; }
+
         public string InventarioUbicacionStatusNombre { get { return OnStatusNombre(InventarioUbicacionStatus); } }    /* 1.Por inventariar - 2.Finalizado */
 
 

@@ -167,7 +167,7 @@
                                                         <StackLayout Padding="0" HorizontalOptions="End" Grid.Column="1" Grid.Row="0">
                                                                        
                                                                             <Frame Padding="0" HeightRequest="20" WidthRequest="20" BackgroundColor="#3880ff" HorizontalOptions="End" CornerRadius="100" HasShadow="True">
-                                                                            <Label Margin="0" Text="12" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" FontSize="Caption" TextColor="White" FontAttributes="Bold"></Label>
+                                                                            <Label Margin="0" Text="{Binding AssetTotal}" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" FontSize="Caption" TextColor="White" FontAttributes="Bold"></Label>
                                                                             </Frame>
 
                                                                             <Label Padding="25, 0, 0, 0" HeightRequest="20" Margin="0, -24, 22, 0" Text="Total de activos: " FontSize="Caption" FontAttributes="Bold"></Label>
