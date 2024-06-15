@@ -24,18 +24,35 @@
         IsEnabled="True"
         VerticalScrollBarVisibility="Always">
 
-        <StackLayout
-            Orientation="Vertical"
-            Spacing="25" 
-            Padding="30,0">
+        <Grid>
+                <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto" /> 
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                     </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
 
-            <StackLayout Spacing="5">
-                <Grid
-                    RowDefinitions="Auto, Auto, Auto, Auto">
+            <StackLayout
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        BackgroundColor="White"
+                        Padding="14,0"
+                        Spacing="0">
+
+                <Grid>
+                        <Grid.RowDefinitions>
+<RowDefinition Height="Auto" /> 
+                                                                        <RowDefinition Height="Auto" />
+                                                                     </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
 
                 <Label
                         Grid.Row="0"
-                        Text="Lista - Activos" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        Text="Lista de Activos" FontSize="Subtitle" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                 <!--
                 <Button BackgroundColor="DarkOrange" TextColor="White" Text="Guardar" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" Command="{Binding SaveAssetCommand}" />
                 -->
@@ -107,8 +124,8 @@
                 <StackLayout
                         Grid.Row="1"
                         Orientation="Horizontal">
-                    <Button WidthRequest="120" FontSize="Default" Text="Finalizar ubicación" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding FinalizeLocationCommand}" />
-                    <Button WidthRequest="120" FontSize="Default" Text="Actualizar activos" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding SaveAssetCommand}" />
+                    <Button TextTransform="None" FontSize="Micro"  WidthRequest="120" HeightRequest="40" Text="Finalizar ubicación" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding FinalizeLocationCommand}" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White" />
+                    <Button TextTransform="None" FontSize="Micro"  WidthRequest="120" HeightRequest="40" Text="Actualizar activos" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding SaveAssetCommand}" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White" />
                 </StackLayout>
                 <StackLayout
                         Grid.Row="2"
@@ -137,30 +154,62 @@
                                                     </Frame>
 
                                                     -->
+
+                         </Grid>
+            </StackLayout>
                                            
-                                                
+
+
+                 <StackLayout
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Padding="13, 0, 13, 0">
                                                     <ListView
-                        Grid.Row="3"
                         x:Name="listAsset" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
                                                         <ListView.ItemTemplate>
-
                                                             <DataTemplate>
-                                                                
+    
                                                                <ViewCell>
                                                                     <ViewCell.View>
-                                                                    <Frame
-                                                                        Padding="0, 0, 0, 0">
-                                                                    <StackLayout>
-                                                                    <StackLayout>
-                                                                        <StackLayout Orientation="Vertical">
-                                                                            <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
-                                                                                <Grid RowSpacing="0">
-                                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Activo" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Nombre}" FontSize="Subtitle" FontAttributes="Bold"/>
-                                                                                </Grid>
-                                                                            <BoxView Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
-                                                                        </StackLayout>
+                                            <Frame
+                                                            Margin="2"
+                                                            CornerRadius="10"
+                                                            HasShadow="True"
+                                                            >
+
                                                                     <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                     </Grid.RowDefinitions>
+
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="90" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+
+
+                                                                 
+                                                                     
+                                                                    
+                                                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Text="Activo" FontSize="Small" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontSize="Small"/>                       
+                                                                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
+                                                                   
+                                                                    
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Total de activos: 1" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                                                                     -->
@@ -168,11 +217,10 @@
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Descripción: "/>
                                                                     -->
-                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Código: "/>
-                                                                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="Marca: "/>
-                                                                    <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Text="Serie: "/>
-
-                                                                    <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="Estado fisico: "/>
+                                                                    <Label Grid.Row="2" Grid.Column="0" Text="Código: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="3" Grid.Column="0" Text="Marca: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="4" Grid.Column="0" Text="Serie: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="5" Grid.Column="0" Text="Estado fisico: " FontSize="Caption" FontAttributes="Bold"/>
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: "/>
                                                                     -->
@@ -180,15 +228,16 @@
                                                                     <!--
                                                                     <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Inventariado: "></Label>
                                                                     -->
-                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Tag: "></Label>
+
+                                                                    <Label Grid.Row="6" Grid.Column="0" Text="Tag: " FontSize="Caption" FontAttributes="Bold"></Label>
 
                                                                     <!--
                                                                     <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     -->
-                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Codigo}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="{Binding Marca}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding Serie}" TextColor="Silver" FontAttributes="Bold"/>
-                                                                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Text="{Binding EstadoFisico.Nombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Codigo}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Marca}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Serie}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding EstadoFisico.Nombre}" FontSize="Caption"/>
                                                                     <!--
                                                                     <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     -->
@@ -196,7 +245,7 @@
                                                                     <!--
                                                                     <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
                                                                     -->
-                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Tag.Numero}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding Tag.Numero}" FontSize="Caption"/>
                                                                     
                                                                     
                                                                     <!--
@@ -225,31 +274,27 @@
                                                                     </Label>
                                                                     -->
 
-                                                                    </Grid>
-                                                                    </StackLayout>
-                                                                    <StackLayout Orientation="Horizontal">
-                                                                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+                                                                  
+                                                                   
+
+
+                                                                   
                                                                            
-                                                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="¿Inventariado? "></Label>
-                                                                          
-                                                                            
-                                                                                <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Text="¿Observaciones? "></Label>
-                                                                         
-                                                                            
-                                                                                <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Text="¿Motivo? "></Label>
-                                                                            
-                                                                           
-                                                                                <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="¿Estado físico? "></Label>
+                                                                                <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Inventariado: "></Label>            
+                                                                                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Observaciones: "></Label>
+                                                                                <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Motivo: "></Label>
+                                                                                <Label Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Estado físico: "></Label>
                                                                          
                                                                             
 
                                                                        
                                                                                 <Switch
-                                                                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1"
+                                                    Grid.Row="7"
+                                                                    Grid.Column="1" Grid.ColumnSpan="1"
                                                                                     OnColor="DarkOrange"
                                                                                     ThumbColor="DarkOrange"
-                                                                                    HorizontalOptions="CenterAndExpand"
-                                                                                    VerticalOptions="Center"
+                                                                                    HorizontalOptions="Start"
+                                                                                    VerticalOptions="Start"
                                                                                     IsToggled="{Binding Status, Mode=TwoWay}">
                                                                                     <Switch.Behaviors>
                                                                                         <behaviors:EventToCommandBehaviorView
@@ -262,19 +307,21 @@
                                                                           
                                                                        
                                                                                 <Entry
-                                                                    Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                                    Grid.Row="9"
+                                                                    Grid.Column="0" Grid.ColumnSpan="2"
                                                                                     Text="{Binding Observaciones}"
                                                                                     Placeholder=""
-                                                                                    FontSize="Medium"
+                                                                                    FontSize="Caption"
                                                                                     ></Entry>
                                                                            
                                                                        
                                                                                 <Picker
+                                                    Grid.Row="11"
                                                                 Grid.Column="0"
-                                                                Grid.Row="4"
+                                                                
                                                                 Grid.ColumnSpan="2"
                                                                                     Margin="0,0,0,0"
-                                                                                    
+                                                                                    FontSize="Caption"
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
@@ -292,11 +339,12 @@
                                                                            
                                                                             
                                                                                 <Picker
+                                                    Grid.Row="13"
                                                                                     Grid.Column="0"
-                                                                                Grid.Row="6"
+                                                                                
                                                                                 Grid.ColumnSpan="2"
                                                                                     
-
+                                                                                FontSize="Caption"
                                                                                     Title="-- Seleccione -- "
                                                                                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerItems}"
                                                                                     ItemDisplayBinding="{Binding Nombre}"
@@ -320,32 +368,25 @@
                                                                                 
                                                                                 </Picker>
                                                                         
-                                                                        </Grid>
-                                                                    </StackLayout>
-                                                                    <!--
-                                                                    <StackLayout Orientation="Vertical">
-                                                                        <Button x:Name="ZoomIn" Text="Editar"
-                                                                            Command="{Binding Path=BindingContext.PlanoPagamentoAlteradoCommand, Source={x:Reference Name=listAsset}}" 
-                                                                            CommandParameter="{Binding .}"
-                                                                            BackgroundColor="DarkOrange"
-                                                                            TextColor="White"
-                                                                            CornerRadius="20"
-                                                                            WidthRequest="100"
-                                                                            HorizontalOptions="Center"
-                                                                            VerticalOptions="Center"/>
-                                                                    </StackLayout>
-                                                                    -->
-                                                                    </StackLayout>
-                                                                    </Frame>
+                                                                      
+
+
+
+
+                                                                    </Grid>
+
+                                                </Frame>
+
                                                                 </ViewCell.View>
                                                                </ViewCell>
                                                                 
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
                                                     </ListView>
-                </Grid>
-            </StackLayout>
-        </StackLayout>
+                    </StackLayout>
+               
+        </Grid>
+
             </ScrollView>
     </ContentPage.Content>
 </ContentPage>
