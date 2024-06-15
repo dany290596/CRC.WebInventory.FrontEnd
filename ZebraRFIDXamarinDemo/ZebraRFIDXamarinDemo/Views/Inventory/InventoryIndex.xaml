@@ -27,18 +27,18 @@
                         Grid.Column="0"
                         Grid.Row="0"
                         BackgroundColor="White"
-                        Padding="30,0"
+                        Padding="14,0"
                         Spacing="0">
                         <Grid RowDefinitions="Auto">
                             <StackLayout
                                 Grid.Row="0"
                                 Orientation="Vertical"
-                                Spacing="25">
+                                Spacing="15">
                                 <Grid RowDefinitions="Auto">
                                     <StackLayout
                                         Grid.Row="0"
                                         Spacing="5">
-                                        <Label Text="Lista - Inventarios" FontSize="Title" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                        <Label Text="Lista de Inventarios" FontSize="Subtitle" TextColor="#24252A" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                         <!--
                                         <Button BackgroundColor="DarkOrange" TextColor="White" Text="Descargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding SyncInventoryCommand}" />
                                         <Button BackgroundColor="DarkOrange" TextColor="White" Text="Cargar" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Command="{Binding UploadInventoryCommand}" />
@@ -48,8 +48,8 @@
                                     <StackLayout
                                         Grid.Row="1"
                                         Orientation="Horizontal">
-                                        <Button Text="Descargar Inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
-                                        <Button Text="Limpiar Inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120"></Button>
+                                        <Button TextTransform="None" FontSize="Micro" Text="Descargar inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White"></Button>
+                                        <Button TextTransform="None" FontSize="Micro" Text="Limpiar inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White"></Button>
                                         <!--
                                         <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>
                                         -->
@@ -62,7 +62,7 @@
                     <StackLayout
                         Grid.Column="0"
                         Grid.Row="1"
-                        Padding="20,0,20,0">
+                        Padding="13, 0, 13, 0">
                             <RefreshView
                                 x:DataType="local:InventoryIndexViewModel"
                                 Command="{Binding LoadInventoryCommand}"
@@ -73,6 +73,7 @@
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <StackLayout
+
                                                 x:DataType="model:InventoryLocationAssetQuery">
                                                 <SwipeView>
                                                     <!--
@@ -86,10 +87,11 @@
                                                     -->
                                                     <Grid>
                                                         <Frame
+                                                            Margin="2"
                                                             CornerRadius="10"
                                                             HasShadow="True"
                                                             >
-                                                            <StackLayout>
+                                                        
                                                                 <StackLayout>
                                                                     <Grid
                                                                         RowSpacing="0">
@@ -195,7 +197,7 @@
                                                                 </Frame>
                                                                 </Frame>
                                                                 -->
-                                                            </StackLayout>
+                                                           
                                                         </Frame>
                                                     </Grid>
                                                 </SwipeView>
