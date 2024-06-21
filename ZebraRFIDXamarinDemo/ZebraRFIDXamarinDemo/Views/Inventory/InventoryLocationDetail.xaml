@@ -3,10 +3,24 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ZebraRFIDXamarinDemo.ViewModels.Inventory"
-    xmlns:model="clr-namespace:ZebraRFIDXamarinDemo.Models.Startup"
     x:Class="ZebraRFIDXamarinDemo.Views.Inventory.InventoryLocationDetail"
     xmlns:behaviors="clr-namespace:ZebraRFIDXamarinDemo.Common"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    android:TabbedPage.ToolbarPlacement="Bottom"
     x:Name="ThisPage">
+
+    
+                      <ContentPage.ToolbarItems>
+    <!-- ... -->
+    <ToolbarItem
+      Order="Secondary"
+      Text="Item 3" />
+    <ToolbarItem
+      Order="Secondary"
+      Text="Item 4" />
+
+  </ContentPage.ToolbarItems>
+
 
     <ContentPage.BindingContext>
         <local:InventoryLocationDetailViewModel></local:InventoryLocationDetailViewModel>
@@ -17,16 +31,32 @@
         <behaviors:EventToCommandBehavior EventName="Disappearing" Command="{Binding DisappearingCommand}"/>
     </ContentPage.Behaviors>
 
+
     <ContentPage.Content>
+       
+
         <ScrollView 
         BackgroundColor="Transparent"
         HeightRequest="200"
         IsEnabled="True"
         VerticalScrollBarVisibility="Always">
 
+
+             
+
+
+
+
+
+
+
+           
+
+
         <Grid>
                 <Grid.RowDefinitions>
                                                                         <RowDefinition Height="Auto" /> 
+                                                                        <RowDefinition Height="Auto" />
                                                                         <RowDefinition Height="Auto" />
                                                                         <RowDefinition Height="Auto" />
                                                                      </Grid.RowDefinitions>
@@ -42,10 +72,13 @@
                         Spacing="0">
 
                 <Grid>
-                        <Grid.RowDefinitions>
-<RowDefinition Height="Auto" /> 
-                                                                        <RowDefinition Height="Auto" />
-                                                                     </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> 
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /> 
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>
@@ -120,6 +153,14 @@
             </StackLayout>
             -->
 
+
+
+                      
+                       
+              
+
+
+
          
                 <StackLayout
                         Grid.Row="1"
@@ -127,12 +168,14 @@
                     <Button TextTransform="None" FontSize="Micro"  WidthRequest="120" HeightRequest="40" Text="Finalizar ubicación" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding FinalizeLocationCommand}" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White" />
                     <Button TextTransform="None" FontSize="Micro"  WidthRequest="120" HeightRequest="40" Text="Actualizar activos" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Command="{Binding SaveAssetCommand}" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White" />
                 </StackLayout>
+                        <!--
                 <StackLayout
                         Grid.Row="2"
                         Orientation="Horizontal">
                     <Label Text="Total de activos: " TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                     <Label Text="{Binding ListAsset.Count}" TextColor="#24252A" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
+                        -->
 
                                     <!--
                                 <Frame HasShadow="True" CornerRadius="20">
@@ -155,15 +198,289 @@
 
                                                     -->
 
+                          <StackLayout Grid.Row="3" Orientation="Horizontal">
+ <Grid HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand"
+          ColumnSpacing="0"
+          RowSpacing="0"
+          Padding="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!--Details Tab-->
+
+        <StackLayout Grid.Row="0"
+                     Grid.Column="0"
+
+                     VerticalOptions="FillAndExpand">
+
+           <Button Opacity="0.7" BorderWidth="2" BorderColor="DarkOrange" BackgroundColor="Transparent" Command="{Binding GetAssetsInventoriedCommand}" Text="{Binding ListAssetCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
+
+        </StackLayout>
+
+        <!-- Tab 2 -->
+        <StackLayout Grid.Row="0"
+                     Grid.Column="1"
+
+                     VerticalOptions="FillAndExpand">
+            <Button Opacity="0.7" BorderWidth="2" BorderColor="DarkOrange" BackgroundColor="Transparent" Command="{Binding GetAssetsWithoutInventoryCommand}" Text="{Binding ListAssetInventariadoCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
+        </StackLayout>
+    </Grid>
+</StackLayout>
                          </Grid>
-            </StackLayout>
-                                           
+                    </StackLayout>
 
-
-                 <StackLayout
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+                <StackLayout
+                    IsVisible="{Binding GetAssetsWithoutInventory}"
                         Grid.Column="0"
                         Grid.Row="1"
                         Padding="13, 0, 13, 0">
+                    <Grid
+                        IsVisible="{Binding GetAssetsWithoutInventory}">
+                                                    <ListView
+                        x:Name="listAssetInventariado" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAssetInventariado}" IsVisible="True" HasUnevenRows="True">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+    
+                                                               <ViewCell>
+                                                                    <ViewCell.View>
+                                            <Frame
+                                                            Margin="2"
+                                                            CornerRadius="10"
+                                                            HasShadow="True"
+                                                            >
+
+                                                                    <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                     </Grid.RowDefinitions>
+
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="90" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+
+
+                                                                 
+                                                                     
+                                                                    
+                                                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Text="Activo" FontSize="Small" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontSize="Small"/>                       
+                                                                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" Color="#24252A" HeightRequest="2" WidthRequest="2" HorizontalOptions="Fill" />
+                                                                   
+                                                                    
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Total de activos: 1" FontSize="Subtitle" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center"/>
+                                                                    -->
+
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Text="Descripción: "/>
+                                                                    -->
+                                                                    <Label Grid.Row="2" Grid.Column="0" Text="Código: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="3" Grid.Column="0" Text="Marca: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="4" Grid.Column="0" Text="Serie: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <Label Grid.Row="5" Grid.Column="0" Text="Estado fisico: " FontSize="Caption" FontAttributes="Bold"/>
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Text="Observaciones: "/>
+                                                                    -->
+
+                                                                    <!--
+                                                                    <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Text="Inventariado: "></Label>
+                                                                    -->
+
+                                                                    <Label Grid.Row="6" Grid.Column="0" Text="Tag: " FontSize="Caption" FontAttributes="Bold"></Label>
+
+                                                                    <!--
+                                                                    <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Descripcion}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    -->
+                                                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Codigo}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Marca}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Serie}" FontSize="Caption"/>
+                                                                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding EstadoFisico.Nombre}" FontSize="Caption"/>
+                                                                    <!--
+                                                                    <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Text="{Binding Observaciones}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    -->
+
+                                                                    <!--
+                                                                    <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding StatusNombre}" TextColor="Silver" FontAttributes="Bold"/>
+                                                                    -->
+                                                                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding Tag.Numero}" FontSize="Caption"/>
+                                                                    
+                                                                    
+                                                                    <!--
+                                                                    <Picker Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="1" Title="Seleccione"
+                                                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerItems}"
+                                                                            ItemDisplayBinding="{Binding Nombre}"
+                                                                            SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PickerSelectedIndex}"
+                                                                            SelectedIndexChanged="SelectedAssetChanged"
+                                                                            >
+                                                                
+                                                                        <Picker.Behaviors>
+                                                                            <behaviors:EventToCommandBehaviour
+                                                                                EventName="SelectedIndexChanged"
+                                                                                Command="{Binding Path=BindingContext.PlanoPagamentoAlteradoCommand, Source={x:Reference Name=listAsset}}"
+                                                                                >
+                                                                            </behaviors:EventToCommandBehaviour>
+                                                                        </Picker.Behaviors>
+                                                                    </Picker>
+                                                                    -->
+
+                                                                    <!--
+                                                                    <Editor Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="1" Text="{Binding Observaciones}">
+                                                                    </Editor>
+                                                                    
+                                                                    <Label Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="1" Text="{Binding Activo.EstadoFisicoId}">
+                                                                    </Label>
+                                                                    -->
+
+                                                                  
+                                                                   
+
+
+                                                                   
+                                                                           
+                                                                                <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Inventariado: "></Label>            
+                                                                                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Observaciones: "></Label>
+                                                                                <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Motivo: "></Label>
+                                                                                <Label Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="1" FontSize="Caption" FontAttributes="Bold" Text="Estado físico: "></Label>
+                                                                         
+                                                                            
+
+                                                                       
+                                                                                <Switch
+                                                    Grid.Row="7"
+                                                                    Grid.Column="1" Grid.ColumnSpan="1"
+                                                                                    OnColor="DarkOrange"
+                                                                                    ThumbColor="DarkOrange"
+                                                                                    HorizontalOptions="Start"
+                                                                                    VerticalOptions="Start"
+                                                                                    IsToggled="{Binding Status, Mode=TwoWay}">
+                                                                                    <Switch.Behaviors>
+                                                                                        <behaviors:EventToCommandBehaviorView
+                                                                                            EventName="Toggled"
+                                                                                            Command="{Binding Path=BindingContext.StatusSwitchCommand, Source={x:Reference Name=listAssetInventariado}}"
+                                                                                            CommandParameter="{Binding .}">
+                                                                                        </behaviors:EventToCommandBehaviorView>
+                                                                                    </Switch.Behaviors>
+                                                                                </Switch>
+                                                                          
+                                                                       
+                                                                                <Entry
+                                                    Grid.Row="9"
+                                                                    Grid.Column="0" Grid.ColumnSpan="2"
+                                                                                    Text="{Binding Observaciones}"
+                                                                                    Placeholder=""
+                                                                                    FontSize="Caption"
+                                                                                    ></Entry>
+                                                                           
+                                                                       
+                                                                                <Picker
+                                                    Grid.Row="11"
+                                                                Grid.Column="0"
+                                                                
+                                                                Grid.ColumnSpan="2"
+                                                                                    Margin="0,0,0,0"
+                                                                                    FontSize="Caption"
+                                                                                    Title="-- Seleccione -- "
+                                                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerItems}"
+                                                                                    ItemDisplayBinding="{Binding Nombre}"
+                                                                                    SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerSelectedIndex, Mode=TwoWay}"
+                                                                                    SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ParamsPickerSelectedItem}">
+                                                                                        
+                                                                                    <Picker.Behaviors>
+                                                                                        <behaviors:EventToCommandBehavior
+                                                                                            EventName="SelectedIndexChanged"
+                                                                                            Command="{Binding Path=BindingContext.ParamsPickerCommand, Source={x:Reference Name=listAssetInventariado}}"
+                                                                                            CommandParameter="{Binding .}">
+                                                                                        </behaviors:EventToCommandBehavior>
+                                                                                    </Picker.Behaviors>
+                                                                                </Picker>
+                                                                           
+                                                                            
+                                                                                <Picker
+                                                    Grid.Row="13"
+                                                                                    Grid.Column="0"
+                                                                                
+                                                                                Grid.ColumnSpan="2"
+                                                                                    
+                                                                                FontSize="Caption"
+                                                                                    Title="-- Seleccione -- "
+                                                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerItems}"
+                                                                                    ItemDisplayBinding="{Binding Nombre}"
+                                                                                    SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerSelectedIndex, Mode=TwoWay}"
+                                                                                    SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=PhysicalStatePickerSelectedItem}">
+                                                                                    <!--
+                                                                                    SelectedIndex="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}, AncestorLevel={x:Reference Name=listAsset}}, Path=PhysicalStatePickerSelectedIndex}"
+                                                                                    -->
+                                                                                
+                                                                                <Picker.Behaviors>
+                                                                                    <behaviors:EventToCommandBehavior
+                                                                                        EventName="SelectedIndexChanged"
+                                                                                        Command="{Binding Path=BindingContext.PhysicalStatePickerCommand, Source={x:Reference Name=listAssetInventariado}}"
+                                                                                        CommandParameter="{Binding .}">
+                                                                                        <!--
+                                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}, AncestorLevel={x:Reference Name=listAssetInventariado}}, Path=PhysicalStatePickerCommand}"
+                                                                                        -->
+                                                                                        
+                                                                                    </behaviors:EventToCommandBehavior>
+                                                                                </Picker.Behaviors>
+                                                                                
+                                                                                </Picker>
+                                                                        
+                                                                      
+
+
+
+
+                                                                    </Grid>
+
+                                                </Frame>
+
+                                                                </ViewCell.View>
+                                                               </ViewCell>
+                                                                
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>
+                        </Grid>
+                    </StackLayout>
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS NO INVENTARIADOS -->
+
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
+                 <StackLayout
+                    IsVisible="{Binding GetAssetsInventoried}"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Padding="13, 0, 13, 0">
+                    <Grid IsVisible="{Binding GetAssetsInventoried}">
                                                     <ListView
                         x:Name="listAsset" BackgroundColor="White" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryLocationDetailViewModel}}, Path=ListAsset}" IsVisible="True" HasUnevenRows="True">
                                                         <ListView.ItemTemplate>
@@ -383,7 +700,11 @@
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
                                                     </ListView>
+                        </Grid>
                     </StackLayout>
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
+                <!-- LISTA DE ACTIVOS INVENTARIADOS -->
                
         </Grid>
 

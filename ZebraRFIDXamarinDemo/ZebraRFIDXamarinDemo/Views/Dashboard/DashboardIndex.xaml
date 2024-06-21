@@ -69,7 +69,9 @@
                             -->
 
                             <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Acceder al tutorial" Clicked="GoGoogle" />
+                            <!--
                             <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="Procesar Tags" Clicked="GoRead" />
+                            -->
 
                             <!--
                             <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="Inventarios" Clicked="GoInventory" />

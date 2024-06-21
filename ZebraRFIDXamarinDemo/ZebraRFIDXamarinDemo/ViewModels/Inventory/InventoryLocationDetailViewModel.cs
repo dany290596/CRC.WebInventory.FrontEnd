@@ -12,11 +12,26 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
     {
         public Command LoadAssetCommand { get; }
         public Command SaveAssetCommand { get; }
+        public Command GetAssetsInventoriedCommand { get; }
+        public Command GetAssetsWithoutInventoryCommand { get; }
         public Command FinalizeLocationCommand { get; }
         public Command PlanoPagamentoAlteradoCommand { get; }
         public Command PhysicalStatePickerCommand { get; }
         public Command ParamsPickerCommand { get; }
         public Command StatusSwitchCommand { get; }
+
+        public bool _getAssetsInventoried;
+        public bool GetAssetsInventoried
+        {
+            get { return _getAssetsInventoried; }
+            set { SetProperty(ref _getAssetsInventoried, value); }
+        }
+        public bool _getAssetsWithoutInventory;
+        public bool GetAssetsWithoutInventory
+        {
+            get { return _getAssetsWithoutInventory; }
+            set { SetProperty(ref _getAssetsWithoutInventory, value); }
+        }
 
         public ObservableCollection<Asset> listAsset = new ObservableCollection<Asset>();
         public ObservableCollection<Asset> ListAsset
@@ -25,21 +40,49 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             set { listAsset = value; }
         }
 
+        public string listAssetCount = "Activos inventariados: 0";
+        public string ListAssetCount
+        {
+            get { return listAssetCount; }
+            set { SetProperty(ref listAssetCount, value); }
+        }
+
+        public ObservableCollection<Asset> listAssetInventariado = new ObservableCollection<Asset>();
+        public ObservableCollection<Asset> ListAssetInventariado
+        {
+            get { return listAssetInventariado; }
+            set { listAssetInventariado = value; }
+        }
+
+        public string listAssetInventariadoCount = "Activos no inventariados: 0";
+        public string ListAssetInventariadoCount
+        {
+            get { return listAssetInventariadoCount; }
+            set { SetProperty(ref listAssetInventariadoCount, value); }
+        }
+
         public InventoryLocationDetailViewModel()
         {
             LoadAssetCommand = new Command(async () => await ExecuteLoadPersonCommand());
             SaveAssetCommand = new Command(OnSaveAsset);
             FinalizeLocationCommand = new Command(OnFinalizeLocation);
 
+            GetAssetsInventoriedCommand = new Command(OnGetAssetsInventoried);
+            GetAssetsWithoutInventoryCommand = new Command(OnGetAssetsWithoutInventory);
+
             PhysicalStatePickerItems = new ObservableCollection<PhysicalState>();
             ParamsPickerItems = new ObservableCollection<Params>();
             ListAsset = new ObservableCollection<Asset>();
+            ListAssetInventariado = new ObservableCollection<Asset>();
 
             PlanoPagamentoAlteradoCommand = new Command<InventoryDetail>(WhenSelectedIndexChanged);
             PhysicalStatePickerCommand = new Command<object>(WhenPhysicalStateSelectedIndexChanged);
             ParamsPickerCommand = new Command<object>(WhenParamsSelectedIndexChanged);
             StatusSwitchCommand = new Command<object>(WhenStatusToggled);
             PhysicalStatePickerSelectedItem = new PhysicalState();
+
+            GetAssetsInventoried = false;
+            GetAssetsWithoutInventory = true;
         }
 
         private ObservableCollection<PhysicalState> _physicalStatePickerItems;
@@ -142,18 +185,27 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     ParamsPickerItems.Add(paramsAll[i]);
                 }
 
-                /*
                 ListAsset.Clear();
-                for (int i = 0; i < LocationSync.DetalleInventario.Count(); i++)
+                ListAssetInventariado.Clear();
+                if (InventoryLocationSync.UbicacionId != null && InventoryLocationSync.InventarioId != null)
                 {
-                    ListAsset.Add(LocationSync.DetalleInventario[i]);
-                }
-                */
-                ListAsset.Clear();
-                //LocationSync.DetalleInventario = inventoryDetailAllById;
-                for (int i = 0; i < InventoryLocationSync.Activo.Count(); i++)
-                {
-                    ListAsset.Add(InventoryLocationSync.Activo[i]);
+                    var dataSQLITEInventory = await App.inventoryRepository.GetByLocationIdAsync(InventoryLocationSync.UbicacionId, InventoryLocationSync.InventarioId);
+                    if (dataSQLITEInventory.Activo.Count() > 0)
+                    {
+                        for (int i = 0; i < dataSQLITEInventory.Activo.Count(); i++)
+                        {
+                            if (dataSQLITEInventory.Activo[i].Status == true)
+                            {
+                                ListAsset.Add(dataSQLITEInventory.Activo[i]);
+                                ListAssetCount = "Activos inventariados: " + ListAsset.Count();
+                            }
+                            if (dataSQLITEInventory.Activo[i].Status == false)
+                            {
+                                ListAssetInventariado.Add(dataSQLITEInventory.Activo[i]);
+                                ListAssetInventariadoCount = "Activos no inventariados: " + ListAssetInventariado.Count();
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -194,15 +246,26 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             }
             */
             ListAsset.Clear();
-            //LocationSync.DetalleInventario = inventoryDetailAllById;
-            //if (InventoryLocationSync.UbicacionId != null && InventoryLocationSync.InventarioId != null)
-            //{
-            //    //var dataSQLITE = await App.inventoryRepository.GetByLocationIdAsync(InventoryLocationSync.UbicacionId);
-
-            //}
-            for (int i = 0; i < InventoryLocationSync.Activo.Count(); i++)
+            ListAssetInventariado.Clear();
+            if (InventoryLocationSync.UbicacionId != null && InventoryLocationSync.InventarioId != null)
             {
-                ListAsset.Add(InventoryLocationSync.Activo[i]);
+                var dataSQLITEInventory = await App.inventoryRepository.GetByLocationIdAsync(InventoryLocationSync.UbicacionId, InventoryLocationSync.InventarioId);
+                if (dataSQLITEInventory.Activo.Count() > 0)
+                {
+                    for (int i = 0; i < dataSQLITEInventory.Activo.Count(); i++)
+                    {
+                        if (dataSQLITEInventory.Activo[i].Status == true)
+                        {
+                            ListAsset.Add(dataSQLITEInventory.Activo[i]);
+                            ListAssetCount = "Activos inventariados: " + ListAsset.Count();
+                        }
+                        if (dataSQLITEInventory.Activo[i].Status == false)
+                        {
+                            ListAssetInventariado.Add(dataSQLITEInventory.Activo[i]);
+                            ListAssetInventariadoCount = "Activos no inventariados: " + ListAssetInventariado.Count();
+                        }
+                    }
+                }
             }
         }
 
@@ -210,12 +273,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             try
             {
-                var dataAsset = InventoryLocationSync;
-                if (dataAsset != null)
+                var dataAssetInventariado = ListAssetInventariado;
+                if (dataAssetInventariado != null)
                 {
-                    if (dataAsset.Activo.Count() > 0)
+                    if (dataAssetInventariado.Count() > 0)
                     {
-                        foreach (var itemAsset in dataAsset.Activo)
+                        foreach (var itemAsset in dataAssetInventariado)
                         {
                             if (itemAsset != null)
                             {
@@ -280,8 +343,86 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                     asset.Status = itemAsset.Status; // Este campo se va a modificar
                                     if (itemAsset.MotivoId != null)
                                     {
+                                        asset.MotivoId = itemAsset.MotivoId; // Este campo se va a modificar
+                                    }
+                                    await App.assetRepository.UpdateAsync(asset);
+                                    // await Application.Current.MainPage.DisplayAlert("Mensaje", "La información se actualizó correctamente.", "Aceptar");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var dataAsset = ListAsset;
+                if (dataAsset != null)
+                {
+                    if (dataAsset.Count() > 0)
+                    {
+                        foreach (var itemAsset in dataAsset)
+                        {
+                            if (itemAsset != null)
+                            {
+                                var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(itemAsset.Id);
+                                if (dataAssetSQLITE != null)
+                                {
+                                    if (itemAsset.EstadoFisicoId == null)
+                                    {
+                                        // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese el estado fisico", "Aceptar");
+                                        return;
+                                    }
 
 
+                                    if (itemAsset.Observaciones == null || itemAsset.Observaciones == "")
+                                    {
+                                        // await Application.Current.MainPage.DisplayAlert("Advertencia", "Ingrese las observaciones", "Aceptar");
+                                        return;
+                                    }
+
+
+
+                                    Asset asset = new Asset();
+                                    asset.UsuarioCreadorId = dataAssetSQLITE.UsuarioCreadorId;
+                                    asset.UsuarioModificadorId = dataAssetSQLITE.UsuarioModificadorId;
+                                    asset.UsuarioBajaId = dataAssetSQLITE.UsuarioBajaId;
+                                    asset.UsuarioReactivadorId = dataAssetSQLITE.UsuarioReactivadorId;
+                                    asset.FechaCreacion = dataAssetSQLITE.FechaCreacion;
+                                    asset.FechaModificacion = dataAssetSQLITE.FechaModificacion;
+                                    asset.FechaBaja = dataAssetSQLITE.FechaBaja;
+                                    asset.FechaReactivacion = dataAssetSQLITE.FechaReactivacion;
+                                    asset.Estado = dataAssetSQLITE.Estado;
+                                    asset.EmpresaId = dataAssetSQLITE.EmpresaId;
+                                    asset.Id = dataAssetSQLITE.Id;
+                                    asset.UbicacionId = dataAssetSQLITE.UbicacionId;
+                                    asset.GrupoActivoId = dataAssetSQLITE.GrupoActivoId;
+                                    asset.TipoActivoId = dataAssetSQLITE.TipoActivoId;
+                                    asset.Codigo = dataAssetSQLITE.Codigo;
+                                    asset.Serie = dataAssetSQLITE.Serie;
+                                    asset.Marca = dataAssetSQLITE.Marca;
+                                    asset.Modelo = dataAssetSQLITE.Modelo;
+                                    asset.Descripcion = dataAssetSQLITE.Descripcion;
+                                    asset.Nombre = dataAssetSQLITE.Nombre;
+                                    asset.Observaciones = itemAsset.Observaciones; // Este campo se va a modificar
+                                    asset.EstadoFisicoId = itemAsset.EstadoFisicoId; // Este campo se va a modificar
+                                    asset.TagId = dataAssetSQLITE.TagId;
+                                    asset.ColaboradorHabitualId = dataAssetSQLITE.ColaboradorHabitualId;
+                                    asset.ColaboradorResponsableId = dataAssetSQLITE.ColaboradorResponsableId;
+                                    asset.ValorCompra = dataAssetSQLITE.ValorCompra;
+                                    asset.FechaCompra = dataAssetSQLITE.FechaCompra;
+                                    asset.Proveedor = dataAssetSQLITE.Proveedor;
+                                    asset.FechaFinGarantia = dataAssetSQLITE.FechaFinGarantia;
+                                    asset.TieneFoto = dataAssetSQLITE.TieneFoto;
+                                    asset.TieneArchivo = dataAssetSQLITE.TieneArchivo;
+                                    asset.FechaCapitalizacion = dataAssetSQLITE.FechaCapitalizacion;
+                                    asset.FichaResguardo = dataAssetSQLITE.FichaResguardo;
+                                    asset.CampoLibre1 = dataAssetSQLITE.CampoLibre1;
+                                    asset.CampoLibre2 = dataAssetSQLITE.CampoLibre2;
+                                    asset.CampoLibre3 = dataAssetSQLITE.CampoLibre3;
+                                    asset.CampoLibre4 = dataAssetSQLITE.CampoLibre4;
+                                    asset.CampoLibre5 = dataAssetSQLITE.CampoLibre5;
+                                    asset.AreaId = dataAssetSQLITE.AreaId;
+                                    asset.Status = itemAsset.Status; // Este campo se va a modificar
+                                    if (itemAsset.MotivoId != null)
+                                    {
                                         asset.MotivoId = itemAsset.MotivoId; // Este campo se va a modificar
                                     }
                                     await App.assetRepository.UpdateAsync(asset);
@@ -309,72 +450,175 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void WhenPhysicalStateSelectedIndexChanged(object sender)
         {
-            var picker = (Asset)sender;
-            if (picker != null)
+            try
             {
-                if (picker != null)
+                if (ListAssetInventariado != null)
                 {
-                    if (picker.EstadoFisicoId != null)
+                    if (ListAssetInventariado.Count() > 0)
                     {
-                        var index = PhysicalStatePickerSelectedIndex;
-                        var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.EstadoFisicoId);
-                        if (item.Id != null)
+                        var picker = (Asset)sender;
+                        if (picker != null)
                         {
-                            var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
-                            if (data != null)
+                            if (picker != null)
                             {
                                 if (picker.EstadoFisicoId != null)
                                 {
-                                    data.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                                    var index = PhysicalStatePickerSelectedIndex;
+                                    var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.EstadoFisicoId);
+                                    if (item.Id != null)
+                                    {
+                                        var data = ListAssetInventariado.FirstOrDefault(f => f.Id == picker.Id);
+                                        if (data != null)
+                                        {
+                                            if (picker.EstadoFisicoId != null)
+                                            {
+                                                data.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (ListAsset != null)
+                {
+                    if (ListAsset.Count() > 0)
+                    {
+                        var picker = (Asset)sender;
+                        if (picker != null)
+                        {
+                            if (picker != null)
+                            {
+                                if (picker.EstadoFisicoId != null)
+                                {
+                                    var index = PhysicalStatePickerSelectedIndex;
+                                    var item = PhysicalStatePickerSelectedItem = PhysicalStatePickerItems.FirstOrDefault(f => f.Id == picker.EstadoFisicoId);
+                                    if (item.Id != null)
+                                    {
+                                        var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                                        if (data != null)
+                                        {
+                                            if (picker.EstadoFisicoId != null)
+                                            {
+                                                data.EstadoFisicoId = PhysicalStatePickerItems[index].Id;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private async void WhenParamsSelectedIndexChanged(object sender)
         {
-            var picker = (Asset)sender;
-            if (picker != null)
+            try
             {
-                if (picker != null)
+                if (ListAssetInventariado != null)
                 {
-                    if (picker.MotivoId != null)
+                    if (ListAssetInventariado.Count() > 0)
                     {
-                        var index = ParamsPickerSelectedIndex;
-                        var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.MotivoId);
-                        if (item.Id != null)
+                        var picker = (Asset)sender;
+                        if (picker != null)
                         {
-                            var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
-                            if (data != null)
+                            if (picker != null)
                             {
                                 if (picker.MotivoId != null)
                                 {
-                                    data.MotivoId = ParamsPickerItems[index].Id;
+                                    var index = ParamsPickerSelectedIndex;
+                                    var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.MotivoId);
+                                    if (item.Id != null)
+                                    {
+                                        var data = ListAssetInventariado.FirstOrDefault(f => f.Id == picker.Id);
+                                        if (data != null)
+                                        {
+                                            if (picker.MotivoId != null)
+                                            {
+                                                data.MotivoId = ParamsPickerItems[index].Id;
+                                            }
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    }
-                    if (picker.MotivoId == null)
-                    {
-                        var item = ParamsPickerSelectedItem;
-                        if (item != null)
-                        {
-                            var itemData = ParamsPickerItems.FirstOrDefault(f => f.Id == item.Id);
-                            if (itemData != null)
-                            {
-                                var index = ParamsPickerSelectedIndex;
-                                var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
-                                if (data != null)
+                                if (picker.MotivoId == null)
                                 {
-                                    data.MotivoId = ParamsPickerItems[index].Id;
+                                    var item = ParamsPickerSelectedItem;
+                                    if (item != null)
+                                    {
+                                        var itemData = ParamsPickerItems.FirstOrDefault(f => f.Id == item.Id);
+                                        if (itemData != null)
+                                        {
+                                            var index = ParamsPickerSelectedIndex;
+                                            var data = ListAssetInventariado.FirstOrDefault(f => f.Id == picker.Id);
+                                            if (data != null)
+                                            {
+                                                data.MotivoId = ParamsPickerItems[index].Id;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+                if (ListAsset != null)
+                {
+                    if (ListAsset.Count() > 0)
+                    {
+                        var picker = (Asset)sender;
+                        if (picker != null)
+                        {
+                            if (picker != null)
+                            {
+                                if (picker.MotivoId != null)
+                                {
+                                    var index = ParamsPickerSelectedIndex;
+                                    var item = ParamsPickerSelectedItem = ParamsPickerItems.FirstOrDefault(f => f.Id == picker.MotivoId);
+                                    if (item.Id != null)
+                                    {
+                                        var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                                        if (data != null)
+                                        {
+                                            if (picker.MotivoId != null)
+                                            {
+                                                data.MotivoId = ParamsPickerItems[index].Id;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (picker.MotivoId == null)
+                                {
+                                    var item = ParamsPickerSelectedItem;
+                                    if (item != null)
+                                    {
+                                        var itemData = ParamsPickerItems.FirstOrDefault(f => f.Id == item.Id);
+                                        if (itemData != null)
+                                        {
+                                            var index = ParamsPickerSelectedIndex;
+                                            var data = ListAsset.FirstOrDefault(f => f.Id == picker.Id);
+                                            if (data != null)
+                                            {
+                                                data.MotivoId = ParamsPickerItems[index].Id;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -437,6 +681,32 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 {
                     await Application.Current.MainPage.DisplayAlert("Advertencia", "Todos los activos deben de contar con un motivo o un estatus activo.", "Aceptar");
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async void OnGetAssetsInventoried(object sender)
+        {
+            try
+            {
+                GetAssetsInventoried = true;
+                GetAssetsWithoutInventory = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async void OnGetAssetsWithoutInventory(object sender)
+        {
+            try
+            {
+                GetAssetsInventoried = false;
+                GetAssetsWithoutInventory = true;
             }
             catch (Exception ex)
             {

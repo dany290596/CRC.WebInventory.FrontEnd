@@ -105,6 +105,9 @@
     <PackageReference Include="XamEffects">
       <Version>1.6.3</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
+      <Version>26.1.35</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

@@ -68,9 +68,11 @@
         <ShellContent Route="InventoryIndex" ContentTemplate="{DataTemplate inventory:InventoryIndex}" />
     </FlyoutItem>
 
+    <!--
     <FlyoutItem Title="Tags" Icon="tag.png">
         <ShellContent Route="TagIndex" ContentTemplate="{DataTemplate tag:TagIndex}" />
     </FlyoutItem>
+    -->
 
     <!--
     <FlyoutItem Title="Personas" Icon="tab_about.png">

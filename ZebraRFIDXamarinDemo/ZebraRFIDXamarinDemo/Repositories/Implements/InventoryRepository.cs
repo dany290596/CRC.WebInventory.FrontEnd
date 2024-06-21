@@ -2154,64 +2154,430 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             return await Task.FromResult(query.FirstOrDefault(l => l.InventarioId == inventoryId));
         }
 
-        public async Task<List<Asset>> GetByLocationIdAsync(Guid locationId, Guid inventoryId)
+        public async Task<InventoryLocationAQ> GetByLocationIdAsync(Guid locationId, Guid inventoryId)
         {
-            var asset = await App.assetRepository.GetAllAsync();
-            //var inventorylocationasset = await App.inventoryLocationAssetRepository.GetAllAsync();
+            var inventorylocationdi = await App.inventoryLocationRepository.GetAllAsync();
 
-            //var query = (from ila in inventorylocationasset
-            //             select new InventoryLocationAsset()
-            //             {
+            var inventorylocationassetdi = await App.inventoryLocationAssetRepository.GetAllAsync();
 
-            //             }).Where(ila => ila.InventarioUbicacionId == locationId).ToList();
-            var query = (from a in asset
+            var paramsdi = await App.paramsRepositoty.GetAllAsync();
 
-                         select new Asset()
-                         {
-                             UsuarioCreadorId = a.UsuarioCreadorId,
-                             UsuarioModificadorId = a.UsuarioModificadorId,
-                             UsuarioBajaId = a.UsuarioBajaId,
-                             UsuarioReactivadorId = a.UsuarioReactivadorId,
-                             FechaCreacion = a.FechaCreacion,
-                             FechaModificacion = a.FechaModificacion,
-                             FechaBaja = a.FechaBaja,
-                             FechaReactivacion = a.FechaReactivacion,
-                             Estado = a.Estado,
-                             EmpresaId = a.EmpresaId,
-                             Id = a.Id,
-                             UbicacionId = a.UbicacionId,
-                             GrupoActivoId = a.GrupoActivoId,
-                             TipoActivoId = a.TipoActivoId,
-                             Codigo = a.Codigo,
-                             Serie = a.Serie,
-                             Marca = a.Marca,
-                             Modelo = a.Modelo,
-                             Descripcion = a.Descripcion,
-                             Nombre = a.Nombre,
-                             Observaciones = a.Observaciones,
-                             EstadoFisicoId = a.EstadoFisicoId,
-                             TagId = a.TagId,
-                             ColaboradorHabitualId = a.ColaboradorHabitualId,
-                             ColaboradorResponsableId = a.ColaboradorResponsableId,
-                             ValorCompra = a.ValorCompra,
-                             FechaCompra = a.FechaCompra,
-                             Proveedor = a.Proveedor,
-                             FechaFinGarantia = a.FechaFinGarantia,
-                             TieneFoto = a.TieneFoto,
-                             TieneArchivo = a.TieneArchivo,
-                             FechaCapitalizacion = a.FechaCapitalizacion,
-                             FichaResguardo = a.FichaResguardo,
-                             CampoLibre1 = a.CampoLibre1,
-                             CampoLibre2 = a.CampoLibre2,
-                             CampoLibre3 = a.CampoLibre3,
-                             CampoLibre4 = a.CampoLibre4,
-                             CampoLibre5 = a.CampoLibre5,
-                             AreaId = a.AreaId,
-                             Status = a.Status,
-                             MotivoId = a.MotivoId,
-                         }).Where(w => w.UbicacionId == locationId).ToList();
+            var collaboratordi = await App.collaboratorRepository.GetAllAsync();
 
-            return await Task.FromResult(query.ToList());
+            var assetdi = await App.assetRepository.GetAllAsync();
+
+            var devicedi = await App.deviceRepository.GetAllAsync();
+
+            var inventorydi = await _database.QueryAsync<Inventory>("SELECT * FROM Inventory");
+
+            var locationdi = await App.locationRepository.GetAllAsync();
+
+            var inventoryDetaildi = await App.inventoryDetailRepository.GetAllAsync();
+
+            var physicalStatedi = await App.physicalStateRepository.GetAllAsync();
+
+            var tagi = await App.tagRepository.GetAllAsync();
+
+            var queryila = (from ila in inventorylocationassetdi
+
+                            join il in inventorylocationdi on ila.InventarioUbicacionId equals il.Id
+                            into InventoryLocation_InventoryLocationAsset
+                            from ilila in InventoryLocation_InventoryLocationAsset.DefaultIfEmpty()
+
+                            join i in inventorydi on ilila.InventarioId equals i.Id
+                            into Inventory_InventoryLocation
+                            from iil in Inventory_InventoryLocation.DefaultIfEmpty()
+
+                            join c in collaboratordi on iil.ColaboradorResponsableId equals c.Id
+                            into Collaborator_Inventory
+                            from ci in Collaborator_Inventory.DefaultIfEmpty()
+
+                            join l in locationdi on ilila.UbicacionId equals l.Id
+                            into Location_InventoryLocation
+                            from lil in Location_InventoryLocation.DefaultIfEmpty()
+
+
+
+
+                            join a in assetdi on ila.ActivoId equals a.Id
+                            into Asset_InventoryLocationAsset
+                            from aila in Asset_InventoryLocationAsset.DefaultIfEmpty()
+
+                            join ps in physicalStatedi on aila.EstadoFisicoId equals ps.Id
+                            into PhysicalState_Asset
+                            from psa in PhysicalState_Asset.DefaultIfEmpty()
+
+                            join t in tagi on aila.TagId equals t.Id
+                            into Tag_Asset
+                            from ta in Tag_Asset.DefaultIfEmpty()
+
+                                /*
+                                join p in paramsdi on aila.MotivoId equals p.Id
+                                into Params_Asset
+                                from pa in Params_Asset.DefaultIfEmpty()
+                                */
+
+                            select new InventoryLocationAsset()
+                            {
+                                Id = ila.Id,
+                                InventarioUbicacionId = ila.InventarioUbicacionId,
+                                ActivoId = ila.ActivoId,
+                                InventarioUbicacion = new InventoryLocation()
+                                {
+                                    Id = ilila.Id,
+                                    InventarioId = ilila.InventarioId,
+                                    UbicacionId = ilila.UbicacionId,
+                                    Status = ilila.Status,
+                                    Inventario = new Inventory()
+                                    {
+                                        UsuarioCreadorId = iil.UsuarioCreadorId,
+                                        UsuarioModificadorId = iil.UsuarioModificadorId,
+                                        UsuarioBajaId = iil.UsuarioBajaId,
+                                        UsuarioReactivadorId = iil.UsuarioReactivadorId,
+                                        FechaCreacion = iil.FechaCreacion,
+                                        FechaModificacion = iil.FechaModificacion,
+                                        FechaBaja = iil.FechaBaja,
+                                        FechaReactivacion = iil.FechaReactivacion,
+                                        Estado = iil.Estado,
+                                        EmpresaId = iil.EmpresaId,
+                                        Id = iil.Id,
+                                        ColaboradorResponsableId = iil.ColaboradorResponsableId,
+                                        Descripcion = iil.Descripcion,
+                                        Observaciones = iil.Observaciones,
+                                        FechaInventario = iil.FechaInventario,
+                                        Inventariado = iil.Inventariado,
+                                        NoInventario = iil.NoInventario,
+                                        ColaboradorResponsable = new Collaborator()
+                                        {
+                                            Id = ci.Id,
+                                            Nombre = ci.Nombre,
+                                            ApellidoPaterno = ci.ApellidoPaterno,
+                                            ApellidoMaterno = ci.ApellidoMaterno,
+                                            EstadoCivilId = ci.EstadoCivilId,
+                                            Genero = ci.Genero,
+                                            TipoIdentificacionId = ci.TipoIdentificacionId,
+                                            Identificacion = ci.Identificacion,
+                                            Foto = ci.Foto,
+                                            ExtensionFoto = ci.ExtensionFoto,
+                                            NumEmpleado = ci.NumEmpleado,
+                                            PuestoId = ci.PuestoId,
+                                            UbicacionId = ci.UbicacionId,
+                                            AreaId = ci.AreaId,
+                                            TipoColaboradorId = ci.TipoColaboradorId,
+                                            TelefonoMovil = ci.TelefonoMovil,
+                                            TelefonoOficina = ci.TelefonoOficina,
+                                            Email = ci.Email,
+                                            Email_secundario = ci.Email_secundario
+                                        }
+                                    },
+                                    Ubicacion = new Location()
+                                    {
+                                        Id = lil.Id,
+                                        Nombre = lil.Nombre,
+                                        Status = lil.Status
+                                    }
+                                },
+                                Activo = new Asset()
+                                {
+                                    UsuarioCreadorId = aila.UsuarioCreadorId,
+                                    UsuarioModificadorId = aila.UsuarioModificadorId,
+                                    UsuarioBajaId = aila.UsuarioBajaId,
+                                    UsuarioReactivadorId = aila.UsuarioReactivadorId,
+                                    FechaCreacion = aila.FechaCreacion,
+                                    FechaModificacion = aila.FechaModificacion,
+                                    FechaBaja = aila.FechaBaja,
+                                    FechaReactivacion = aila.FechaReactivacion,
+                                    Estado = aila.Estado,
+                                    EmpresaId = aila.EmpresaId,
+                                    Id = aila.Id,
+                                    UbicacionId = aila.UbicacionId,
+                                    GrupoActivoId = aila.GrupoActivoId,
+                                    TipoActivoId = aila.TipoActivoId,
+                                    Codigo = aila.Codigo,
+                                    Serie = aila.Serie,
+                                    Marca = aila.Marca,
+                                    Modelo = aila.Modelo,
+                                    Descripcion = aila.Descripcion,
+                                    Nombre = aila.Nombre,
+                                    Observaciones = aila.Observaciones,
+                                    EstadoFisicoId = aila.EstadoFisicoId,
+                                    TagId = aila.TagId,
+                                    ColaboradorHabitualId = aila.ColaboradorHabitualId,
+                                    ColaboradorResponsableId = aila.ColaboradorResponsableId,
+                                    ValorCompra = aila.ValorCompra,
+                                    FechaCompra = aila.FechaCompra,
+                                    Proveedor = aila.Proveedor,
+                                    FechaFinGarantia = aila.FechaFinGarantia,
+                                    TieneFoto = aila.TieneFoto,
+                                    TieneArchivo = aila.TieneArchivo,
+                                    FechaCapitalizacion = aila.FechaCapitalizacion,
+                                    FichaResguardo = aila.FichaResguardo,
+                                    CampoLibre1 = aila.CampoLibre1,
+                                    CampoLibre2 = aila.CampoLibre2,
+                                    CampoLibre3 = aila.CampoLibre3,
+                                    CampoLibre4 = aila.CampoLibre4,
+                                    CampoLibre5 = aila.CampoLibre5,
+                                    AreaId = aila.AreaId,
+                                    Status = aila.Status,
+                                    MotivoId = aila.MotivoId,
+                                    EstadoFisico = new PhysicalState()
+                                    {
+                                        UsuarioCreadorId = psa.UsuarioCreadorId,
+                                        UsuarioModificadorId = psa.UsuarioModificadorId,
+                                        UsuarioBajaId = psa.UsuarioBajaId,
+                                        UsuarioReactivadorId = psa.UsuarioReactivadorId,
+                                        FechaCreacion = psa.FechaCreacion,
+                                        FechaModificacion = psa.FechaModificacion,
+                                        FechaBaja = psa.FechaBaja,
+                                        FechaReactivacion = psa.FechaReactivacion,
+                                        Estado = psa.Estado,
+                                        EmpresaId = psa.EmpresaId,
+                                        Id = psa.Id,
+                                        Nombre = psa.Nombre,
+                                        Descripcion = psa.Descripcion
+                                    },
+                                    Tag = new Tag()
+                                    {
+                                        UsuarioCreadorId = ta.UsuarioCreadorId,
+                                        UsuarioModificadorId = ta.UsuarioModificadorId,
+                                        UsuarioBajaId = ta.UsuarioBajaId,
+                                        UsuarioReactivadorId = ta.UsuarioReactivadorId,
+                                        FechaCreacion = ta.FechaCreacion,
+                                        FechaModificacion = ta.FechaModificacion,
+                                        FechaBaja = ta.FechaBaja,
+                                        FechaReactivacion = ta.FechaReactivacion,
+                                        Estado = ta.Estado,
+                                        EmpresaId = ta.EmpresaId,
+                                        Id = ta.Id,
+                                        TipoTagId = ta.TipoTagId,
+                                        Numero = ta.Numero,
+                                        Fc = ta.Fc,
+                                        Vence = ta.Vence
+                                    }
+                                    /*
+                                    Motivo = new Models.Setting.Params()
+                                    {
+                                        UsuarioCreadorId = pa.UsuarioCreadorId,
+                                        UsuarioModificadorId = pa.UsuarioModificadorId,
+                                        UsuarioBajaId = pa.UsuarioBajaId,
+                                        UsuarioReactivadorId = pa.UsuarioReactivadorId,
+                                        FechaCreacion = pa.FechaCreacion,
+                                        FechaModificacion = pa.FechaModificacion,
+                                        FechaBaja = pa.FechaBaja,
+                                        FechaReactivacion = pa.FechaReactivacion,
+                                        Estado = pa.Estado,
+                                        EmpresaId = pa.EmpresaId,
+                                        Id = pa.Id,
+                                        Nombre = pa.Nombre,
+                                        TipoParamId = pa.TipoParamId,
+                                        Orden = pa.Orden
+                                    }
+                                    */
+                                },
+
+                            }).ToList();
+
+
+            var queryq = (from q in queryila
+                          where q.InventarioUbicacion.Inventario.Id == inventoryId
+                          group q by new
+                          {
+                              q.InventarioUbicacion.Inventario.ColaboradorResponsableId,
+                              q.InventarioUbicacion.Inventario.Descripcion,
+                              q.InventarioUbicacion.Inventario.Observaciones,
+                              q.InventarioUbicacion.Inventario.FechaInventario,
+                              q.InventarioUbicacion.Inventario.Id,
+                              q.InventarioUbicacion.Inventario.Inventariado,
+                              q.InventarioUbicacion.Inventario.NoInventario,
+                              q.InventarioUbicacion.Inventario.Estado,
+                              q.InventarioUbicacion.Inventario.ColaboradorResponsable.Nombre,
+                              q.InventarioUbicacion.Inventario.ColaboradorResponsable.ApellidoPaterno,
+                              q.InventarioUbicacion.Inventario.ColaboradorResponsable.ApellidoMaterno,
+                              q.InventarioUbicacion.Inventario.ColaboradorResponsable.NumEmpleado,
+                              //InventarioUbicacionId = q.InventarioUbicacion.Id
+                              //InventarioUbicacionActivoId = q.Id,
+                          } into g
+                          select new InventoryLocationAssetQuery()
+                          {
+                              InventarioColaboradorResponsableId = g.Key.ColaboradorResponsableId,
+                              InventarioDescripcion = g.Key.Descripcion,
+                              InventarioObservaciones = g.Key.Observaciones,
+                              InventarioFechaInventario = g.Key.FechaInventario,
+                              InventarioId = g.Key.Id,
+                              InventarioInventariado = g.Key.Inventariado,
+                              InventarioNoInventario = g.Key.NoInventario,
+                              InventarioEstado = g.Key.Estado,
+                              ColaboradorNombre = g.Key.Nombre,
+                              ColaboradorApellidoPaterno = g.Key.ApellidoPaterno,
+                              ColaboradorApellidoMaterno = g.Key.ApellidoMaterno,
+                              ColaboradorNumEmpleado = g.Key.NumEmpleado,
+                              //InventarioUbicacionActivoId = g.Key.InventarioUbicacionActivoId,
+                              Ubicacion = g.GroupBy(u => new
+                              {
+                                  u.InventarioUbicacion.Ubicacion.Id,
+                                  u.InventarioUbicacion.Ubicacion.Nombre,
+                                  u.InventarioUbicacion.Status,
+                                  InventarioId = u.InventarioUbicacion.Inventario.Id
+                                  //InventarioUbicacionId = u.InventarioUbicacion.Id,
+
+                              }).Select(l => new InventoryLocationAQ()
+                              {
+                                  UbicacionId = l.Key.Id,
+                                  UbicacionNombre = l.Key.Nombre,
+                                  InventarioUbicacionStatus = l.Key.Status,
+                                  InventarioId = l.Key.InventarioId,
+                                  AssetTotal = l.GroupBy(w => new
+                                  {
+                                      w.Activo
+                                  }).Select(t => new Asset()
+                                  {
+                                      UsuarioCreadorId = t.Key.Activo.UsuarioCreadorId,
+                                      UsuarioModificadorId = t.Key.Activo.UsuarioModificadorId,
+                                      UsuarioBajaId = t.Key.Activo.UsuarioBajaId,
+                                      UsuarioReactivadorId = t.Key.Activo.UsuarioReactivadorId,
+                                      FechaCreacion = t.Key.Activo.FechaCreacion,
+                                      FechaModificacion = t.Key.Activo.FechaModificacion,
+                                      FechaBaja = t.Key.Activo.FechaBaja,
+                                      FechaReactivacion = t.Key.Activo.FechaReactivacion,
+                                      Estado = t.Key.Activo.Estado,
+                                      EmpresaId = t.Key.Activo.EmpresaId,
+                                      Id = t.Key.Activo.Id,
+                                      UbicacionId = t.Key.Activo.UbicacionId,
+                                      GrupoActivoId = t.Key.Activo.GrupoActivoId,
+                                      TipoActivoId = t.Key.Activo.TipoActivoId,
+                                      Codigo = t.Key.Activo.Codigo,
+                                      Serie = t.Key.Activo.Serie,
+                                      Marca = t.Key.Activo.Marca,
+                                      Modelo = t.Key.Activo.Modelo,
+                                      Descripcion = t.Key.Activo.Descripcion,
+                                      Nombre = t.Key.Activo.Nombre,
+                                      Observaciones = t.Key.Activo.Observaciones,
+                                      EstadoFisicoId = t.Key.Activo.EstadoFisicoId,
+                                      TagId = t.Key.Activo.TagId,
+                                      ColaboradorHabitualId = t.Key.Activo.ColaboradorHabitualId,
+                                      ColaboradorResponsableId = t.Key.Activo.ColaboradorResponsableId,
+                                      ValorCompra = t.Key.Activo.ValorCompra,
+                                      FechaCompra = t.Key.Activo.FechaCompra,
+                                      Proveedor = t.Key.Activo.Proveedor,
+                                      FechaFinGarantia = t.Key.Activo.FechaFinGarantia,
+                                      TieneFoto = t.Key.Activo.TieneFoto,
+                                      TieneArchivo = t.Key.Activo.TieneArchivo,
+                                      FechaCapitalizacion = t.Key.Activo.FechaCapitalizacion,
+                                      FichaResguardo = t.Key.Activo.FichaResguardo,
+                                      CampoLibre1 = t.Key.Activo.CampoLibre1,
+                                      CampoLibre2 = t.Key.Activo.CampoLibre2,
+                                      CampoLibre3 = t.Key.Activo.CampoLibre3,
+                                      CampoLibre4 = t.Key.Activo.CampoLibre4,
+                                      CampoLibre5 = t.Key.Activo.CampoLibre5,
+                                      AreaId = t.Key.Activo.AreaId,
+                                      Status = t.Key.Activo.Status,
+                                      MotivoId = t.Key.Activo.MotivoId,
+                                      EstadoFisico = new PhysicalState()
+                                      {
+                                          Id = t.Key.Activo.EstadoFisico.Id,
+                                          Nombre = t.Key.Activo.EstadoFisico.Nombre,
+                                          Descripcion = t.Key.Activo.EstadoFisico.Descripcion
+                                      },
+                                      Tag = new Tag()
+                                      {
+                                          UsuarioCreadorId = t.Key.Activo.Tag.UsuarioCreadorId,
+                                          UsuarioModificadorId = t.Key.Activo.Tag.UsuarioModificadorId,
+                                          UsuarioBajaId = t.Key.Activo.Tag.UsuarioBajaId,
+                                          UsuarioReactivadorId = t.Key.Activo.Tag.UsuarioReactivadorId,
+                                          FechaCreacion = t.Key.Activo.Tag.FechaCreacion,
+                                          FechaModificacion = t.Key.Activo.Tag.FechaModificacion,
+                                          FechaBaja = t.Key.Activo.Tag.FechaBaja,
+                                          FechaReactivacion = t.Key.Activo.Tag.FechaReactivacion,
+                                          Estado = t.Key.Activo.Tag.Estado,
+                                          EmpresaId = t.Key.Activo.Tag.EmpresaId,
+                                          Id = t.Key.Activo.Tag.Id,
+                                          TipoTagId = t.Key.Activo.Tag.TipoTagId,
+                                          Numero = t.Key.Activo.Tag.Numero,
+                                          Fc = t.Key.Activo.Tag.Fc,
+                                          Vence = t.Key.Activo.Tag.Vence
+                                      }
+                                  }).ToList().Count(),
+                                  Activo = l.GroupBy(w => new
+                                  {
+                                      w.Activo
+                                  }).Select(t => new Asset()
+                                  {
+                                      UsuarioCreadorId = t.Key.Activo.UsuarioCreadorId,
+                                      UsuarioModificadorId = t.Key.Activo.UsuarioModificadorId,
+                                      UsuarioBajaId = t.Key.Activo.UsuarioBajaId,
+                                      UsuarioReactivadorId = t.Key.Activo.UsuarioReactivadorId,
+                                      FechaCreacion = t.Key.Activo.FechaCreacion,
+                                      FechaModificacion = t.Key.Activo.FechaModificacion,
+                                      FechaBaja = t.Key.Activo.FechaBaja,
+                                      FechaReactivacion = t.Key.Activo.FechaReactivacion,
+                                      Estado = t.Key.Activo.Estado,
+                                      EmpresaId = t.Key.Activo.EmpresaId,
+                                      Id = t.Key.Activo.Id,
+                                      UbicacionId = t.Key.Activo.UbicacionId,
+                                      GrupoActivoId = t.Key.Activo.GrupoActivoId,
+                                      TipoActivoId = t.Key.Activo.TipoActivoId,
+                                      Codigo = t.Key.Activo.Codigo,
+                                      Serie = t.Key.Activo.Serie,
+                                      Marca = t.Key.Activo.Marca,
+                                      Modelo = t.Key.Activo.Modelo,
+                                      Descripcion = t.Key.Activo.Descripcion,
+                                      Nombre = t.Key.Activo.Nombre,
+                                      Observaciones = t.Key.Activo.Observaciones,
+                                      EstadoFisicoId = t.Key.Activo.EstadoFisicoId,
+                                      TagId = t.Key.Activo.TagId,
+                                      ColaboradorHabitualId = t.Key.Activo.ColaboradorHabitualId,
+                                      ColaboradorResponsableId = t.Key.Activo.ColaboradorResponsableId,
+                                      ValorCompra = t.Key.Activo.ValorCompra,
+                                      FechaCompra = t.Key.Activo.FechaCompra,
+                                      Proveedor = t.Key.Activo.Proveedor,
+                                      FechaFinGarantia = t.Key.Activo.FechaFinGarantia,
+                                      TieneFoto = t.Key.Activo.TieneFoto,
+                                      TieneArchivo = t.Key.Activo.TieneArchivo,
+                                      FechaCapitalizacion = t.Key.Activo.FechaCapitalizacion,
+                                      FichaResguardo = t.Key.Activo.FichaResguardo,
+                                      CampoLibre1 = t.Key.Activo.CampoLibre1,
+                                      CampoLibre2 = t.Key.Activo.CampoLibre2,
+                                      CampoLibre3 = t.Key.Activo.CampoLibre3,
+                                      CampoLibre4 = t.Key.Activo.CampoLibre4,
+                                      CampoLibre5 = t.Key.Activo.CampoLibre5,
+                                      AreaId = t.Key.Activo.AreaId,
+                                      Status = t.Key.Activo.Status,
+                                      MotivoId = t.Key.Activo.MotivoId,
+                                      EstadoFisico = new PhysicalState()
+                                      {
+                                          Id = t.Key.Activo.EstadoFisico.Id,
+                                          Nombre = t.Key.Activo.EstadoFisico.Nombre,
+                                          Descripcion = t.Key.Activo.EstadoFisico.Descripcion
+                                      },
+                                      Tag = new Tag()
+                                      {
+                                          UsuarioCreadorId = t.Key.Activo.Tag.UsuarioCreadorId,
+                                          UsuarioModificadorId = t.Key.Activo.Tag.UsuarioModificadorId,
+                                          UsuarioBajaId = t.Key.Activo.Tag.UsuarioBajaId,
+                                          UsuarioReactivadorId = t.Key.Activo.Tag.UsuarioReactivadorId,
+                                          FechaCreacion = t.Key.Activo.Tag.FechaCreacion,
+                                          FechaModificacion = t.Key.Activo.Tag.FechaModificacion,
+                                          FechaBaja = t.Key.Activo.Tag.FechaBaja,
+                                          FechaReactivacion = t.Key.Activo.Tag.FechaReactivacion,
+                                          Estado = t.Key.Activo.Tag.Estado,
+                                          EmpresaId = t.Key.Activo.Tag.EmpresaId,
+                                          Id = t.Key.Activo.Tag.Id,
+                                          TipoTagId = t.Key.Activo.Tag.TipoTagId,
+                                          Numero = t.Key.Activo.Tag.Numero,
+                                          Fc = t.Key.Activo.Tag.Fc,
+                                          Vence = t.Key.Activo.Tag.Vence
+                                      }
+                                  }).ToList()
+                              }).Where(ee => ee.UbicacionId == locationId).ToList()
+                          }).ToList();
+
+            var query = queryq.Select(s
+                => s.Ubicacion.FirstOrDefault(f => f.UbicacionId == locationId)).ToList();
+
+            var queryy = query.FirstOrDefault(f => f.UbicacionId == locationId);
+
+
+            return await Task.FromResult(queryy);
         }
     }
 }
