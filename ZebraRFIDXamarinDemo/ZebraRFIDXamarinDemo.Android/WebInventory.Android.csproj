@@ -387,8 +387,10 @@
       </Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\tag.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
