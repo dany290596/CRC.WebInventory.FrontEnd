@@ -118,30 +118,39 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             List<InventorySync> inventorySync = new List<InventorySync>();
             Api<List<InventorySync>> data = new Api<List<InventorySync>>(false, "", 200, null);
 
-            ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-            var httpClientHandler = new HttpClientHandler();
-            httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            var httpClient = new HttpClient(httpClientHandler);
-            //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
-            Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/Inventario/GetInventarioSync/" + device);
-
-            httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-            httpClient.DefaultRequestHeaders.Add("Empresa", company);
-            var response = await httpClient.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+                var httpClientHandler = new HttpClientHandler();
+                httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                var httpClient = new HttpClient(httpClientHandler);
+                //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
+                Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/Inventario/GetInventarioSync/" + device);
+                // Uri uri = new Uri("https://192.168.1.111:8084/api/Inventario/GetInventarioSync/962CD5F7-CF54-4124-B0CF-60F9E90CCD76");
+
+                httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                httpClient.DefaultRequestHeaders.Add("Empresa", company);
+                var response = await httpClient.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    string content = response.Content.ReadAsStringAsync().Result;
-                    data = JsonConvert.DeserializeObject<Api<List<InventorySync>>>(content);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string content = response.Content.ReadAsStringAsync().Result;
+                        data = JsonConvert.DeserializeObject<Api<List<InventorySync>>>(content);
+                    }
+                }
+                else
+                {
+                    return data;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return data;
+
+                throw;
             }
 
             return data;
@@ -160,6 +169,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             var httpClient = new HttpClient(httpClientHandler);
             //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
             Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/Inventario/SubirInventario?id=" + inventory.Id);
+            // Uri uri = new Uri("https://192.168.1.111:8084/api/Inventario/SubirInventario?id=" + inventory.Id);
 
             var json = JsonConvert.SerializeObject(inventory);
             var request = new StringContent(json, Encoding.UTF8, "application/json");

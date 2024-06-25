@@ -130,6 +130,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
             Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/EstadoFisico/GetEstadoFisicoById/" + id);
 
+            // Uri uri = new Uri("https://192.168.1.111:8084/api/EstadoFisico/GetEstadoFisicoById/" + id);
             httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
             httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
             var response = await httpClient.GetAsync(uri);
@@ -144,7 +145,6 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
             }
             else
             {
-
                 return await Task.FromResult(data);
             }
 
