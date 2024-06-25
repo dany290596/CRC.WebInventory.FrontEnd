@@ -16,6 +16,7 @@ using System.Linq;
 using ZebraRFIDXamarinDemo.Models.Sesion;
 using ZebraRFIDXamarinDemo.Controls;
 using ZebraRFIDXamarinDemo.Views.Api;
+using System.Net.NetworkInformation;
 
 namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
 {
@@ -57,63 +58,74 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
                     IsRunning = false;
                     return;
                 }
-                Api<string> token = new Api<string>(false, "", 200, "");
-                Api<Token> tokenData = new Api<Token>(false, "", 200, null);
-
-                ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-                var httpClientHandler = new HttpClientHandler();
-                httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-                var httpClient = new HttpClient(httpClientHandler);
-
-                Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/");
-
-                var jsonLogin = JsonConvert.SerializeObject(login);
-                var requestLogin = new StringContent(jsonLogin, Encoding.UTF8, "application/json");
-                var responseLogin = await httpClient.PostAsync(uri + "Login", requestLogin);
-                if (responseLogin.IsSuccessStatusCode)
+                if (NetworkInterface.GetIsNetworkAvailable())
                 {
-                    IsRunning = false;
-                    if (responseLogin.StatusCode == System.Net.HttpStatusCode.OK)
+                    Console.WriteLine("The internet connection is available.");
+
+
+                    Api<string> token = new Api<string>(false, "", 200, "");
+                    Api<Token> tokenData = new Api<Token>(false, "", 200, null);
+
+                    ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                    ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+                    var httpClientHandler = new HttpClientHandler();
+                    httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                    var httpClient = new HttpClient(httpClientHandler);
+
+                    Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/");
+                    // Uri uri = new Uri("https://192.168.1.111:8084/api/");
+
+                    var jsonLogin = JsonConvert.SerializeObject(login);
+                    var requestLogin = new StringContent(jsonLogin, Encoding.UTF8, "application/json");
+                    var responseLogin = await httpClient.PostAsync(uri + "Login", requestLogin);
+                    if (responseLogin.IsSuccessStatusCode)
                     {
-                        string contentLogin = responseLogin.Content.ReadAsStringAsync().Result;
-                        token = JsonConvert.DeserializeObject<Api<string>>(contentLogin);
-                        if (token.Respuesta)
+                        IsRunning = false;
+                        if (responseLogin.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token.Data));
-                            var responseUsuario = await httpClient.GetAsync(uri + "Usuario/GetUsuarioData");
-                            if (responseUsuario.StatusCode == System.Net.HttpStatusCode.OK)
+                            string contentLogin = responseLogin.Content.ReadAsStringAsync().Result;
+                            token = JsonConvert.DeserializeObject<Api<string>>(contentLogin);
+                            if (token.Respuesta)
                             {
-                                string contentUsuario = responseUsuario.Content.ReadAsStringAsync().Result;
-                                tokenData = JsonConvert.DeserializeObject<Api<Token>>(contentUsuario);
-                                if (tokenData.Respuesta)
+                                httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token.Data));
+                                var responseUsuario = await httpClient.GetAsync(uri + "Usuario/GetUsuarioData");
+                                if (responseUsuario.StatusCode == System.Net.HttpStatusCode.OK)
                                 {
-                                    var userInformationGetAll = await App.userInformationRepository.GetAllAsync();
-                                    if (userInformationGetAll.Count() > 0)
+                                    string contentUsuario = responseUsuario.Content.ReadAsStringAsync().Result;
+                                    tokenData = JsonConvert.DeserializeObject<Api<Token>>(contentUsuario);
+                                    if (tokenData.Respuesta)
                                     {
-                                        await App.userInformationRepository.DeleteAllAsync();
-                                    }
-                                    UserInformation user = new UserInformation();
-                                    user.Token = token.Data;
-                                    user.EmpresaId = tokenData.Data.EmpresaId;
-                                    user.Id = tokenData.Data.UsuarioId;
-                                    user.EmailUsuario = login.Email;
-                                    var userInformation = await App.userInformationRepository.AddAsync(user);
-                                    if (userInformation == true)
-                                    {
-                                        //await App.collaboratorRepository.GetCollaboratorByIdAsync();
-                                        /*
-                                        Preferences.Set("token", token.Data);
-                                        Preferences.Set("company", tokenData.Data.EmpresaId.ToString());
-                                        Preferences.Set("user", tokenData.Data.UsuarioId.ToString());
-                                        */
-                                        var information = await App.userInformationRepository.GetByLastOrDefaultAsync();
-                                        if (information != null)
+                                        var userInformationGetAll = await App.userInformationRepository.GetAllAsync();
+                                        if (userInformationGetAll.Count() > 0)
                                         {
-                                            ZebraRFIDXamarinDemo.AppShell.Current.FlyoutHeader = new FlyoutHeaderControl(information);
-                                            await Shell.Current.GoToAsync($"//{nameof(DashboardIndex)}");
+                                            await App.userInformationRepository.DeleteAllAsync();
                                         }
+                                        UserInformation user = new UserInformation();
+                                        user.Token = token.Data;
+                                        user.EmpresaId = tokenData.Data.EmpresaId;
+                                        user.Id = tokenData.Data.UsuarioId;
+                                        user.EmailUsuario = login.Email;
+                                        var userInformation = await App.userInformationRepository.AddAsync(user);
+                                        if (userInformation == true)
+                                        {
+                                            //await App.collaboratorRepository.GetCollaboratorByIdAsync();
+                                            /*
+                                            Preferences.Set("token", token.Data);
+                                            Preferences.Set("company", tokenData.Data.EmpresaId.ToString());
+                                            Preferences.Set("user", tokenData.Data.UsuarioId.ToString());
+                                            */
+                                            var information = await App.userInformationRepository.GetByLastOrDefaultAsync();
+                                            if (information != null)
+                                            {
+                                                ZebraRFIDXamarinDemo.AppShell.Current.FlyoutHeader = new FlyoutHeaderControl(information);
+                                                await Shell.Current.GoToAsync($"//{nameof(DashboardIndex)}");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        await Application.Current.MainPage.DisplayAlert("Mensaje", "El token no se validó correctamente", "Aceptar");
                                     }
                                 }
                                 else
@@ -121,21 +133,23 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Authorization
                                     await Application.Current.MainPage.DisplayAlert("Mensaje", "El token no se validó correctamente", "Aceptar");
                                 }
                             }
-                            else
-                            {
-                                await Application.Current.MainPage.DisplayAlert("Mensaje", "El token no se validó correctamente", "Aceptar");
-                            }
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Mensaje", "El email y la contraseña son incorrectos", "Aceptar");
                         }
                     }
                     else
                     {
+                        IsRunning = false;
                         await Application.Current.MainPage.DisplayAlert("Mensaje", "El email y la contraseña son incorrectos", "Aceptar");
                     }
                 }
                 else
                 {
+                    await Application.Current.MainPage.DisplayAlert("Advertencia", "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", "Aceptar");
                     IsRunning = false;
-                    await Application.Current.MainPage.DisplayAlert("Mensaje", "El email y la contraseña son incorrectos", "Aceptar");
+                    return;
                 }
             }
             catch (Exception ex)
