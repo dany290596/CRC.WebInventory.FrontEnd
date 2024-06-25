@@ -91,7 +91,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         public virtual void TagReadEvent(TagData[] tags)
         {
-   
+
         }
 
         public virtual void StatusEvent(Events.StatusEventData statusEvent)
@@ -111,20 +111,34 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         internal void UpdateIn()
         {
-            rfidModel.TagRead += TagReadEvent;
-            rfidModel.TriggerEvent += HHTriggerEvent;
-            rfidModel.StatusEvent += StatusEvent;
-            rfidModel.ReaderConnectionEvent += ReaderConnectionEvent;
-            rfidModel.ReaderAppearanceEvent += ReaderAppearanceEvent;
+            try
+            {
+                rfidModel.TagRead += TagReadEvent;
+                rfidModel.TriggerEvent += HHTriggerEvent;
+                rfidModel.StatusEvent += StatusEvent;
+                rfidModel.ReaderConnectionEvent += ReaderConnectionEvent;
+                rfidModel.ReaderAppearanceEvent += ReaderAppearanceEvent;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         internal void UpdateOut()
         {
-            rfidModel.TagRead -= TagReadEvent;
-            rfidModel.TriggerEvent -= HHTriggerEvent;
-            rfidModel.StatusEvent -= StatusEvent;
-            rfidModel.ReaderConnectionEvent -= ReaderConnectionEvent;
-            rfidModel.ReaderAppearanceEvent -= ReaderAppearanceEvent;
+            try
+            {
+                rfidModel.TagRead -= TagReadEvent;
+                rfidModel.TriggerEvent -= HHTriggerEvent;
+                rfidModel.StatusEvent -= StatusEvent;
+                rfidModel.ReaderConnectionEvent -= ReaderConnectionEvent;
+                rfidModel.ReaderAppearanceEvent -= ReaderAppearanceEvent;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public bool isConnected { get => rfidModel.isConnected; set => OnPropertyChanged(); }

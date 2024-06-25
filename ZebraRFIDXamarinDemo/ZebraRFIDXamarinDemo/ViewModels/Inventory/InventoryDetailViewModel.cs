@@ -17,7 +17,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 {
     public class InventoryDetailViewModel : InventoryBaseViewModel
     {
-
         public Command SeeDetailInventoryCommand { get; }
         public Command InventoryInventoryCommand { get; }
         public string tags = "";
@@ -75,7 +74,7 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             try
             {
                 IsRunning = true;
-               
+
                 Preferences.Remove("Activo_Tag");
                 if (inventoryLocationSync.Activo.Count() > 0)
                 {
@@ -108,15 +107,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                     }
                     else
                     {
+                        await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "No hay activos disponibles por marcar en esta ubicación ", "Aceptar");
                         Preferences.Remove("Activo_Tag");
                     }
                 }
                 else
                 {
+                    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "No hay activos disponibles por marcar en esta ubicación ", "Aceptar");
                     Preferences.Remove("Activo_Tag");
                     IsRunning = false;
                 }
-           
             }
             catch (Exception ex)
             {
@@ -124,10 +124,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 throw ex;
             }
         }
-
-
-
-
 
         public ObservableCollection<Models.Tag.Tag> AllItems { get => _allItems; set => _allItems = value; }
 
@@ -276,103 +272,110 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
 
         private async void updateCounts()
         {
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            try
             {
-                bool hasKey = Preferences.ContainsKey("Activo_Tag");
-                if (hasKey)
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
                 {
-                    if (tagListDict.Count() > 0)
+                    bool hasKey = Preferences.ContainsKey("Activo_Tag");
+                    if (hasKey)
                     {
-                        var jsonGet = Preferences.Get("Activo_Tag", "");
-                        var jsonAsset = JsonConvert.DeserializeObject<List<AssetQuery>>(jsonGet);
-                        var jsonDataQuery = jsonAsset.Select(s => s.Nombre).ToList();
-                        if (jsonAsset.Count() > 0)
+                        if (tagListDict.Count() > 0)
                         {
-                            Preferences.Remove("Activo_Tag");
-                            UniqueTags = tagListDict.Count.ToString();
-                            TotalTags = totalTagCount.ToString();
-                            TimeSpan span = (DateTime.Now - startime);
-                            TotalTime = span.ToString("hh\\:mm\\:ss");
-
-                            var tags = Newtonsoft.Json.JsonConvert.SerializeObject(tagListDict);
-                            // Toast.MakeText(Android.App.Application.Context, "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "TAGS IDS  \n\n" + data, ToastLength.Short).Show();
-
-                            int activosMarcados = 0;
-                            int tagProsesados = 0;
-                            foreach (var tag in tagListDict)
+                            var jsonGet = Preferences.Get("Activo_Tag", "");
+                            var jsonAsset = JsonConvert.DeserializeObject<List<AssetQuery>>(jsonGet);
+                            var jsonDataQuery = jsonAsset.Select(s => s.Nombre).ToList();
+                            if (jsonAsset.Count() > 0)
                             {
-                                var tagNumber = DecodificarEpc(tag.Key);
-                                // itemTag += "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n";
+                                Preferences.Remove("Activo_Tag");
+                                UniqueTags = tagListDict.Count.ToString();
+                                TotalTags = totalTagCount.ToString();
+                                TimeSpan span = (DateTime.Now - startime);
+                                TotalTime = span.ToString("hh\\:mm\\:ss");
 
-                                // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n", "Continuar");
-                                foreach (var asset in jsonAsset)
+                                var tags = Newtonsoft.Json.JsonConvert.SerializeObject(tagListDict);
+                                // Toast.MakeText(Android.App.Application.Context, "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "TAGS IDS  \n\n" + data, ToastLength.Short).Show();
+
+                                int activosMarcados = 0;
+                                int tagProsesados = 0;
+                                foreach (var tag in tagListDict)
                                 {
-                                    if (asset.Tag.Numero != null)
+                                    var tagNumber = DecodificarEpc(tag.Key);
+                                    // itemTag += "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n";
+
+                                    // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + "FC: " + tagNumber.Item1 + " :: " + "NÚMERO: " + tagNumber.Item2 + "\n", "Continuar");
+                                    foreach (var asset in jsonAsset)
                                     {
-                                        if (asset.Tag.Numero == tagNumber.Item2.ToString())
+                                        if (asset.Tag.Numero != null)
                                         {
-                                            var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(asset.Id);
-                                            if (dataAssetSQLITE != null)
+                                            if (asset.Tag.Numero == tagNumber.Item2.ToString())
                                             {
-                                                dataAssetSQLITE.Status = true;
-                                                var dataAssetUpdateSQLITE = await App.assetRepository.UpdateAsync(dataAssetSQLITE);
-                                                if (dataAssetUpdateSQLITE)
+                                                var dataAssetSQLITE = await App.assetRepository.GetByIdAsync(asset.Id);
+                                                if (dataAssetSQLITE != null)
                                                 {
-                                                    activosMarcados += 1;
+                                                    dataAssetSQLITE.Status = true;
+                                                    var dataAssetUpdateSQLITE = await App.assetRepository.UpdateAsync(dataAssetSQLITE);
+                                                    if (dataAssetUpdateSQLITE)
+                                                    {
+                                                        activosMarcados += 1;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                    tagProsesados += 1;
                                 }
-                                tagProsesados += 1;
+
+
+                                await Application.Current.MainPage.DisplayAlert("¡Información!", "Tags por leer: " + tagListDict.Count().ToString() + "\n" + "Número de tags procesados: " + tagProsesados + "\n" + "Número de activos: " + jsonAsset.Count().ToString() + "\n" + "Número de activos marcados: " + activosMarcados.ToString() + "\n", "Aceptar");
+
+                                //IsRunning = true;
+                                //var tagNumber = SearchTagNumber(tagListDict);
+                                //if (tagNumber.Count() > 0)
+                                //{
+                                //    IsRunning = false;
+                                //    string itemTag = "";
+                                //    foreach (var item in tagNumber)
+                                //    {
+                                //        itemTag += "FC: " + item.Fc + " :: " + "NÚMERO: " + item.Numero + "\n";
+                                //    }
+                                //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + itemTag, "Continuar");
+                                //}
+                                //else
+                                //{
+                                //    IsRunning = false;
+                                //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE NUMEROS DE TAGS \n\n" + "No hay", "Continuar");
+                                //}
+
+
+
+                                // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "LISTA DE TAGS \n\n" + string.Join("\n", tagListDict.Keys) + "\n\nLISTA DE ACTIVOS A INVENTARIAR  \n\n" + string.Join("\n", jsonDataQuery), "Continuar");
+                                // IsRunning = true;
+
+                                // var iteracion = 
+
+                                //foreach (var itemtags in tagListDict)
+                                //{
+                                //    foreach (var itemactivos in jsonData)
+                                //    {
+                                //        if (itemtags.Key == itemactivos.Tag.Numero)
+                                //        {
+
+                                //        }
+                                //    }
+                                //}
                             }
-
-                            
-                            await Application.Current.MainPage.DisplayAlert("¡Información!", "Tags por leer: " + tagListDict.Count().ToString() + "\n" + "Número de tags procesados: " + tagProsesados + "\n" + "Número de activos: " + jsonAsset.Count().ToString() + "\n" + "Número de activos marcados: " + activosMarcados.ToString() + "\n", "Aceptar");
-
-                            //IsRunning = true;
-                            //var tagNumber = SearchTagNumber(tagListDict);
-                            //if (tagNumber.Count() > 0)
-                            //{
-                            //    IsRunning = false;
-                            //    string itemTag = "";
-                            //    foreach (var item in tagNumber)
-                            //    {
-                            //        itemTag += "FC: " + item.Fc + " :: " + "NÚMERO: " + item.Numero + "\n";
-                            //    }
-                            //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE FC Y NUMEROS DE TAGS \n\n" + itemTag, "Continuar");
-                            //}
-                            //else
-                            //{
-                            //    IsRunning = false;
-                            //    await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "LISTA DE NUMEROS DE TAGS \n\n" + "No hay", "Continuar");
-                            //}
-
-
-
-                            // await Application.Current.MainPage.DisplayAlert("¡Advertencia!", "NÚMERO DE TAGS: " + UniqueTags + "\n\n" + "LISTA DE TAGS \n\n" + string.Join("\n", tagListDict.Keys) + "\n\nLISTA DE ACTIVOS A INVENTARIAR  \n\n" + string.Join("\n", jsonDataQuery), "Continuar");
-                            // IsRunning = true;
-
-                            // var iteracion = 
-
-                            //foreach (var itemtags in tagListDict)
-                            //{
-                            //    foreach (var itemactivos in jsonData)
-                            //    {
-                            //        if (itemtags.Key == itemactivos.Tag.Numero)
-                            //        {
-
-                            //        }
-                            //    }
-                            //}
-                        }
-                        else
-                        {
-                            Preferences.Remove("Activo_Tag");
+                            else
+                            {
+                                Preferences.Remove("Activo_Tag");
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<Models.Startup.TagSearch> SearchTagNumber(Dictionary<string, int> tagListDict)

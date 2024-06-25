@@ -40,7 +40,6 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             IsBusy = true;
             try
             {
-                
                 InventoryData.Clear();
                 var inventoryAllSQLITE = await App.inventoryRepository.GetAllByInventoryLocationAssetAsync();
                 if (inventoryAllSQLITE.Count() > 0)
@@ -85,7 +84,8 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 
                 if (inventoryList.Data != null)
                 {
-                    IsRunning = false;
+                    // IsRunning = false;
+                    int contador = 0;
                     foreach (var iteminventory in inventoryList.Data)
                     {
                         var inventoryByIdSQLITE = await App.inventoryRepository.GetByIdAsync(iteminventory.Inventario.Id);
@@ -420,6 +420,15 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                                 }
                             }
                         }
+                        contador += 1;
+                    }
+                    if(inventoryList.Data.Count() == contador)
+                    {
+                        IsRunning = false;
+                    }
+                    else
+                    {
+                        IsRunning = false;
                     }
                 }
                 else
