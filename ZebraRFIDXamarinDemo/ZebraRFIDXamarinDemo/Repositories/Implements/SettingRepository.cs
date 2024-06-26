@@ -144,6 +144,11 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
                 }
                 else
                 {
+                    if (((int)response.StatusCode) == 401)
+                    {
+                        data = new Api<List<InventorySync>>(false, "El token de sesión ha caducado. Por favor, inicia sesión nuevamente para renovarlo", ((int)response.StatusCode), null);
+                        return data;
+                    }
                     return data;
                 }
             }

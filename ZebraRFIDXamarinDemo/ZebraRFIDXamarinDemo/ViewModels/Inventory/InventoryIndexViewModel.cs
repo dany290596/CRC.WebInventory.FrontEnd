@@ -434,10 +434,16 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
                 else
                 {
                     IsRunning = false;
+                    if (inventoryList.Codigo == 401)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Advertencia", inventoryList.Mensaje, "Aceptar");
+                    }
                     // await Application.Current.MainPage.DisplayAlert("Mensaje", "No hay inventarios disponibles en este momento", "Aceptar");
-                    await Application.Current.MainPage.DisplayAlert("Message", "Session expired", "Ok");
-                    await App.userInformationRepository.DeleteAllAsync();
-                    await Shell.Current.GoToAsync($"//{nameof(LoginIndex)}");
+
+                    // ....
+                    // await Application.Current.MainPage.DisplayAlert("Message", "Session expired", "Ok");
+                    // await App.userInformationRepository.DeleteAllAsync();
+                    // await Shell.Current.GoToAsync($"//{nameof(LoginIndex)}");
                 }
 
                 try

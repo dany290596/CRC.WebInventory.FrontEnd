@@ -214,6 +214,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ZebraReader\ZebraReaderInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\AssetQuery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Startup\TagQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\HttpBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
