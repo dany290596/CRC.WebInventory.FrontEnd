@@ -46,6 +46,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             get { return listAssetCount; }
             set { SetProperty(ref listAssetCount, value); }
         }
+        public string listAssetColor = "#FFFF8C00";
+        public string ListAssetColor
+        {
+            get { return listAssetColor; }
+            set { SetProperty(ref listAssetColor, value); }
+        }
 
         public ObservableCollection<Asset> listAssetInventariado = new ObservableCollection<Asset>();
         public ObservableCollection<Asset> ListAssetInventariado
@@ -59,6 +65,12 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
         {
             get { return listAssetInventariadoCount; }
             set { SetProperty(ref listAssetInventariadoCount, value); }
+        }
+        public string listAssetInventariadoColor = "#FFFF8C00";
+        public string ListAssetInventariadoColor
+        {
+            get { return listAssetInventariadoColor; }
+            set { SetProperty(ref listAssetInventariadoColor, value); }
         }
 
         public InventoryLocationDetailViewModel()
@@ -82,7 +94,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             PhysicalStatePickerSelectedItem = new PhysicalState();
 
             GetAssetsInventoried = false;
+            ListAssetColor = "#FFFF";
             GetAssetsWithoutInventory = true;
+            ListAssetInventariadoColor = "#FFFF8C00";
         }
 
         private ObservableCollection<PhysicalState> _physicalStatePickerItems;
@@ -693,7 +707,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             try
             {
                 GetAssetsInventoried = true;
+                ListAssetColor = "#FFFF8C00";
                 GetAssetsWithoutInventory = false;
+                ListAssetInventariadoColor = "#FFFF";
             }
             catch (Exception ex)
             {
@@ -706,7 +722,9 @@ namespace ZebraRFIDXamarinDemo.ViewModels.Inventory
             try
             {
                 GetAssetsInventoried = false;
+                ListAssetColor = "#FFFF";
                 GetAssetsWithoutInventory = true;
+                ListAssetInventariadoColor = "#FFFF8C00";
             }
             catch (Exception ex)
             {

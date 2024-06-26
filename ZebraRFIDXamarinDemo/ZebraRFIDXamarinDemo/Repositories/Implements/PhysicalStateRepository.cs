@@ -11,12 +11,15 @@ using SQLite;
 using ZebraRFIDXamarinDemo.Models.Api;
 using ZebraRFIDXamarinDemo.Models.Startup;
 using ZebraRFIDXamarinDemo.Repositories.Interfaces;
+using ZebraRFIDXamarinDemo.Common;
+using System.Net.NetworkInformation;
 
 namespace ZebraRFIDXamarinDemo.Repositories.Implements
 {
     public class PhysicalStateRepository : IPhysicalStateRepository
     {
         public SQLiteAsyncConnection _database;
+        public static Common.HttpBase httpBase = new Common.HttpBase();
         public PhysicalStateRepository(string pathDatabase)
         {
             _database = new SQLiteAsyncConnection(pathDatabase);
@@ -153,33 +156,59 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
         public async Task<Api<List<PhysicalState>>> GetAllPhysicalState(string token, Guid company)
         {
-            Api<List<PhysicalState>> data = new Api<List<PhysicalState>>(false, "", 200, null);
+            Api<List<PhysicalState>> data = new Api<List<PhysicalState>>(false, "", 501, null);
 
-            ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-            var httpClientHandler = new HttpClientHandler();
-            httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            var httpClient = new HttpClient(httpClientHandler);
-            //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
-            Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/EstadoFisico/GetAllEstadoFisico?PageSize=1");
-
-            httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-            httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
-            var response = await httpClient.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (NetworkInterface.GetIsNetworkAvailable())
                 {
-                    string content = response.Content.ReadAsStringAsync().Result;
-                    data = JsonConvert.DeserializeObject<Api<List<PhysicalState>>>(content);
+                    var urlIsValid = httpBase.UrlIsValid("https://crcdemexico.gets-it.net:7001/swagger/index.html");
+                    if (urlIsValid)
+                    {
+                        ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+                        var httpClientHandler = new HttpClientHandler();
+                        httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        var httpClient = new HttpClient(httpClientHandler);
+                        //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
+                        Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/EstadoFisico/GetAllEstadoFisico?PageSize=1");
+
+                        httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                        httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
+                        var response = await httpClient.GetAsync(uri);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                string content = response.Content.ReadAsStringAsync().Result;
+                                data = JsonConvert.DeserializeObject<Api<List<PhysicalState>>>(content);
+                            }
+                        }
+                        else
+                        {
+
+                            return await Task.FromResult(data);
+                        }
+
+                    }
+                    else
+                    {
+                        data = new Api<List<PhysicalState>>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
+                        return data;
+                    }
+                }
+                else
+                {
+                    data = new Api<List<PhysicalState>>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
+                    return data;
                 }
             }
-            else
+            catch (Exception ex)
             {
 
-                return await Task.FromResult(data);
+                throw;
             }
 
             return await Task.FromResult(data);

@@ -221,7 +221,7 @@
 
                      VerticalOptions="FillAndExpand">
 
-           <Button Opacity="0.7" BorderWidth="2" BorderColor="DarkOrange" BackgroundColor="Transparent" Command="{Binding GetAssetsInventoriedCommand}" Text="{Binding ListAssetCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
+           <Button BorderWidth="0" TextColor="{Binding ListAssetInventariadoColor}" BorderColor="{Binding ListAssetColor}" BackgroundColor="{Binding ListAssetColor}" Command="{Binding GetAssetsInventoriedCommand}" Text="{Binding ListAssetCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
 
         </StackLayout>
 
@@ -230,7 +230,7 @@
                      Grid.Column="1"
 
                      VerticalOptions="FillAndExpand">
-            <Button Opacity="0.7" BorderWidth="2" BorderColor="DarkOrange" BackgroundColor="Transparent" Command="{Binding GetAssetsWithoutInventoryCommand}" Text="{Binding ListAssetInventariadoCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
+            <Button BorderWidth="0" TextColor="{Binding ListAssetColor}" BorderColor="{Binding ListAssetInventariadoColor}" BackgroundColor="{Binding ListAssetInventariadoColor}" Command="{Binding GetAssetsWithoutInventoryCommand}" Text="{Binding ListAssetInventariadoCount}" CornerRadius="3" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" TextTransform="None" FontSize="Micro" />
         </StackLayout>
     </Grid>
 </StackLayout>

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SQLite;
+using ZebraRFIDXamarinDemo.Common;
 using ZebraRFIDXamarinDemo.Models.Api;
 using ZebraRFIDXamarinDemo.Models.Setting;
 using ZebraRFIDXamarinDemo.Models.Startup;
@@ -19,6 +21,7 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
     public class SettingRepository : ISettingRepository
     {
         public SQLiteAsyncConnection _database;
+        public static Common.HttpBase httpBase = new Common.HttpBase();
         public SettingRepository(string pathDatabase)
         {
             _database = new SQLiteAsyncConnection(pathDatabase);
@@ -120,35 +123,52 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
             try
             {
-                ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-                var httpClientHandler = new HttpClientHandler();
-                httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-                var httpClient = new HttpClient(httpClientHandler);
-                //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
-                Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/Inventario/GetInventarioSync/" + device);
-                // Uri uri = new Uri("https://192.168.1.111:8084/api/Inventario/GetInventarioSync/962CD5F7-CF54-4124-B0CF-60F9E90CCD76");
-
-                httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-                httpClient.DefaultRequestHeaders.Add("Empresa", company);
-                var response = await httpClient.GetAsync(uri);
-
-                if (response.IsSuccessStatusCode)
+                if (NetworkInterface.GetIsNetworkAvailable())
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    var urlIsValid = httpBase.UrlIsValid("https://crcdemexico.gets-it.net:7001/swagger/index.html");
+                    if (urlIsValid)
                     {
-                        string content = response.Content.ReadAsStringAsync().Result;
-                        data = JsonConvert.DeserializeObject<Api<List<InventorySync>>>(content);
+                        ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+                        var httpClientHandler = new HttpClientHandler();
+                        httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        var httpClient = new HttpClient(httpClientHandler);
+                        //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
+                        Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/Inventario/GetInventarioSync/" + device);
+                        // Uri uri = new Uri("https://192.168.1.111:8084/api/Inventario/GetInventarioSync/962CD5F7-CF54-4124-B0CF-60F9E90CCD76");
+
+                        httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                        httpClient.DefaultRequestHeaders.Add("Empresa", company);
+                        var response = await httpClient.GetAsync(uri);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                string content = response.Content.ReadAsStringAsync().Result;
+                                data = JsonConvert.DeserializeObject<Api<List<InventorySync>>>(content);
+                            }
+                        }
+                        else
+                        {
+                            if (((int)response.StatusCode) == 401)
+                            {
+                                data = new Api<List<InventorySync>>(false, "El token de sesión ha caducado. Por favor, inicia sesión nuevamente para renovarlo", ((int)response.StatusCode), null);
+                                return data;
+                            }
+                            return data;
+                        }
+                    }
+                    else
+                    {
+                        data = new Api<List<InventorySync>>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
+                        return data;
                     }
                 }
                 else
                 {
-                    if (((int)response.StatusCode) == 401)
-                    {
-                        data = new Api<List<InventorySync>>(false, "El token de sesión ha caducado. Por favor, inicia sesión nuevamente para renovarlo", ((int)response.StatusCode), null);
-                        return data;
-                    }
+                    data = new Api<List<InventorySync>>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
                     return data;
                 }
             }

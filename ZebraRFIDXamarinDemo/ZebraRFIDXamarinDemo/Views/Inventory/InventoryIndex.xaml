@@ -48,7 +48,7 @@
                                     <StackLayout
                                         Grid.Row="1"
                                         Orientation="Horizontal">
-                                        <Button TextTransform="None" FontSize="Micro" Text="Descargar inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White"></Button>
+                                        <Button IsEnabled="{Binding IsEnabled}" TextTransform="None" FontSize="Micro" Text="Descargar inventarios" Command="{Binding SyncInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White"></Button>
                                         <Button TextTransform="None" FontSize="Micro" Text="Limpiar inventarios" Command="{Binding DeleteInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="120" HeightRequest="40" CornerRadius="3" BackgroundColor="DarkOrange" TextColor="White"></Button>
                                         <!--
                                         <Button Text="Cargar" Command="{Binding UploadInventoryCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="20" BackgroundColor="DarkOrange" TextColor="White" WidthRequest="120"></Button>

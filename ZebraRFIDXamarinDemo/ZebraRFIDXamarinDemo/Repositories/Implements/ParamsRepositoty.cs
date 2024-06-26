@@ -11,12 +11,16 @@ using SQLite;
 using ZebraRFIDXamarinDemo.Models.Api;
 using ZebraRFIDXamarinDemo.Models.Setting;
 using ZebraRFIDXamarinDemo.Repositories.Interfaces;
+using ZebraRFIDXamarinDemo.Common;
+using ZebraRFIDXamarinDemo.Models.Startup;
+using System.Net.NetworkInformation;
 
 namespace ZebraRFIDXamarinDemo.Repositories.Implements
 {
     public class ParamsRepositoty : IParamsRepositoty
     {
         public SQLiteAsyncConnection _database;
+        public static Common.HttpBase httpBase = new Common.HttpBase();
         public ParamsRepositoty(string pathDatabase)
         {
             _database = new SQLiteAsyncConnection(pathDatabase);
@@ -113,32 +117,58 @@ namespace ZebraRFIDXamarinDemo.Repositories.Implements
 
         public async Task<Api<ParamsSync>> GetParams(string token, Guid company)
         {
-            Api<ParamsSync> data = new Api<ParamsSync>(false, "", 200, null);
+            Api<ParamsSync> data = new Api<ParamsSync>(false, "", 501, null);
 
-            ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-
-            var httpClientHandler = new HttpClientHandler();
-            httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
-            var httpClient = new HttpClient(httpClientHandler);
-            //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
-            Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/TipoParam/GetConParams/eb2245f4-6c99-4793-a893-066f65f8be85");
-
-            httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-            httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
-            var response = await httpClient.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (NetworkInterface.GetIsNetworkAvailable())
                 {
-                    string content = response.Content.ReadAsStringAsync().Result;
-                    data = JsonConvert.DeserializeObject<Api<ParamsSync>>(content);
+                    Console.WriteLine("The internet connection is available.");
+                    var urlIsValid = httpBase.UrlIsValid("https://crcdemexico.gets-it.net:7001/swagger/index.html");
+                    if (urlIsValid)
+                    {
+                        ServicePointManager.ServerCertificateValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+                        var httpClientHandler = new HttpClientHandler();
+                        httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true;
+                        var httpClient = new HttpClient(httpClientHandler);
+                        //962CD5F7-CF54-4124-B0CF-60F9E90CCD76
+                        Uri uri = new Uri("https://crcdemexico.gets-it.net:7001/api/TipoParam/GetConParams/eb2245f4-6c99-4793-a893-066f65f8be85");
+
+                        httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                        httpClient.DefaultRequestHeaders.Add("Empresa", company.ToString());
+                        var response = await httpClient.GetAsync(uri);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                string content = response.Content.ReadAsStringAsync().Result;
+                                data = JsonConvert.DeserializeObject<Api<ParamsSync>>(content);
+                            }
+                        }
+                        else
+                        {
+                            return data;
+                        }
+                    }
+                    else
+                    {
+                        data = new Api<ParamsSync>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
+                        return data;
+                    }
+                }
+                else
+                {
+                    data = new Api<ParamsSync>(false, "La conexión a Internet no está disponible. Conéctate a Internet e inténtalo de nuevo", 501, null);
+                    return data;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return data;
+
+                throw;
             }
 
             return data;
